@@ -6,11 +6,13 @@ interface User {
   name?: string;
 }
 
+// Interface da requisição de login
 interface ISignInRequest {
   email: string;
   password: string;
 }
 
+// Interface da resposta de login
 interface ISignInResponse {
   user?: {
     name: string;
