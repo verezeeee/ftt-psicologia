@@ -62,6 +62,7 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
   );
 }
 
+// Hook de uso do contexto
 export function useAuth() {
   const context = useContext(AuthContext);
 
