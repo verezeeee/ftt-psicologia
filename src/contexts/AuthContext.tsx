@@ -1,11 +1,6 @@
 import { createContext, useState, useContext, ReactNode } from "react";
-import Login from "../src/pages/login";
-
-// Interface do usuário
-interface User {
-  email: string;
-  name?: string;
-}
+import Login from "../pages/login";
+import { User } from "../utils/types";
 
 // Interface da requisição de login
 interface ISignInRequest {
@@ -47,7 +42,8 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
   async function signIn({ email, password }: ISignInRequest) {
     setUser({
       email: email,
-      name: "User Name",
+      nome: "Ricardo",
+      role: "admin",
     });
     return {
       user: {
