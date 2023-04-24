@@ -1,27 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useAuth, withAuth } from "../contexts/AuthContext";
+import Admin from "../routes/Admin";
+import { Text } from "@chakra-ui/react";
 
-import { Flex, Text } from "@chakra-ui/react";
-import { useAuth, withAuth } from "../../contexts/AuthContext";
-
-function Dashboard() {
+function Index() {
   const { user } = useAuth();
 
   return (
-    <Flex
-      style={{
-        padding: 20,
-        height: "100vh",
-        width: "100%",
-        backgroundColor: "#FFF",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <Text color="#333" fontSize="2rem">
-        Olá, {user.name}
-      </Text>
-    </Flex>
+    <>
+      {/* {user.role === "admin" && <Admin />} */}
+      {user.role === "admin" ? <Admin /> : <Text m="4">Em andamento...</Text>}
+    </>
   );
 }
 
-export default withAuth(Dashboard);
+export default withAuth(Index);

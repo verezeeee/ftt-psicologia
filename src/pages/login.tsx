@@ -1,7 +1,8 @@
-import { Button, Flex, Input, Spacer, Text, useToast } from "@chakra-ui/react";
+import { Flex, Input, Spacer, Text, useToast } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/router";
+import Button from "../components/Button";
 
 export default function Login() {
   // Hooks
@@ -28,6 +29,7 @@ export default function Login() {
         position: "bottom-right",
         status: "success",
         description: "Login realizado com sucesso",
+        duration: 500
       });
       router.push("/");
     }
@@ -46,16 +48,11 @@ export default function Login() {
         w="80vw"
         maxW={500}
         flexDir="column"
-        boxShadow="rgba(0, 0, 0, 0.1) 0 0 10px"
+        boxShadow="rgba(199, 96, 235, 0.3) 0 0 10px"
         borderRadius="10"
         p="8"
       >
-        <Text
-          color="#333"
-          textAlign="center"
-          fontSize="1.8rem"
-          fontWeight={600}
-        >
+        <Text color="#333" textAlign="center" fontSize="2rem" fontWeight={600}>
           psicare
         </Text>{" "}
         <Text color="#333" textAlign="center" fontSize="1rem">
@@ -64,6 +61,16 @@ export default function Login() {
         <form>
           <Flex mt="10" flexDir="column">
             <Input
+              _hover={{
+                border: "2px solid #D5B8FF",
+              }}
+              _active={{
+                border: "2px solid #D5B8FF",
+              }}
+              _focus={{
+                border: "2px solid #D5B8FF",
+              }}
+              boxShadow="none !important"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setEmail(e.target.value);
               }}
@@ -73,18 +80,26 @@ export default function Login() {
               autoComplete="email"
             />
             <Input
+              _hover={{
+                border: "2px solid #D5B8FF",
+              }}
+              _active={{
+                border: "2px solid #D5B8FF",
+              }}
+              _focus={{
+                border: "2px solid #D5B8FF",
+              }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setPassword(e.target.value);
               }}
+              boxShadow="none !important"
               value={password}
               type="password"
               mt="4"
               placeholder="Sua senha"
               autoComplete="current-password"
             />
-            <Button mt="4" onClick={handleSignIn}>
-              <Text fontWeight={500}>Entrar</Text>
-            </Button>
+            <Button onPress={handleSignIn} label="Entrar" />
           </Flex>
         </form>
       </Flex>
