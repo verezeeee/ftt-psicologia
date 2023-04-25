@@ -1,6 +1,7 @@
 import { Table as TableNextUI } from "@nextui-org/react";
 import { useMediaQuery } from "../../utils/useMediaQuery";
 import { User } from "../../utils/types";
+import { formatarCPF } from "../../utils/formatarCPF";
 
 export default function Table({
   headers,
@@ -13,13 +14,11 @@ export default function Table({
 
   return (
     <TableNextUI
-      color="secondary"
-      aria-label="Example pagination  table"
+      bordered={false}
+      shadow={false}
       css={{
-        height: "auto",
-        minWidth: mobile ? "calc(100vw - 40px)" : "calc(100vw - 340px)",
+        width: mobile ? "calc(100vw - 40px)" : "calc(100vw - 350px)",
       }}
-      selectionMode="multiple"
     >
       <TableNextUI.Header>
         {headers.map((header) => {
@@ -32,7 +31,9 @@ export default function Table({
             <TableNextUI.Row key={i}>
               <TableNextUI.Cell>{data.id}</TableNextUI.Cell>
               <TableNextUI.Cell>{data.nome}</TableNextUI.Cell>
-              <TableNextUI.Cell>{data.cpf}</TableNextUI.Cell>
+              <TableNextUI.Cell>
+                {formatarCPF(String(data.cpf))}
+              </TableNextUI.Cell>
               <TableNextUI.Cell>TDAH</TableNextUI.Cell>
             </TableNextUI.Row>
           );
