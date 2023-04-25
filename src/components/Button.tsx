@@ -1,5 +1,6 @@
 import React from "react";
-import { Button as ChakraButton, Text } from "@chakra-ui/react";
+import { Button as ChakraButton, Icon, Text } from "@chakra-ui/react";
+import { IconType } from "react-icons";
 
 export default function Button({
   onPress,
@@ -7,20 +8,21 @@ export default function Button({
   mt,
   px,
   mb,
-  bg
+  bg,
+  icon,
 }: {
   onPress: () => void;
   label: string;
   mt?: number;
   px?: number;
-  mb?: number
-  bg?: string
+  mb?: number;
+  bg?: string;
+  icon?: IconType;
 }) {
   return (
     <ChakraButton
-      bg={bg ? bg :  "#FFF"}
+      bg={bg ? bg : "#FFF"}
       border="1px solid #D5B8FF"
-      boxShadow="rgba(199, 96, 235, 0.2) 0 0 10px"
       _hover={{
         backgroundColor: "#C760EB",
         opacity: 0.8,
@@ -33,6 +35,7 @@ export default function Button({
       onClick={onPress}
       color="#C760EB"
     >
+      {icon && <Icon as={icon} fontSize="1.2rem" mr="4" />}
       <Text fontWeight={500}>{label}</Text>
     </ChakraButton>
   );
