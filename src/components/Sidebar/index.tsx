@@ -25,7 +25,6 @@ export default function Sidebar({
       position="fixed"
       p="4"
       bg="#E9E9E9"
-      borderRight="1px solid #EEE"
     >
       {user.role === "admin" && (
         <Flex flexDir="column">

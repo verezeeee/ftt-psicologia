@@ -43,7 +43,7 @@ export default function Header({
       align="center"
       position="fixed"
       bg="#FFF"
-      boxShadow="rgba(0, 0, 0, 0.1) 0px 2px 2px"
+      // boxShadow="rgba(0, 0, 0, 0.1) 0px 2px 2px"
     >
       <Flex align="center">
         <Image
