@@ -43,6 +43,7 @@ export default function Header({
       align="center"
       position="fixed"
       bg="#FFF"
+      zIndex={999}
       // boxShadow="rgba(0, 0, 0, 0.1) 0px 2px 2px"
     >
       <Flex align="center">
@@ -50,9 +51,9 @@ export default function Header({
           mb={-4}
           alt="psicare"
           mx="auto"
-          src="/logo-h.png"
+          src="/logo-icon.png"
           style={{
-            width: 180,
+            width: 80,
             height: "auto",
           }}
         />
@@ -60,11 +61,12 @@ export default function Header({
       {!mobile && <Button mt={0.1} px={6} bg="transparent" label="Sair" onPress={signOut} />}
       {mobile && (
         <Icon
+          mt="3"
           cursor="pointer"
           onClick={() => setSidebarOpened(true)}
           as={BiMenuAltRight}
           color="#C760EB"
-          fontSize="2rem"
+          fontSize="3rem"
         />
       )}
       <Drawer

@@ -7,6 +7,8 @@ import Header from "../../components/Header";
 import { Pacientes, Alunos, Professores } from "./screens";
 
 import { useMediaQuery } from "../../utils/useMediaQuery";
+import Table from "../../components/Tables";
+import Head from "next/head";
 
 function Dashboard() {
   const { user } = useAuth();
