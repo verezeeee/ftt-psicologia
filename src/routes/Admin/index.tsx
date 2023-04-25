@@ -15,16 +15,16 @@ function Dashboard() {
 
   const { mobile, tablet, desktop } = useMediaQuery();
 
-  const [activeTab, setActiveTab] = React.useState("Pacientes");
+  const [activeTab, setActiveTab] = React.useState("Secretários");
 
   return (
-    <Flex flexDir="row">
+    <Flex flexDir="row" w="100%">
       {!mobile && <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />}
 
-      <Flex flexDir="column">
+      <Flex flexDir="column" w="100%">
         <Header activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {activeTab === "Pacientes" && (
+        {activeTab === "Secretários" && (
           <Pacientes user={user} activeTab={activeTab} />
         )}
         {activeTab === "Alunos" && <Alunos user={user} activeTab={activeTab} />}
