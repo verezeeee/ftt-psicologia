@@ -22,7 +22,7 @@ export default function Button({
   return (
     <ChakraButton
       bg={bg ? bg : "#FFF"}
-      border="1px solid #D5B8FF"
+      border="2px solid #D5B8FF"
       _hover={{
         backgroundColor: "#C760EB",
         opacity: 0.8,

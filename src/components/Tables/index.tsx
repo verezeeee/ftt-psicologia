@@ -2,6 +2,7 @@ import { Table as TableNextUI } from "@nextui-org/react";
 import { useMediaQuery } from "../../utils/useMediaQuery";
 import { User } from "../../utils/types";
 import { formatarCPF } from "../../utils/formatarCPF";
+import React from "react";
 
 export default function Table({
   headers,
@@ -11,6 +12,8 @@ export default function Table({
   data: User[];
 }) {
   const { mobile } = useMediaQuery();
+
+  const [selectedKeys, setSelectedKeys] = React.useState<string[]>([]);
 
   return (
     <TableNextUI
