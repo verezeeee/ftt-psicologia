@@ -1,6 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { User } from "../../utils/types";
-
+import { useMediaQuery } from "../../utils/useMediaQuery";
 export default function Pacientes({
   user,
   activeTab,
@@ -8,10 +8,12 @@ export default function Pacientes({
   user: User;
   activeTab?: string;
 }) {
+  const { mobile, tablet, desktop } = useMediaQuery();
+
   return (
     <Flex
       style={{
-        marginLeft: 300,
+        marginLeft: mobile ? 0 : 300,
         marginTop: 70,
         padding: 20,
         height: 2000,

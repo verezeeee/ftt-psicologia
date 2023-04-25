@@ -1,8 +1,8 @@
 import React from "react";
 
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery as rrUseMediaQuery } from "react-responsive";
 
-export default function MediaQuery(): {
+export function useMediaQuery(): {
   mobile: boolean;
   tablet: boolean;
   desktop: boolean;
@@ -11,11 +11,11 @@ export default function MediaQuery(): {
   const [tablet, setTablet] = React.useState<boolean>(false);
   const [desktop, setDesktop] = React.useState<boolean>(false);
 
-  const a = useMediaQuery({ query: "(min-width: 1224px)" });
-  const b = useMediaQuery({
+  const a = rrUseMediaQuery({ query: "(min-width: 1224px)" });
+  const b = rrUseMediaQuery({
     query: "(min-width: 1000px) and (max-width: 1224px)",
   });
-  const c = useMediaQuery({ query: "(max-width: 1000px)" });
+  const c = rrUseMediaQuery({ query: "(max-width: 1000px)" });
 
   React.useEffect(() => {
     if (a) {
