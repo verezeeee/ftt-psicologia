@@ -1,7 +1,14 @@
 import { Table as TableNextUI } from "@nextui-org/react";
 import { useMediaQuery } from "../../utils/useMediaQuery";
+import { User } from "../../utils/types";
 
-export default function Table() {
+export default function Table({
+  headers,
+  data,
+}: {
+  headers: string[];
+  data: User[];
+}) {
   const { mobile } = useMediaQuery();
 
   return (
@@ -15,54 +22,27 @@ export default function Table() {
       selectionMode="multiple"
     >
       <TableNextUI.Header>
-        <TableNextUI.Column>ID</TableNextUI.Column>
-        <TableNextUI.Column>NOME</TableNextUI.Column>
-        <TableNextUI.Column>CPF</TableNextUI.Column>
-        <TableNextUI.Column>TRATAMENTO</TableNextUI.Column>
+        {headers.map((header) => {
+          return <TableNextUI.Column>{header}</TableNextUI.Column>;
+        })}
       </TableNextUI.Header>
       <TableNextUI.Body>
-        <TableNextUI.Row key="1">
-          <TableNextUI.Cell>1</TableNextUI.Cell>
-          <TableNextUI.Cell>Tony Reichert</TableNextUI.Cell>
-          <TableNextUI.Cell>371.273.384-83</TableNextUI.Cell>
-          <TableNextUI.Cell>TDAH</TableNextUI.Cell>
-        </TableNextUI.Row>
-        <TableNextUI.Row key="2">
-          <TableNextUI.Cell>2</TableNextUI.Cell>
-          <TableNextUI.Cell>Tony Reichert</TableNextUI.Cell>
-          <TableNextUI.Cell>371.273.384-83</TableNextUI.Cell>
-          <TableNextUI.Cell>TDAH</TableNextUI.Cell>
-        </TableNextUI.Row>
-        <TableNextUI.Row key="3">
-          <TableNextUI.Cell>3</TableNextUI.Cell>
-          <TableNextUI.Cell>Tony Reichert</TableNextUI.Cell>
-          <TableNextUI.Cell>371.273.384-83</TableNextUI.Cell>
-          <TableNextUI.Cell>TDAH</TableNextUI.Cell>
-        </TableNextUI.Row>
-        <TableNextUI.Row key="4">
-          <TableNextUI.Cell>4</TableNextUI.Cell>
-          <TableNextUI.Cell>Tony Reichert</TableNextUI.Cell>
-          <TableNextUI.Cell>371.273.384-83</TableNextUI.Cell>
-          <TableNextUI.Cell>TDAH</TableNextUI.Cell>
-        </TableNextUI.Row>
-        <TableNextUI.Row key="5">
-          <TableNextUI.Cell>5</TableNextUI.Cell>
-          <TableNextUI.Cell>Tony Reichert</TableNextUI.Cell>
-          <TableNextUI.Cell>371.273.384-83</TableNextUI.Cell>
-          <TableNextUI.Cell>TDAH</TableNextUI.Cell>
-        </TableNextUI.Row>
-        <TableNextUI.Row key="6">
-          <TableNextUI.Cell>6</TableNextUI.Cell>
-          <TableNextUI.Cell>Tony Reichert</TableNextUI.Cell>
-          <TableNextUI.Cell>371.273.384-83</TableNextUI.Cell>
-          <TableNextUI.Cell>TDAH</TableNextUI.Cell>
-        </TableNextUI.Row>
+        {data.map((data, i) => {
+          return (
+            <TableNextUI.Row key={i}>
+              <TableNextUI.Cell>{data.id}</TableNextUI.Cell>
+              <TableNextUI.Cell>{data.nome}</TableNextUI.Cell>
+              <TableNextUI.Cell>{data.cpf}</TableNextUI.Cell>
+              <TableNextUI.Cell>TDAH</TableNextUI.Cell>
+            </TableNextUI.Row>
+          );
+        })}
       </TableNextUI.Body>
       <TableNextUI.Pagination
         shadow
         noMargin
         align="center"
-        rowsPerPage={3}
+        rowsPerPage={10}
         onPageChange={(page) => console.log({ page })}
       />
     </TableNextUI>

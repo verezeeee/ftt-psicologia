@@ -1,4 +1,4 @@
-import Pacientes from "./Pacientes";
+import Pacientes from "./Secretarios";
 import Alunos from "./Alunos";
 import Professores from "./Professores";
 

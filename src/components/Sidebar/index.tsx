@@ -21,7 +21,7 @@ export default function Sidebar({
       w={300}
       bottom={0}
       borderTopRightRadius={20}
-      h="99vh"
+      h="97vh"
       position="fixed"
       p="4"
       bg="#E9E9E9"
@@ -34,7 +34,7 @@ export default function Sidebar({
             user={user}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
-            href="Pacientes"
+            href="Secretários"
             icon={IoMdPerson}
           />
           <Item

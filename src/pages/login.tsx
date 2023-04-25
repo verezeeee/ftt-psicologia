@@ -32,6 +32,7 @@ export default function Login() {
         duration: 500,
       });
       router.push("/");
+      window.scrollTo(0, 0);
     }
   };
 

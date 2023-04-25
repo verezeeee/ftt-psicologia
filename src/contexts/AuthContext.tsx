@@ -41,9 +41,10 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
   // Lógica de autenticação
   async function signIn({ email, password }: ISignInRequest) {
     setUser({
+      id: "0",
       email: email,
       nome: "Ricardo",
-      role: "admin",
+      role: "admin"
     });
     return {
       user: {
