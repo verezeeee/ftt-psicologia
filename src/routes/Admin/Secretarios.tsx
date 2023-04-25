@@ -22,7 +22,7 @@ export default function Pacientes({
         marginLeft: mobile ? 0 : 300,
         marginTop: 80,
         padding: 20,
-        width: "calc(100vw - 320px)",
+        width: mobile ? "100%" : "calc(100vw - 320px)",
         backgroundColor: "#FFF",
         display: "flex",
         flexDirection: "column",
@@ -31,9 +31,26 @@ export default function Pacientes({
       <Text color="#333" fontSize="2rem" mr="4">
         Secretários
       </Text>
-      <Flex mt="4" align="center" w="100%" justify="space-between" pr="4">
-        <Button icon={IoMdPersonAdd} px={6} mt={0.1} onPress={() => {}} label="Novo cadastro" />
-        <Flex align="center">
+      {mobile && (
+        <Button
+          icon={IoMdPersonAdd}
+          px={6}
+          mt={2}
+          onPress={() => {}}
+          label="Novo cadastro"
+        />
+      )}
+      <Flex mt="4" align="center" w="100%" justify="space-between">
+        {!mobile && (
+          <Button
+            icon={IoMdPersonAdd}
+            px={6}
+            mt={0.1}
+            onPress={() => {}}
+            label="Novo cadastro"
+          />
+        )}
+        <Flex align="center" w={mobile ? "100%" : "auto"}>
           <Search />
           <Flex w={4} />
           <Filter />

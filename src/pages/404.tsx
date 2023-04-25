@@ -8,12 +8,21 @@ export default function NotFound() {
   const toast = useToast();
 
   return (
-    <Flex flexDir="column" align="center" justify="center" h="100vh" w="100%">
-      <Text color="#C760EB" fontSize="18rem" fontWeight={700}>
+    <Flex
+      flexDir="column"
+      maxH="90vh"
+      overflow="hidden"
+      align="center"
+      justify="center"
+      h="100vh"
+      w="100%"
+      px="8"
+    >
+      <Text color="#C760EB" fontSize="8rem" fontWeight={700}>
         404
       </Text>
 
-      <Flex flexDir="column">
+      <Flex flexDir="column" mt={-10}>
         <Text
           color="#C760EB"
           textAlign="center"
