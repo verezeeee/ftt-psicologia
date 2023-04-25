@@ -6,17 +6,21 @@ import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import { Pacientes, Alunos, Professores } from "./screens";
 
+import { useMediaQuery } from "../../utils/useMediaQuery";
+
 function Dashboard() {
   const { user } = useAuth();
+
+  const { mobile, tablet, desktop } = useMediaQuery();
 
   const [activeTab, setActiveTab] = React.useState("Pacientes");
 
   return (
     <Flex flexDir="row">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      {!mobile && <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />}
 
       <Flex flexDir="column">
-        <Header />
+        <Header activeTab={activeTab} setActiveTab={setActiveTab} />
 
         {activeTab === "Pacientes" && (
           <Pacientes user={user} activeTab={activeTab} />
