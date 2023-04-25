@@ -15,7 +15,7 @@ export default function Professores({
     <Flex
       style={{
         marginLeft: mobile ? 0 : 300,
-        marginTop: 70,
+        marginTop: 80,
         padding: 20,
         height: 2000,
         width: "100%",

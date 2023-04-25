@@ -23,6 +23,7 @@ import {
 } from "react-icons/io";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "../../utils/useMediaQuery";
+import Button from "../Button";
 
 export default function Drawer({
   sidebarOpened,
@@ -35,7 +36,7 @@ export default function Drawer({
   activeTab: string;
   setActiveTab: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
 
   const { mobile } = useMediaQuery();
 
@@ -96,9 +97,12 @@ export default function Drawer({
                 icon={IoMdPerson}
               />
             </Flex>
-            <Text color="purple" mb="4" w="100%" textAlign="center">
-              Desenvolvido com 💜 pela FTT
-            </Text>
+            <Flex flexDir="column" p="4">
+              <Button label="Sair da sua conta" onPress={signOut} />
+              <Text color="purple" w="100%" textAlign="center">
+                Desenvolvido com 💜 pela FTT
+              </Text>
+            </Flex>
           </Flex>
         )}
       </DrawerContent>

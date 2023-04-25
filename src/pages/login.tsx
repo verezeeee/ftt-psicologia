@@ -1,4 +1,4 @@
-import { Flex, Input, Spacer, Text, useToast } from "@chakra-ui/react";
+import { Flex, Image, Input, Spacer, Text, useToast } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/router";
@@ -29,7 +29,7 @@ export default function Login() {
         position: "bottom-right",
         status: "success",
         description: "Login realizado com sucesso",
-        duration: 500
+        duration: 500,
       });
       router.push("/");
     }
@@ -52,12 +52,16 @@ export default function Login() {
         borderRadius="10"
         p="8"
       >
-        <Text color="#333" textAlign="center" fontSize="2rem" fontWeight={600}>
-          psicare
-        </Text>{" "}
-        <Text color="#333" textAlign="center" fontSize="1rem">
-          Faça login em sua conta
-        </Text>
+        <Image
+          mb={-6}
+          alt="psicare"
+          mx="auto"
+          src="/logo.png"
+          style={{
+            width: 200,
+            height: "auto",
+          }}
+        />
         <form>
           <Flex mt="10" flexDir="column">
             <Input
