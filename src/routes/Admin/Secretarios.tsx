@@ -5,6 +5,7 @@ import Table from "../../components/Tables";
 import Search from "../../components/Search";
 import Filter from "../../components/Filter";
 import Button from "../../components/Button";
+import { IoMdPersonAdd } from "react-icons/io";
 export default function Pacientes({
   user,
   activeTab,
@@ -30,10 +31,11 @@ export default function Pacientes({
       <Text color="#333" fontSize="2rem" mr="4">
         Secretários
       </Text>
-      <Flex align="center" w="100%" justify="space-between">
-        <Button onPress={() => {}} label="Novo cadastro" />
+      <Flex mt="4" align="center" w="100%" justify="space-between" pr="4">
+        <Button icon={IoMdPersonAdd} px={6} mt={0.1} onPress={() => {}} label="Novo cadastro" />
         <Flex align="center">
           <Search />
+          <Flex w={4} />
           <Filter />
         </Flex>
       </Flex>
