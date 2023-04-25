@@ -19,7 +19,9 @@ export default function Sidebar({
       zIndex={3}
       flexDir="column"
       w={300}
-      h="100vh"
+      bottom={0}
+      borderTopRightRadius={20}
+      h="99vh"
       position="fixed"
       p="4"
       bg="#E9E9E9"

@@ -8,6 +8,7 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Image,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Button from "../Button";
@@ -37,18 +38,24 @@ export default function Header({
       left={mobile ? 0 : 300}
       style={{
         width: mobile ? "100%" : "calc(100vw - 300px)",
-        height: 70,
+        height: 90,
       }}
       align="center"
       position="fixed"
       bg="#FFF"
-      // boxShadow="rgba(0, 0, 0, 0.1) 0px 2px 2px"
-      borderBottom="1px solid #EEE"
+      boxShadow="rgba(0, 0, 0, 0.1) 0px 2px 2px"
     >
       <Flex align="center">
-        <Text color="#333" fontSize="1.4rem">
-          Psicare
-        </Text>
+        <Image
+          mb={-4}
+          alt="psicare"
+          mx="auto"
+          src="/logo-h.png"
+          style={{
+            width: 180,
+            height: "auto",
+          }}
+        />
       </Flex>
       {!mobile && <Button mt={0.1} px={6} label="Sair" onPress={signOut} />}
       {mobile && (
