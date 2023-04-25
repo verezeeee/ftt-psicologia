@@ -98,7 +98,7 @@ export default function Drawer({
               />
             </Flex>
             <Flex flexDir="column" p="4">
-              <Button label="Sair da sua conta" onPress={signOut} />
+              <Button mb={4} bg="transparent" label="Sair da sua conta" onPress={signOut} />
               <Text color="purple" w="100%" textAlign="center">
                 Desenvolvido com 💜 pela FTT
               </Text>
