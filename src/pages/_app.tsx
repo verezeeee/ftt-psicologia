@@ -1,5 +1,6 @@
 // Description: This file is used to wrap all the pages with the ChakraProvider and AuthContextProvider
 import { ChakraProvider } from "@chakra-ui/react";
+import { NextUIProvider } from "@nextui-org/react";
 
 // Types
 import type { AppProps } from "next/app";
@@ -11,7 +12,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <AuthContextProvider>
       <ChakraProvider>
-        <Component {...pageProps} />
+        <NextUIProvider>
+          <Component {...pageProps} />
+        </NextUIProvider>
       </ChakraProvider>
     </AuthContextProvider>
   );

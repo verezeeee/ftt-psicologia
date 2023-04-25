@@ -1,6 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { User } from "../../utils/types";
 import { useMediaQuery } from "../../utils/useMediaQuery";
+import Table from "../../components/Tables";
 export default function Pacientes({
   user,
   activeTab,
@@ -26,6 +27,9 @@ export default function Pacientes({
       <Text color="#333" fontSize="2rem">
         Pacientes
       </Text>
+      <Flex mt="4" w="100%">
+        <Table />
+      </Flex>
     </Flex>
   );
 }
