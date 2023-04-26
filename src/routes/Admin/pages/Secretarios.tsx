@@ -1,13 +1,14 @@
 import { Flex, Text } from "@chakra-ui/react";
-import { User } from "../../utils/types";
-import { useMediaQuery } from "../../utils/useMediaQuery";
-import Table from "../../components/Tables";
-import Search from "../../components/Search";
-import Filter from "../../components/Filter";
-import Button from "../../components/Button";
+import { User } from "../../../utils/types";
+import { useMediaQuery } from "../../../utils/useMediaQuery";
+import Table from "../../../components/Tables";
+import Search from "../../../components/Search";
+import Filter from "../../../components/Filter";
+import Button from "../../../components/Button";
 import { IoMdPersonAdd } from "react-icons/io";
 import { useEffect, useState } from "react";
-import { removeAcentos } from "../../utils/removeAcentos";
+import { removeAcentos } from "../../../utils/removeAcentos";
+import Cadastrar from "../components/Cadastrar";
 
 export default function Pacientes({
   user,
@@ -17,6 +18,8 @@ export default function Pacientes({
   activeTab?: string;
 }) {
   const { mobile, tablet, desktop } = useMediaQuery();
+
+  const [cadastrarOpened, setCadastrarOpened] = useState<boolean>(false);
 
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [data, setData] = useState<User[]>([
@@ -345,7 +348,9 @@ export default function Pacientes({
           icon={IoMdPersonAdd}
           px={6}
           mt={2}
-          onPress={() => {}}
+          onPress={() => {
+            setCadastrarOpened(true);
+          }}
           label="Novo cadastro"
         />
       )}
@@ -355,7 +360,9 @@ export default function Pacientes({
             icon={IoMdPersonAdd}
             px={6}
             mt={0.1}
-            onPress={() => {}}
+            onPress={() => {
+              setCadastrarOpened(true);
+            }}
             label="Novo cadastro"
           />
         )}
@@ -371,6 +378,10 @@ export default function Pacientes({
           data={result ? result : data}
         />
       </Flex>
+      <Cadastrar
+        cadastrarOpened={cadastrarOpened}
+        setCadastrarOpened={setCadastrarOpened}
+      />
     </Flex>
   );
 }

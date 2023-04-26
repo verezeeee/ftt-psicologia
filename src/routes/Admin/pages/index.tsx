@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 
 import { Flex, Text } from "@chakra-ui/react";
-import { useAuth, withAuth } from "../../contexts/AuthContext";
-import Sidebar from "../../components/Sidebar";
-import Header from "../../components/Header";
+import { useAuth, withAuth } from "../../../contexts/AuthContext";
+import Sidebar from "../../../components/Sidebar";
+import Header from "../../../components/Header";
 import { Secretarios, Alunos, Professores } from "./screens";
 
-import { useMediaQuery } from "../../utils/useMediaQuery";
-import Table from "../../components/Tables";
+import { useMediaQuery } from "../../../utils/useMediaQuery";
+import Table from "../../../components/Tables";
 import Head from "next/head";
 
 function Dashboard() {

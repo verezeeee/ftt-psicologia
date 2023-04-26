@@ -1,8 +1,8 @@
 import { Flex, Text } from "@chakra-ui/react";
-import { User } from "../../utils/types";
-import { useMediaQuery } from "../../utils/useMediaQuery";
+import { User } from "../../../utils/types";
+import { useMediaQuery } from "../../../utils/useMediaQuery";
 
-export default function Professores({
+export default function Alunos({
   user,
   activeTab,
 }: {
@@ -25,7 +25,7 @@ export default function Professores({
       }}
     >
       <Text color="#333" fontSize="2rem">
-        Professores
+        Alunos
       </Text>
     </Flex>
   );
