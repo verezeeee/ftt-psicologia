@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Flex,
@@ -22,9 +22,17 @@ export default function Cadastrar({
   cadastrarOpened: boolean;
   setCadastrarOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const [entidadeHover, setEntidadeHover] = useState<string>();
+
+  const [etapa, setEtapa] = useState<"">();
+
   function Entidade({ iconImage, hoverImage, entidade }) {
     return (
       <Flex
+        onMouseOver={() => {
+          setEntidadeHover(entidade);
+        }}
+        onMouseLeave={() => setEntidadeHover("")}
         cursor="pointer"
         flexDir="column"
         align="center"
@@ -41,17 +49,19 @@ export default function Cadastrar({
           height: 150,
           width: 150,
         }}
-        color="#C760EB"
+        color="#868686"
       >
         <Image
           alt={`Cadastrar ${entidade}`}
-          src={iconImage}
+          src={entidadeHover === entidade ? hoverImage : iconImage}
           style={{
-            height: 65,
-            width: 65,
+            height: 75,
+            width: 75,
           }}
         />
-        <Text>{entidade}</Text>
+        <Text mt="2" fontSize="1.2rem" fontWeight={600}>
+          {entidade}
+        </Text>
       </Flex>
     );
   }
@@ -78,21 +88,21 @@ export default function Cadastrar({
                 filled
               />
             </Flex>
-            <Flex mt="4" align="center" justify="space-between">
+            <Flex mt="6" align="center" justify="space-between">
               <Entidade
                 entidade="Professor"
-                iconImage="/logo-icon.png"
-                hoverImage="/logo-icon.png"
+                iconImage="/cadastro_professor.png"
+                hoverImage="/cadastro_professor_hover.png"
               />
               <Entidade
                 entidade="Secretário"
-                iconImage="/logo-icon.png"
-                hoverImage="/logo-icon.png"
+                iconImage="/customer-secretario.png"
+                hoverImage="/customer-secretario_hover.png"
               />
               <Entidade
                 entidade="Aluno"
-                iconImage="/logo-icon.png"
-                hoverImage="/logo-icon.png"
+                iconImage="/cadastro_aluno.png"
+                hoverImage="/cadastro_aluno_hover.png"
               />
             </Flex>
           </Flex>
