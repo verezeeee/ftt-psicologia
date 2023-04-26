@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import Button from "../../../../components/Button";
 import Input from "../../../../components/Input";
+import { useMediaQuery } from "../../../../utils/useMediaQuery";
 
 export default function Cadastrar({
   cadastrarOpened,
@@ -24,6 +25,8 @@ export default function Cadastrar({
   cadastrarOpened: boolean;
   setCadastrarOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const { mobile } = useMediaQuery();
+
   const [entidadeHover, setEntidadeHover] = useState<string>();
 
   const [etapa, setEtapa] = useState<
@@ -66,8 +69,9 @@ export default function Cadastrar({
         }}
         style={{
           height: 150,
-          width: 150,
+          width: mobile ? "100%" : 150,
         }}
+        mt={mobile ? 4 : 0}
         color="#868686"
       >
         <Image
@@ -87,18 +91,18 @@ export default function Cadastrar({
 
   return (
     <>
-      <Modal size="xl" isCentered isOpen={cadastrarOpened} onClose={closeModal}>
+      <Modal size={mobile ? "xs" : "xl"} isCentered isOpen={cadastrarOpened} onClose={closeModal}>
         <ModalOverlay />
         <ModalContent borderRadius={8}>
           {etapa === "selecionar" && (
-            <Flex flexDir="column" p="8" pt="6">
+            <Flex flexDir="column" p="6" pt="6">
               <Flex align="center" justify="space-between" w="100%">
-                <Text color="#333" fontSize="2rem" mr="4">
+                <Text color="#333" fontSize={mobile ? "1.5rem" :"2rem"} mr="4">
                   Novo cadastro
                 </Text>
                 <Button label="Voltar" onPress={closeModal} mt={0.1} filled />
               </Flex>
-              <Flex mt="6" align="center" justify="space-between">
+              <Flex flexDir={mobile ? "column" : "row"} mt={mobile ? "2" : "6"} align="center" justify="space-between">
                 <Entidade
                   entidade="Professor"
                   iconImage="/cadastro_professor.png"
@@ -133,15 +137,44 @@ export default function Cadastrar({
                 w="100%"
               >
                 <Input label="Nome completo" value={nome} setValue={setNome} />
-                <Flex w="100%" align="center" justify="space-between">
-                  <Input label="CPF" value={cpf} setValue={setCPF} />
-                  <Flex w={10} />
-                  <Input
-                    label="Telefone"
-                    value={telefone}
-                    setValue={setTelefone}
-                  />
-                </Flex>
+                {mobile ? (
+                  <Flex
+                    w="100%"
+                    flexDir="column"
+                    align="center"
+                    justify="space-between"
+                  >
+                    <Input
+                      label="CPF"
+                      mask="000.000.000-00"
+                      value={cpf}
+                      setValue={setCPF}
+                    />
+                    <Flex w={10} />
+                    <Input
+                      label="Telefone"
+                      mask="(00) 00000-0000"
+                      value={telefone}
+                      setValue={setTelefone}
+                    />
+                  </Flex>
+                ) : (
+                  <Flex w="100%" align="center" justify="space-between">
+                    <Input
+                      label="CPF"
+                      mask="000.000.000-00"
+                      value={cpf}
+                      setValue={setCPF}
+                    />
+                    <Flex w={10} />
+                    <Input
+                      label="Telefone"
+                      mask="(00) 00000-0000"
+                      value={telefone}
+                      setValue={setTelefone}
+                    />
+                  </Flex>
+                )}
                 <Input
                   label="Disciplina"
                   value={disciplina}

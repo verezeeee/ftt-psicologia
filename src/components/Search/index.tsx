@@ -34,7 +34,6 @@ export default function Search({
         autoCapitalize="none"
         autoComplete="off"
         autoCorrect="off"
-        autoFocus
         w="100%"
         _focus={{
           boxShadow: "none !important",

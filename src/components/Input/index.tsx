@@ -1,20 +1,27 @@
 import { Flex, Text, Input as ChakraInput } from "@chakra-ui/react";
 import React from "react";
+import { IMaskInput } from "react-imask";
 
 export default function Input({
   label,
   value,
   setValue,
+  mask,
 }: {
   label: string;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
+  mask?: string;
 }) {
   return (
     <Flex flexDir="column" w="100%" my="1">
-      <Text color="#767474" fontSize="1.2rem">{label}</Text>
+      <Text color="#767474" fontSize="1.2rem">
+        {label}
+      </Text>
       <ChakraInput
-      borderRadius={12}
+        as={IMaskInput}
+        mask={mask}
+        borderRadius={12}
         mt="2"
         w="100%"
         _hover={{
