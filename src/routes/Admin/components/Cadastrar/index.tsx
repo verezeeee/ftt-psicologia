@@ -47,62 +47,107 @@ export default function Cadastrar({
 
   function Entidade({ iconImage, hoverImage, entidade }) {
     return (
-      <Flex
-        onClick={() => {
-          setEtapa(entidade);
-        }}
-        onMouseOver={() => {
-          setEntidadeHover(entidade);
-        }}
-        onMouseLeave={() => setEntidadeHover("")}
-        cursor="pointer"
-        flexDir="column"
-        align="center"
-        justify="center"
-        p="4"
-        borderRadius={5}
-        border="2px solid #C760EB"
-        _hover={{
-          backgroundColor: "#C760EB",
-          color: "#FFF",
-          transition: "0.4s",
-        }}
-        style={{
-          height: 150,
-          width: mobile ? "100%" : 150,
-        }}
-        mt={mobile ? 4 : 0}
-        color="#868686"
-      >
-        <Image
-          alt={`Cadastrar ${entidade}`}
-          src={entidadeHover === entidade ? hoverImage : iconImage}
-          style={{
-            height: 75,
-            width: 75,
-          }}
-        />
-        <Text mt="2" fontSize="1.2rem" fontWeight={600}>
-          {entidade}
-        </Text>
-      </Flex>
+      <>
+        {mobile ? (
+          <Flex
+            onClick={() => {
+              setEtapa(entidade);
+            }}
+            cursor="pointer"
+            flexDir="column"
+            align="center"
+            justify="center"
+            p="4"
+            borderRadius={5}
+            border="2px solid #C760EB"
+            style={{
+              height: 150,
+              width: mobile ? "100%" : 150,
+            }}
+            mt={mobile ? 4 : 0}
+            color="#868686"
+          >
+            <Image
+              alt={`Cadastrar ${entidade}`}
+              src={hoverImage}
+              style={{
+                height: 75,
+                width: 75,
+              }}
+            />
+            <Text mt="2" fontSize="1.2rem" fontWeight={600}>
+              {entidade}
+            </Text>
+          </Flex>
+        ) : (
+          <Flex
+            onClick={() => {
+              setEtapa(entidade);
+            }}
+            onMouseOver={() => {
+              setEntidadeHover(entidade);
+            }}
+            onMouseLeave={() => setEntidadeHover("")}
+            cursor="pointer"
+            flexDir="column"
+            align="center"
+            justify="center"
+            p="4"
+            borderRadius={5}
+            border="2px solid #C760EB"
+            _hover={{
+              backgroundColor: "#C760EB",
+              color: "#FFF",
+              transition: "0.4s",
+            }}
+            style={{
+              height: 150,
+              width: mobile ? "100%" : 150,
+            }}
+            mt={mobile ? 4 : 0}
+            color="#868686"
+          >
+            <Image
+              alt={`Cadastrar ${entidade}`}
+              src={entidadeHover === entidade ? hoverImage : iconImage}
+              style={{
+                height: 75,
+                width: 75,
+              }}
+            />
+            <Text mt="2" fontSize="1.2rem" fontWeight={600}>
+              {entidade}
+            </Text>
+          </Flex>
+        )}
+      </>
     );
   }
 
   return (
     <>
-      <Modal size={mobile ? "xs" : "xl"} isCentered isOpen={cadastrarOpened} onClose={closeModal}>
+      <Modal
+        size={mobile ? "xs" : "xl"}
+        isCentered
+        isOpen={cadastrarOpened}
+        onClose={closeModal}
+      >
         <ModalOverlay />
         <ModalContent borderRadius={8}>
           {etapa === "selecionar" && (
             <Flex flexDir="column" p="6" pt="6">
               <Flex align="center" justify="space-between" w="100%">
-                <Text color="#333" fontSize={mobile ? "1.5rem" :"2rem"} mr="4">
+                <Text color="#333" fontSize={mobile ? "1.5rem" : "2rem"} mr="4">
                   Novo cadastro
                 </Text>
                 <Button label="Voltar" onPress={closeModal} mt={0.1} filled />
               </Flex>
-              <Flex flexDir={mobile ? "column" : "row"} mt={mobile ? "2" : "6"} align="center" justify="space-between">
+              <Flex
+                flexDir={mobile ? "column" : "row"}
+                mt={mobile ? "2" : "6"}
+                align="center"
+                justify="space-between"
+              >
                 <Entidade
                   entidade="Professor"
                   iconImage="/cadastro_professor.png"
