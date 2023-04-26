@@ -23,8 +23,9 @@ export default function Button({
 }) {
   return (
     <ChakraButton
+    borderRadius={5}
       bg={bg ? bg : filled ? "#C760EB" : "#FFF"}
-      border="2px solid #D5B8FF"
+      border="2px solid #C760EB"
       _hover={{
         backgroundColor: "#C760EB",
         opacity: 0.9,

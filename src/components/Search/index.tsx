@@ -20,12 +20,13 @@ export default function Search({
       }}
       w={mobile ? "100%" : 400}
       px="4"
-      border="2px solid #D5B8FF"
+      border="2px solid #C760EB"
       align="center"
       borderRadius="10"
     >
-      <Icon as={BiSearch} color="#710198" fontSize="1rem" />
+      <Icon as={BiSearch} color="#C760EB" fontSize="1rem" />
       <Input
+        borderRadius={12}
         value={searchTerm}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setSearchTerm(e.target.value);

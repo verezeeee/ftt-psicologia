@@ -12,8 +12,10 @@ import {
   ModalCloseButton,
   useDisclosure,
   Image,
+  Divider,
 } from "@chakra-ui/react";
 import Button from "../../../../components/Button";
+import Input from "../../../../components/Input";
 
 export default function Cadastrar({
   cadastrarOpened,
@@ -24,11 +26,28 @@ export default function Cadastrar({
 }) {
   const [entidadeHover, setEntidadeHover] = useState<string>();
 
-  const [etapa, setEtapa] = useState<"">();
+  const [etapa, setEtapa] = useState<
+    "selecionar" | "Professor" | "Secretário" | "Aluno"
+  >("selecionar");
+
+  const [nome, setNome] = useState<string>("");
+  const [cpf, setCPF] = useState<string>("");
+  const [telefone, setTelefone] = useState<string>("");
+  const [disciplina, setDisciplina] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+
+  function closeModal() {
+    setEtapa("selecionar");
+    setEntidadeHover("");
+    setCadastrarOpened(false);
+  }
 
   function Entidade({ iconImage, hoverImage, entidade }) {
     return (
       <Flex
+        onClick={() => {
+          setEtapa(entidade);
+        }}
         onMouseOver={() => {
           setEntidadeHover(entidade);
         }}
@@ -68,44 +87,83 @@ export default function Cadastrar({
 
   return (
     <>
-      <Modal
-        size="xl"
-        isCentered
-        isOpen={cadastrarOpened}
-        onClose={() => setCadastrarOpened(false)}
-      >
+      <Modal size="xl" isCentered isOpen={cadastrarOpened} onClose={closeModal}>
         <ModalOverlay />
-        <ModalContent>
-          <Flex flexDir="column" p="8" pt="6">
-            <Flex align="center" justify="space-between" w="100%">
-              <Text color="#333" fontSize="2rem" mr="4">
-                Novo cadastro
-              </Text>
-              <Button
-                label="Voltar"
-                onPress={() => setCadastrarOpened(false)}
-                mt={0.1}
-                filled
-              />
+        <ModalContent borderRadius={8}>
+          {etapa === "selecionar" && (
+            <Flex flexDir="column" p="8" pt="6">
+              <Flex align="center" justify="space-between" w="100%">
+                <Text color="#333" fontSize="2rem" mr="4">
+                  Novo cadastro
+                </Text>
+                <Button label="Voltar" onPress={closeModal} mt={0.1} filled />
+              </Flex>
+              <Flex mt="6" align="center" justify="space-between">
+                <Entidade
+                  entidade="Professor"
+                  iconImage="/cadastro_professor.png"
+                  hoverImage="/cadastro_professor_hover.png"
+                />
+                <Entidade
+                  entidade="Secretário"
+                  iconImage="/customer-secretario.png"
+                  hoverImage="/customer-secretario_hover.png"
+                />
+                <Entidade
+                  entidade="Aluno"
+                  iconImage="/cadastro_aluno.png"
+                  hoverImage="/cadastro_aluno_hover.png"
+                />
+              </Flex>
             </Flex>
-            <Flex mt="6" align="center" justify="space-between">
-              <Entidade
-                entidade="Professor"
-                iconImage="/cadastro_professor.png"
-                hoverImage="/cadastro_professor_hover.png"
-              />
-              <Entidade
-                entidade="Secretário"
-                iconImage="/customer-secretario.png"
-                hoverImage="/customer-secretario_hover.png"
-              />
-              <Entidade
-                entidade="Aluno"
-                iconImage="/cadastro_aluno.png"
-                hoverImage="/cadastro_aluno_hover.png"
-              />
+          )}
+          {etapa === "Professor" && (
+            <Flex flexDir="column" p="8" pt="6">
+              <Flex align="center" justify="space-between" w="100%">
+                <Text color="#787878" fontSize="1.8rem">
+                  Cadastro de professor
+                </Text>
+              </Flex>
+              <Divider mt="2" />
+              <Flex
+                flexDir="column"
+                py="4"
+                align="center"
+                justify="space-between"
+                w="100%"
+              >
+                <Input label="Nome completo" value={nome} setValue={setNome} />
+                <Flex w="100%" align="center" justify="space-between">
+                  <Input label="CPF" value={cpf} setValue={setCPF} />
+                  <Flex w={10} />
+                  <Input
+                    label="Telefone"
+                    value={telefone}
+                    setValue={setTelefone}
+                  />
+                </Flex>
+                <Input
+                  label="Disciplina"
+                  value={disciplina}
+                  setValue={setDisciplina}
+                />
+                <Input label="E-mail" value={email} setValue={setEmail} />
+              </Flex>
+              <Flex align="center" mt="4" justify="space-between" w="100%">
+                <Button
+                  label="Cancelar"
+                  onPress={() => setEtapa("selecionar")}
+                  mt={0.1}
+                />
+                <Button
+                  label="Cadastrar"
+                  onPress={closeModal}
+                  mt={0.1}
+                  filled
+                />
+              </Flex>
             </Flex>
-          </Flex>
+          )}
         </ModalContent>
       </Modal>
     </>
