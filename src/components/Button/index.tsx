@@ -10,6 +10,7 @@ export default function Button({
   mb,
   bg,
   icon,
+  filled,
 }: {
   onPress: () => void;
   label: string;
@@ -18,14 +19,15 @@ export default function Button({
   mb?: number;
   bg?: string;
   icon?: IconType;
+  filled?: boolean;
 }) {
   return (
     <ChakraButton
-      bg={bg ? bg : "#FFF"}
+      bg={bg ? bg : filled ? "#C760EB" : "#FFF"}
       border="2px solid #D5B8FF"
       _hover={{
         backgroundColor: "#C760EB",
-        opacity: 0.8,
+        opacity: 0.9,
         color: "#FFF",
         transition: "0.3s",
       }}
@@ -33,7 +35,7 @@ export default function Button({
       mt={mt ? mt : "6"}
       mb={mb ? mb : "0"}
       onClick={onPress}
-      color="#C760EB"
+      color={filled ? "#FFF" : "#C760EB"}
     >
       {icon && <Icon as={icon} fontSize="1.2rem" mr="4" />}
       <Text fontWeight={500}>{label}</Text>

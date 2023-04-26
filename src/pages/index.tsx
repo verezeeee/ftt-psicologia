@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth, withAuth } from "../contexts/AuthContext";
-import Admin from "../routes/Admin";
+import Admin from "../routes/Admin/pages";
 import { Flex, Text } from "@chakra-ui/react";
 
 function Index() {
