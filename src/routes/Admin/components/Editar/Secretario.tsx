@@ -93,8 +93,8 @@ export default function EditarSecretario({
         />
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
-        <Button label="Cancelar" onPress={() => {}} mt={0.1} />
-        <Button label="Cadastrar" onPress={closeModal} mt={0.1} filled />
+        <Button label="Cancelar" onPress={closeModal} mt={0.1} />
+        <Button label="Salvar" onPress={closeModal} mt={0.1} filled />
       </Flex>
     </Flex>
   );
