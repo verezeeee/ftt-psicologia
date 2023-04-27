@@ -17,6 +17,7 @@ export default function Table({
 
   return (
     <TableNextUI
+      color="secondary"
       bordered={false}
       shadow={false}
       css={{
