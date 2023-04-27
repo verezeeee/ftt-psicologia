@@ -3,25 +3,30 @@ import { useMediaQuery } from "../../utils/useMediaQuery";
 import { User } from "../../utils/types";
 import { formatarCPF } from "../../utils/formatarCPF";
 import React from "react";
+import { Icon } from "@chakra-ui/react";
+import { BiEdit, BiEditAlt } from "react-icons/bi";
+import { FiEdit, FiEdit2, FiTrash2 } from "react-icons/fi";
 
 export default function Table({
   headers,
   data,
+  isEditing,
+  setIsEditing,
 }: {
   headers: string[];
   data: User[];
+  isEditing: any;
+  setIsEditing: any;
 }) {
   const { mobile } = useMediaQuery();
-
-  const [selectedKeys, setSelectedKeys] = React.useState<string[]>([]);
 
   return (
     <TableNextUI
       color="secondary"
-      bordered={false}
       shadow={false}
       css={{
         width: mobile ? "calc(100vw - 40px)" : "calc(100vw - 350px)",
+        paddingRight: mobile ? 10 : 30,
       }}
     >
       <TableNextUI.Header>
@@ -38,7 +43,16 @@ export default function Table({
               <TableNextUI.Cell>
                 {formatarCPF(String(data.cpf))}
               </TableNextUI.Cell>
-              <TableNextUI.Cell>TDAH</TableNextUI.Cell>
+              <TableNextUI.Cell>{data.turno}</TableNextUI.Cell>
+              <TableNextUI.Cell>
+                <Icon
+                  cursor="pointer"
+                  onClick={() => setIsEditing(data)}
+                  as={FiEdit2}
+                  color="#C760EB"
+                />
+                <Icon cursor="pointer" ml="4" as={FiTrash2} color="#C760EB" />
+              </TableNextUI.Cell>
             </TableNextUI.Row>
           );
         })}
