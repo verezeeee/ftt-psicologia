@@ -101,6 +101,19 @@ export default function CadastrarAluno({
           </Flex>
         )}
         <Input label="E-mail" value={email} setValue={setEmail} />
+        <Select
+          label="Professor"
+          options={[
+            "Professor 1",
+            "Professor 2",
+            "Professor 3",
+            "Professor 4",
+            "Professor 5",
+            "Professor 6",
+          ]}
+          value={periodo}
+          setValue={setPeriodo}
+        />
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
         <Button
