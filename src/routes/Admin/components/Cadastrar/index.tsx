@@ -19,6 +19,7 @@ import Input from "../../../../components/Input";
 import { useMediaQuery } from "../../../../utils/useMediaQuery";
 import CadastrarProfessor from "./Professor";
 import CadastrarSecretario from "./Secretario";
+import CadastrarAluno from "./Aluno";
 
 export default function Cadastrar({
   cadastrarOpened,
@@ -41,6 +42,8 @@ export default function Cadastrar({
   const [disciplina, setDisciplina] = useState<string>("");
   const [turno, setTurno] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [matricula, setMatricula] = useState<string>("");
+  const [periodo, setPeriodo] = useState<string>("");
 
   function closeModal() {
     setEtapa("selecionar");
@@ -204,6 +207,25 @@ export default function Cadastrar({
               setTelefone={setTelefone}
               turno={turno}
               setTurno={setTurno}
+              email={email}
+              setEmail={setEmail}
+              setEtapa={setEtapa}
+            />
+          )}
+          {etapa === "Aluno" && (
+            <CadastrarAluno
+              mobile={mobile}
+              closeModal={closeModal}
+              nome={nome}
+              setNome={setNome}
+              cpf={cpf}
+              setCPF={setCPF}
+              telefone={telefone}
+              setTelefone={setTelefone}
+              matricula={matricula}
+              setMatricula={setMatricula}
+              periodo={periodo}
+              setPeriodo={setPeriodo}
               email={email}
               setEmail={setEmail}
               setEtapa={setEtapa}

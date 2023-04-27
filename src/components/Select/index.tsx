@@ -24,6 +24,7 @@ export default function Select({
         {label}
       </Text>
       <ChakraSelect
+        mt="2"
         value={value}
         onChange={(e) => {
           setValue(e.target.value);
