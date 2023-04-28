@@ -1,9 +1,5 @@
 import { api } from "../../../../services/apiClient";
-import {
-  AlunoSignUpData,
-  ProfessorSignUpData,
-  SecretarioSignUpData
-} from "../../../../utils/types";
+import { Aluno, Professor, Secretario } from "../../../../utils/types";
 
 type CreateResponse = {
   error?: string;
@@ -11,7 +7,7 @@ type CreateResponse = {
 };
 
 export async function cadastrarProfessor(
-  req: ProfessorSignUpData
+  req: Professor
 ): Promise<CreateResponse> {
   const res = await api.post("/auth/register", req);
   if (res.status !== 200) {
@@ -25,7 +21,7 @@ export async function cadastrarProfessor(
   }
 }
 export async function cadastrarSecretario(
-  req: SecretarioSignUpData
+  req: Secretario
 ): Promise<CreateResponse> {
   const res = await api.post("/auth/register", req);
   if (res.status !== 200) {
@@ -39,7 +35,7 @@ export async function cadastrarSecretario(
   }
 }
 export async function cadastrarAluno(
-  req: AlunoSignUpData
+  req: Aluno
 ): Promise<CreateResponse> {
   const res = await api.post("/auth/register", req);
   if (res.status !== 200) {

@@ -1,9 +1,11 @@
-import { Divider, Flex, Text } from "@chakra-ui/react";
+import { Divider, Flex, Text, useToast } from "@chakra-ui/react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import Select from "../../../../components/Select";
 import { formatarTelefone } from "../../../../utils/formatarTelefone";
 import { formatarCPF } from "../../../../utils/cpf";
+import { validarEmail } from "../../../../utils/email";
+import { atualizarSecretario } from "./services";
 
 export default function EditarSecretario({
   mobile,
@@ -20,6 +22,8 @@ export default function EditarSecretario({
   setEmail,
   editData,
 }) {
+  const toast = useToast();
+
   return (
     <Flex flexDir="column" p="8" pt="6">
       <Flex align="center" justify="space-between" w="100%">
@@ -35,7 +39,12 @@ export default function EditarSecretario({
         justify="space-between"
         w="100%"
       >
-        <Input label="Nome completo" value={nome} setValue={setNome} defaultValue={editData.nome} />
+        <Input
+          label="Nome completo"
+          value={nome}
+          setValue={setNome}
+          defaultValue={editData.nome}
+        />
         {mobile ? (
           <Flex
             w="100%"
@@ -49,6 +58,7 @@ export default function EditarSecretario({
               mask="000.000.000-00"
               value={cpf}
               setValue={setCPF}
+              disabled
             />
             <Flex w={10} />
             <Input
@@ -94,7 +104,40 @@ export default function EditarSecretario({
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
         <Button label="Cancelar" onPress={closeModal} mt={0.1} />
-        <Button label="Salvar" onPress={closeModal} mt={0.1} filled />
+        <Button
+          label="Salvar"
+          onPress={async () => {
+            if (!nome && !telefone && !email && !turno) {
+              toast({
+                status: "error",
+                description: "Preencha os campos",
+                duration: 500,
+              });
+            } else {
+              const res = await atualizarSecretario({
+                nome,
+                cpf,
+                turno,
+              });
+              if (res.error) {
+                toast({
+                  status: "error",
+                  description: res.error,
+                  duration: 500,
+                });
+              } else {
+                toast({
+                  status: "success",
+                  description: "Secretário cadastrado com sucesso",
+                  duration: 500,
+                });
+                closeModal();
+              }
+            }
+          }}
+          mt={0.1}
+          filled
+        />
       </Flex>
     </Flex>
   );
