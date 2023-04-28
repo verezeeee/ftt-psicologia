@@ -149,11 +149,13 @@ export default function Cadastrar({
           {etapa === "selecionar" && (
             <Flex flexDir="column" p="6" pt="6">
               <Flex align="center" justify="space-between" w="100%">
-                <Text color="#333" fontSize={mobile ? "1.5rem" : "2rem"} mr="4">
+                <Text color="#787878" fontSize="1.8rem">
                   Novo cadastro
                 </Text>
                 <Button label="Voltar" onPress={closeModal} mt={0.1} filled />
               </Flex>
+
+              <Divider mt="2" />
               <Flex
                 flexDir={mobile ? "column" : "row"}
                 mt={mobile ? "2" : "6"}

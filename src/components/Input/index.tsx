@@ -7,11 +7,15 @@ export default function Input({
   value,
   setValue,
   mask,
+  defaultValue,
+  disabled,
 }: {
   label: string;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
   mask?: string;
+  defaultValue?: string;
+  disabled?: boolean;
 }) {
   return (
     <Flex flexDir="column" w="100%" my="1">
@@ -19,6 +23,7 @@ export default function Input({
         {label}
       </Text>
       <ChakraInput
+        disabled={disabled}
         as={IMaskInput}
         mask={mask}
         borderRadius={12}
@@ -39,6 +44,7 @@ export default function Input({
           outline: "none !important",
           boxShadow: "none !Important",
         }}
+        placeholder={defaultValue}
         border="2px solid #C760EB"
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
