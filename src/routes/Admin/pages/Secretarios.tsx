@@ -32,12 +32,10 @@ export default function Pacientes({
       role: "secretary",
       matricula: 3214457,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "JoseduarteGarcia@gmail.com",
-      turno: "Matutino",
+      turno: "matutino",
     },
     {
       id: "2",
@@ -47,12 +45,10 @@ export default function Pacientes({
       role: "secretary",
       matricula: 1143367,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "Toninhocarvalho@gmail.com",
-      turno: "Matutino",
+      turno: "matutino",
     },
     {
       id: "3",
@@ -62,12 +58,10 @@ export default function Pacientes({
       role: "secretary",
       matricula: 6919742,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "fernandavivi@gmail.com",
-      turno: "Vespertino",
+      turno: "vespertino",
     },
     {
       id: "4",
@@ -77,12 +71,10 @@ export default function Pacientes({
       telefone: 11999999999,
       matricula: 4679211,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "jucardoso2023@gmail.com",
-      turno: "Vespertino",
+      turno: "vespertino",
     },
     {
       id: "5",
@@ -92,12 +84,10 @@ export default function Pacientes({
       telefone: 11999999999,
       matricula: 9151769,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "MoraesLuiz@hotmail.com",
-      turno: "Noturno",
+      turno: "noturno",
     },
     {
       id: "6",
@@ -107,12 +97,10 @@ export default function Pacientes({
       matricula: 2605591,
       periodoCursado: "2020.1",
       telefone: 11999999999,
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "Teixeirapaty@gmail.com",
-      turno: "Noturno",
+      turno: "noturno",
     },
     {
       id: "7",
@@ -122,12 +110,10 @@ export default function Pacientes({
       telefone: 11999999999,
       matricula: 5447821,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "marciaandrade2020@gmail.com",
-      turno: "Vespertino",
+      turno: "vespertino",
     },
     {
       id: "8",
@@ -137,12 +123,10 @@ export default function Pacientes({
       matricula: 7842146,
       telefone: 11999999999,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "Marcosdias@hotmail.com",
-      turno: "Noturno",
+      turno: "noturno",
     },
     {
       id: "9",
@@ -152,12 +136,10 @@ export default function Pacientes({
       matricula: 6587429,
       periodoCursado: "2020.1",
       telefone: 11999999999,
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "joãomedeirosmoraaes@gmail.com",
-      turno: "Noturno",
+      turno: "noturno",
     },
     {
       id: "10",
@@ -167,12 +149,10 @@ export default function Pacientes({
       matricula: 5874693,
       telefone: 11999999999,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "anasantosbatista@hotmail.com",
-      turno: "Noturno",
+      turno: "noturno",
     },
     {
       id: "11",
@@ -182,12 +162,10 @@ export default function Pacientes({
       matricula: 4517423,
       periodoCursado: "2020.1",
       telefone: 11999999999,
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "LuizBarros1998@gmail.com",
-      turno: "Vespertino",
+      turno: "vespertino",
     },
   ]);
 
@@ -211,11 +189,9 @@ export default function Pacientes({
       const lowerCaseNome = removeAcentos(user.nome.toLowerCase());
       const lowerCaseRole = user.role.toLowerCase();
       const lowerCasePeriodoCursado = user.periodoCursado?.toLowerCase() || "";
-      const lowerCaseDisciplina = user.disciplina?.toLowerCase() || "";
       const lowerCaseDisciplinaMinistrada =
         user.disciplinaMinistrada?.toLowerCase() || "";
       const lowerCaseIdOrientador = user.idOrientador?.toLowerCase() || "";
-      const lowerCaseIdSecretaria = user.idSecretaria?.toLowerCase() || "";
       const lowerCaseEmail = user.email.toLowerCase();
 
       return (
@@ -226,10 +202,8 @@ export default function Pacientes({
         (user.matricula &&
           user.matricula.toString().includes(lowerCaseSearchTerm)) ||
         lowerCasePeriodoCursado.includes(lowerCaseSearchTerm) ||
-        lowerCaseDisciplina.includes(lowerCaseSearchTerm) ||
         lowerCaseDisciplinaMinistrada.includes(lowerCaseSearchTerm) ||
         lowerCaseIdOrientador.includes(lowerCaseSearchTerm) ||
-        lowerCaseIdSecretaria.includes(lowerCaseSearchTerm) ||
         lowerCaseEmail.includes(lowerCaseSearchTerm)
       );
     });

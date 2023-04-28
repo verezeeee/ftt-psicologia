@@ -23,6 +23,7 @@ export default function Login() {
       toast({
         status: "error",
         description: res.error,
+        duration: 500,
       });
     } else {
       toast({

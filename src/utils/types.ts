@@ -2,15 +2,13 @@
 export interface User {
   id: string;
   nome: string;
-  cpf?: number;
+  email: string;
+  cpf: number;
+  telefone?: number;
   role: "admin" | "student" | "secretary" | "professor";
   matricula?: number;
-  telefone?: number;
   periodoCursado?: string;
-  disciplina?: string;
   disciplinaMinistrada?: string;
   idOrientador?: string;
-  idSecretaria?: string;
-  turno?: string;
-  email: string;
+  turno?: "noturno" | "vespertino" | "matutino";
 }

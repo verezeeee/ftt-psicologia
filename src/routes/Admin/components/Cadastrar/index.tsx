@@ -40,10 +40,11 @@ export default function Cadastrar({
   const [cpf, setCPF] = useState<string>("");
   const [telefone, setTelefone] = useState<string>("");
   const [disciplina, setDisciplina] = useState<string>("");
-  const [turno, setTurno] = useState<string>("");
+  const [turno, setTurno] = useState<"noturno" | "matutino" | "vespertino">();
   const [email, setEmail] = useState<string>("");
   const [matricula, setMatricula] = useState<string>("");
   const [periodo, setPeriodo] = useState<string>("");
+  const [professor, setProfessor] = useState<string>("");
 
   function closeModal() {
     setEtapa("selecionar");
@@ -53,8 +54,11 @@ export default function Cadastrar({
     setCPF("");
     setTelefone("");
     setDisciplina("");
-    setTurno("");
     setEmail("");
+    setProfessor("");
+    setMatricula("");
+    setPeriodo(undefined);
+    setTurno(undefined);
   }
 
   function Entidade({ iconImage, hoverImage, entidade }) {
@@ -218,6 +222,8 @@ export default function Cadastrar({
             <CadastrarAluno
               mobile={mobile}
               closeModal={closeModal}
+              professor={professor}
+              setProfessor={setProfessor}
               nome={nome}
               setNome={setNome}
               cpf={cpf}
