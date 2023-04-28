@@ -2,8 +2,8 @@ import { api } from "../../../../services/apiClient";
 import {
   AlunoSignUpData,
   ProfessorSignUpData,
-  SecretarioSignUpData,
-} from "./types";
+  SecretarioSignUpData
+} from "../../../../utils/types";
 
 type CreateResponse = {
   error?: string;
