@@ -10,7 +10,7 @@ export interface User {
   periodoCursado?: string;
   disciplinaMinistrada?: string;
   idOrientador?: string;
-  turno?: "noturno" | "vespertino" | "matutino";
+  turno?: "Noturno" | "Vespertino" | "Matutino";
 }
 
 // Interface de registro de professor
@@ -28,7 +28,7 @@ export type Secretario = {
   nome?: string;
   cpf?: string;
   role?: "secretary";
-  turno?: "noturno" | "vespertino" | "matutino";
+  turno?: "Noturno" | "Vespertino" | "Matutino";
 };
 
 // Interface de registro de aluno

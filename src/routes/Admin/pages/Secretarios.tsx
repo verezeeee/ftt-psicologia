@@ -35,7 +35,7 @@ export default function Pacientes({
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "JoseduarteGarcia@gmail.com",
-      turno: "matutino",
+      turno: "Matutino",
     },
     {
       id: "2",
@@ -48,7 +48,7 @@ export default function Pacientes({
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "Toninhocarvalho@gmail.com",
-      turno: "matutino",
+      turno: "Matutino",
     },
     {
       id: "3",
@@ -61,7 +61,7 @@ export default function Pacientes({
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "fernandavivi@gmail.com",
-      turno: "vespertino",
+      turno: "Vespertino",
     },
     {
       id: "4",
@@ -74,7 +74,7 @@ export default function Pacientes({
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "jucardoso2023@gmail.com",
-      turno: "vespertino",
+      turno: "Vespertino",
     },
     {
       id: "5",
@@ -87,7 +87,7 @@ export default function Pacientes({
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "MoraesLuiz@hotmail.com",
-      turno: "noturno",
+      turno: "Noturno",
     },
     {
       id: "6",
@@ -100,7 +100,7 @@ export default function Pacientes({
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "Teixeirapaty@gmail.com",
-      turno: "noturno",
+      turno: "Noturno",
     },
     {
       id: "7",
@@ -113,7 +113,7 @@ export default function Pacientes({
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "marciaandrade2020@gmail.com",
-      turno: "vespertino",
+      turno: "Vespertino",
     },
     {
       id: "8",
@@ -126,7 +126,7 @@ export default function Pacientes({
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "Marcosdias@hotmail.com",
-      turno: "noturno",
+      turno: "Noturno",
     },
     {
       id: "9",
@@ -139,7 +139,7 @@ export default function Pacientes({
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "joãomedeirosmoraaes@gmail.com",
-      turno: "noturno",
+      turno: "Noturno",
     },
     {
       id: "10",
@@ -152,7 +152,7 @@ export default function Pacientes({
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "anasantosbatista@hotmail.com",
-      turno: "noturno",
+      turno: "Noturno",
     },
     {
       id: "11",
@@ -165,7 +165,7 @@ export default function Pacientes({
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "LuizBarros1998@gmail.com",
-      turno: "vespertino",
+      turno: "Vespertino",
     },
   ]);
 
