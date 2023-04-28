@@ -16,7 +16,7 @@ export type AlunoSignUpData = {
   nome: string;
   cpf: string;
   role: "student";
-  disciplina: string;
   periodoCursado: string;
   idOrientador: string;
+  periodo: number;
 };

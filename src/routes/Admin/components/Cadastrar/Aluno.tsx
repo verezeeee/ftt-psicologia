@@ -1,7 +1,10 @@
-import { Divider, Flex, Text } from "@chakra-ui/react";
+import { Divider, Flex, Text, useToast } from "@chakra-ui/react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import Select from "../../../../components/Select";
+import { validarCPF } from "../../../../utils/cpf";
+import { validarEmail } from "../../../../utils/email";
+import { cadastrarAluno } from "./services";
 
 export default function CadastrarAluno({
   mobile,
@@ -19,7 +22,11 @@ export default function CadastrarAluno({
   email,
   setEmail,
   setEtapa,
+  professor,
+  setProfessor,
 }) {
+  const toast = useToast();
+
   return (
     <Flex flexDir="column" p="8" pt="6">
       <Flex align="center" justify="space-between" w="100%">
@@ -111,17 +118,109 @@ export default function CadastrarAluno({
             "Professor 5",
             "Professor 6",
           ]}
-          value={periodo}
-          setValue={setPeriodo}
+          value={professor}
+          setValue={setProfessor}
         />
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
+        <Button label="Cancelar" onPress={closeModal} mt={0.1} />
         <Button
-          label="Cancelar"
-          onPress={() => setEtapa("selecionar")}
+          label="Cadastrar"
+          onPress={async () => {
+            if (!matricula) {
+              toast({
+                status: "error",
+                description: "Insira a matrícula do aluno",
+                duration: 500,
+              });
+            } else if (!periodo) {
+              toast({
+                status: "error",
+                description: "Insira o período do aluno",
+                duration: 500,
+              });
+            } else if (!nome) {
+              toast({
+                status: "error",
+                description: "Insira o nome do professor",
+                duration: 500,
+              });
+            } else if (!nome.split(" ")[1]) {
+              toast({
+                status: "error",
+                description: "Insira o sobrenome do professor",
+                duration: 500,
+              });
+            } else if (!cpf) {
+              toast({
+                status: "error",
+                description: "Insira o CPF do professor",
+                duration: 500,
+              });
+            } else if (!validarCPF(cpf)) {
+              toast({
+                status: "error",
+                description: "Insira um CPF válido",
+                duration: 500,
+              });
+            } else if (!telefone) {
+              toast({
+                status: "error",
+                description: "Insira o telefone do professor",
+                duration: 500,
+              });
+            } else if (telefone.length !== 15) {
+              toast({
+                status: "error",
+                description: "Insira um telefone válido",
+                duration: 500,
+              });
+            } else if (!email) {
+              toast({
+                status: "error",
+                description: "Insira o e-mail do professor",
+                duration: 500,
+              });
+            } else if (!validarEmail(email)) {
+              toast({
+                status: "error",
+                description: "Insira um e-mail válido",
+                duration: 500,
+              });
+            } else if (!professor) {
+              toast({
+                status: "error",
+                description: "Insira o professor do aluno",
+                duration: 500,
+              });
+            } else {
+              const res = await cadastrarAluno({
+                nome,
+                cpf,
+                periodo,
+                idOrientador: professor,
+                periodoCursado: periodo,
+                role: "student",
+              });
+              if (res.error) {
+                toast({
+                  status: "error",
+                  description: res.error,
+                  duration: 500,
+                });
+              } else {
+                toast({
+                  status: "success",
+                  description: "Secretário cadastrado com sucesso",
+                  duration: 500,
+                });
+                closeModal();
+              }
+            }
+          }}
           mt={0.1}
+          filled
         />
-        <Button label="Cadastrar" onPress={closeModal} mt={0.1} filled />
       </Flex>
     </Flex>
   );

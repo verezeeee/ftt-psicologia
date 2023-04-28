@@ -8,7 +8,6 @@ export interface User {
   role: "admin" | "student" | "secretary" | "professor";
   matricula?: number;
   periodoCursado?: string;
-  disciplina?: string;
   disciplinaMinistrada?: string;
   idOrientador?: string;
   turno?: "noturno" | "vespertino" | "matutino";

@@ -102,46 +102,55 @@ export default function CadastrarProfessor({
               toast({
                 status: "error",
                 description: "Insira o nome do professor",
+                duration: 500,
               });
             } else if (!nome.split(" ")[1]) {
               toast({
                 status: "error",
                 description: "Insira o sobrenome do professor",
+                duration: 500,
               });
             } else if (!cpf) {
               toast({
                 status: "error",
                 description: "Insira o CPF do professor",
+                duration: 500,
               });
             } else if (!validarCPF(cpf)) {
               toast({
                 status: "error",
                 description: "Insira um CPF válido",
+                duration: 500,
               });
             } else if (!telefone) {
               toast({
                 status: "error",
                 description: "Insira o telefone do professor",
+                duration: 500,
               });
             } else if (telefone.length !== 15) {
               toast({
                 status: "error",
                 description: "Insira um telefone válido",
+                duration: 500,
               });
             } else if (!disciplina) {
               toast({
                 status: "error",
                 description: "Insira a disciplina do professor",
+                duration: 500,
               });
             } else if (!email) {
               toast({
                 status: "error",
                 description: "Insira o e-mail do professor",
+                duration: 500,
               });
             } else if (!validarEmail(email)) {
               toast({
                 status: "error",
                 description: "Insira um e-mail válido",
+                duration: 500,
               });
             } else {
               const res = await cadastrarProfessor({
