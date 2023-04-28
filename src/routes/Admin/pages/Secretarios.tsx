@@ -32,7 +32,6 @@ export default function Pacientes({
       role: "secretary",
       matricula: 3214457,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "JoseduarteGarcia@gmail.com",
@@ -46,7 +45,6 @@ export default function Pacientes({
       role: "secretary",
       matricula: 1143367,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "Toninhocarvalho@gmail.com",
@@ -60,7 +58,6 @@ export default function Pacientes({
       role: "secretary",
       matricula: 6919742,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "fernandavivi@gmail.com",
@@ -74,7 +71,6 @@ export default function Pacientes({
       telefone: 11999999999,
       matricula: 4679211,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "jucardoso2023@gmail.com",
@@ -88,7 +84,6 @@ export default function Pacientes({
       telefone: 11999999999,
       matricula: 9151769,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "MoraesLuiz@hotmail.com",
@@ -102,7 +97,6 @@ export default function Pacientes({
       matricula: 2605591,
       periodoCursado: "2020.1",
       telefone: 11999999999,
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "Teixeirapaty@gmail.com",
@@ -116,7 +110,6 @@ export default function Pacientes({
       telefone: 11999999999,
       matricula: 5447821,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "marciaandrade2020@gmail.com",
@@ -130,7 +123,6 @@ export default function Pacientes({
       matricula: 7842146,
       telefone: 11999999999,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "Marcosdias@hotmail.com",
@@ -144,7 +136,6 @@ export default function Pacientes({
       matricula: 6587429,
       periodoCursado: "2020.1",
       telefone: 11999999999,
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "joãomedeirosmoraaes@gmail.com",
@@ -158,7 +149,6 @@ export default function Pacientes({
       matricula: 5874693,
       telefone: 11999999999,
       periodoCursado: "2020.1",
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "anasantosbatista@hotmail.com",
@@ -172,7 +162,6 @@ export default function Pacientes({
       matricula: 4517423,
       periodoCursado: "2020.1",
       telefone: 11999999999,
-      disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
       email: "LuizBarros1998@gmail.com",
@@ -200,7 +189,6 @@ export default function Pacientes({
       const lowerCaseNome = removeAcentos(user.nome.toLowerCase());
       const lowerCaseRole = user.role.toLowerCase();
       const lowerCasePeriodoCursado = user.periodoCursado?.toLowerCase() || "";
-      const lowerCaseDisciplina = user.disciplina?.toLowerCase() || "";
       const lowerCaseDisciplinaMinistrada =
         user.disciplinaMinistrada?.toLowerCase() || "";
       const lowerCaseIdOrientador = user.idOrientador?.toLowerCase() || "";
@@ -214,7 +202,6 @@ export default function Pacientes({
         (user.matricula &&
           user.matricula.toString().includes(lowerCaseSearchTerm)) ||
         lowerCasePeriodoCursado.includes(lowerCaseSearchTerm) ||
-        lowerCaseDisciplina.includes(lowerCaseSearchTerm) ||
         lowerCaseDisciplinaMinistrada.includes(lowerCaseSearchTerm) ||
         lowerCaseIdOrientador.includes(lowerCaseSearchTerm) ||
         lowerCaseEmail.includes(lowerCaseSearchTerm)
