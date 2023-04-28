@@ -2,8 +2,8 @@ import { Divider, Flex, Text } from "@chakra-ui/react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import Select from "../../../../components/Select";
-import { formatarCPF } from "../../../../utils/formatarCPF";
 import { formatarTelefone } from "../../../../utils/formatarTelefone";
+import { formatarCPF } from "../../../../utils/cpf";
 
 export default function EditarSecretario({
   mobile,

@@ -51,6 +51,7 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
         email: "admin@mail.com",
         nome: "Admin",
         role: "admin",
+        cpf: 37151994826,
       });
       return {
         user: {
@@ -58,6 +59,7 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
           email: "admin@mail.com",
           nome: "Admin",
           role: "admin",
+          cpf: 37151994826,
         },
         token: "notAToken",
       };
@@ -67,7 +69,6 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
         password,
       });
       if (res.status !== 200) {
-        console.log(res.data);
         return {
           error: res.data,
         };

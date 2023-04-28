@@ -1,11 +1,11 @@
 import { Table as TableNextUI } from "@nextui-org/react";
 import { useMediaQuery } from "../../utils/useMediaQuery";
 import { User } from "../../utils/types";
-import { formatarCPF } from "../../utils/formatarCPF";
 import React from "react";
 import { Icon } from "@chakra-ui/react";
 import { BiEdit, BiEditAlt } from "react-icons/bi";
 import { FiEdit, FiEdit2, FiTrash2 } from "react-icons/fi";
+import { formatarCPF } from "../../utils/cpf";
 
 export default function Table({
   headers,

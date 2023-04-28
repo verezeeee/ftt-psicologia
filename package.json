@@ -17,6 +17,8 @@
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
     "axios": "^1.4.0",
+    "cpf-cnpj-validator": "^1.0.3",
+    "email-validator": "^2.0.4",
     "framer-motion": "^10.12.4",
     "next": "13.3.0",
     "nookies": "^2.5.2",

@@ -35,9 +35,8 @@ export default function Pacientes({
       disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "JoseduarteGarcia@gmail.com",
-      turno: "Matutino",
+      turno: "matutino",
     },
     {
       id: "2",
@@ -50,9 +49,8 @@ export default function Pacientes({
       disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "Toninhocarvalho@gmail.com",
-      turno: "Matutino",
+      turno: "matutino",
     },
     {
       id: "3",
@@ -65,9 +63,8 @@ export default function Pacientes({
       disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "fernandavivi@gmail.com",
-      turno: "Vespertino",
+      turno: "vespertino",
     },
     {
       id: "4",
@@ -80,9 +77,8 @@ export default function Pacientes({
       disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "jucardoso2023@gmail.com",
-      turno: "Vespertino",
+      turno: "vespertino",
     },
     {
       id: "5",
@@ -95,9 +91,8 @@ export default function Pacientes({
       disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "MoraesLuiz@hotmail.com",
-      turno: "Noturno",
+      turno: "noturno",
     },
     {
       id: "6",
@@ -110,9 +105,8 @@ export default function Pacientes({
       disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "Teixeirapaty@gmail.com",
-      turno: "Noturno",
+      turno: "noturno",
     },
     {
       id: "7",
@@ -125,9 +119,8 @@ export default function Pacientes({
       disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "marciaandrade2020@gmail.com",
-      turno: "Vespertino",
+      turno: "vespertino",
     },
     {
       id: "8",
@@ -140,9 +133,8 @@ export default function Pacientes({
       disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "Marcosdias@hotmail.com",
-      turno: "Noturno",
+      turno: "noturno",
     },
     {
       id: "9",
@@ -155,9 +147,8 @@ export default function Pacientes({
       disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "joãomedeirosmoraaes@gmail.com",
-      turno: "Noturno",
+      turno: "noturno",
     },
     {
       id: "10",
@@ -170,9 +161,8 @@ export default function Pacientes({
       disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "anasantosbatista@hotmail.com",
-      turno: "Noturno",
+      turno: "noturno",
     },
     {
       id: "11",
@@ -185,9 +175,8 @@ export default function Pacientes({
       disciplina: "Cálculo 1",
       disciplinaMinistrada: "",
       idOrientador: "123456789",
-      idSecretaria: "123456789",
       email: "LuizBarros1998@gmail.com",
-      turno: "Vespertino",
+      turno: "vespertino",
     },
   ]);
 
@@ -215,7 +204,6 @@ export default function Pacientes({
       const lowerCaseDisciplinaMinistrada =
         user.disciplinaMinistrada?.toLowerCase() || "";
       const lowerCaseIdOrientador = user.idOrientador?.toLowerCase() || "";
-      const lowerCaseIdSecretaria = user.idSecretaria?.toLowerCase() || "";
       const lowerCaseEmail = user.email.toLowerCase();
 
       return (
@@ -229,7 +217,6 @@ export default function Pacientes({
         lowerCaseDisciplina.includes(lowerCaseSearchTerm) ||
         lowerCaseDisciplinaMinistrada.includes(lowerCaseSearchTerm) ||
         lowerCaseIdOrientador.includes(lowerCaseSearchTerm) ||
-        lowerCaseIdSecretaria.includes(lowerCaseSearchTerm) ||
         lowerCaseEmail.includes(lowerCaseSearchTerm)
       );
     });
