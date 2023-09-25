@@ -117,7 +117,7 @@ export default function Pacientes({
     },
     {
       id: "8",
-      nome: "Marcos Dias Teixeira",
+      nome: "Salsicho Dias Teixeira",
       cpf: 73433408084,
       role: "secretary",
       matricula: 7842146,
@@ -130,7 +130,7 @@ export default function Pacientes({
     },
     {
       id: "9",
-      nome: "João Moraes Medeiros",
+      nome: "Buceto Moraes Medeiros",
       cpf: 48275468078,
       role: "secretary",
       matricula: 6587429,
@@ -156,7 +156,7 @@ export default function Pacientes({
     },
     {
       id: "11",
-      nome: "Luiz Barros Almeida",
+      nome: "Prexeco Barros Almeida",
       cpf: 82318598029,
       role: "secretary",
       matricula: 4517423,
@@ -167,6 +167,7 @@ export default function Pacientes({
       email: "LuizBarros1998@gmail.com",
       turno: "vespertino",
     },
+    
   ]);
 
   const [isEditing, setIsEditing] = useState<any>();
