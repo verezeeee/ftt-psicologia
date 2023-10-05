@@ -23,152 +23,7 @@ export default function Pacientes({
   const [cadastrarOpened, setCadastrarOpened] = useState<boolean>(false);
 
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [data, setData] = useState<User[]>([
-    {
-      id: "1",
-      nome: "José Duarte Garcia",
-      cpf: 86120483039,
-      telefone: 11999999999,
-      role: "secretary",
-      matricula: 3214457,
-      periodoCursado: "2020.1",
-      disciplinaMinistrada: "",
-      idOrientador: "123456789",
-      email: "JoseduarteGarcia@gmail.com",
-      turno: "matutino",
-    },
-    {
-      id: "2",
-      nome: "Antônio Borges Carvalho",
-      cpf: 81205898077,
-      telefone: 11999999999,
-      role: "secretary",
-      matricula: 1143367,
-      periodoCursado: "2020.1",
-      disciplinaMinistrada: "",
-      idOrientador: "123456789",
-      email: "Toninhocarvalho@gmail.com",
-      turno: "matutino",
-    },
-    {
-      id: "3",
-      nome: "Fernanda Barros Vieira",
-      cpf: 94182651090,
-      telefone: 11999999999,
-      role: "secretary",
-      matricula: 6919742,
-      periodoCursado: "2020.1",
-      disciplinaMinistrada: "",
-      idOrientador: "123456789",
-      email: "fernandavivi@gmail.com",
-      turno: "vespertino",
-    },
-    {
-      id: "4",
-      nome: "Juliana Cardoso Garcia",
-      cpf: 58974846004,
-      role: "secretary",
-      telefone: 11999999999,
-      matricula: 4679211,
-      periodoCursado: "2020.1",
-      disciplinaMinistrada: "",
-      idOrientador: "123456789",
-      email: "jucardoso2023@gmail.com",
-      turno: "vespertino",
-    },
-    {
-      id: "5",
-      nome: "Luiz Moraes Ferreira",
-      cpf: 54915506045,
-      role: "secretary",
-      telefone: 11999999999,
-      matricula: 9151769,
-      periodoCursado: "2020.1",
-      disciplinaMinistrada: "",
-      idOrientador: "123456789",
-      email: "MoraesLuiz@hotmail.com",
-      turno: "noturno",
-    },
-    {
-      id: "6",
-      nome: "Patricia Teiixeira Moura",
-      cpf: 29582882486,
-      role: "secretary",
-      matricula: 2605591,
-      periodoCursado: "2020.1",
-      telefone: 11999999999,
-      disciplinaMinistrada: "",
-      idOrientador: "123456789",
-      email: "Teixeirapaty@gmail.com",
-      turno: "noturno",
-    },
-    {
-      id: "7",
-      nome: "Marcia Andrade Santos",
-      cpf: 40641207018,
-      role: "secretary",
-      telefone: 11999999999,
-      matricula: 5447821,
-      periodoCursado: "2020.1",
-      disciplinaMinistrada: "",
-      idOrientador: "123456789",
-      email: "marciaandrade2020@gmail.com",
-      turno: "vespertino",
-    },
-    {
-      id: "8",
-      nome: "Salsicho Dias Teixeira",
-      cpf: 73433408084,
-      role: "secretary",
-      matricula: 7842146,
-      telefone: 11999999999,
-      periodoCursado: "2020.1",
-      disciplinaMinistrada: "",
-      idOrientador: "123456789",
-      email: "Marcosdias@hotmail.com",
-      turno: "noturno",
-    },
-    {
-      id: "9",
-      nome: "Buceto Moraes Medeiros",
-      cpf: 48275468078,
-      role: "secretary",
-      matricula: 6587429,
-      periodoCursado: "2020.1",
-      telefone: 11999999999,
-      disciplinaMinistrada: "",
-      idOrientador: "123456789",
-      email: "joãomedeirosmoraaes@gmail.com",
-      turno: "noturno",
-    },
-    {
-      id: "10",
-      nome: "Ana Santos Batista",
-      cpf: 81382983085,
-      role: "secretary",
-      matricula: 5874693,
-      telefone: 11999999999,
-      periodoCursado: "2020.1",
-      disciplinaMinistrada: "",
-      idOrientador: "123456789",
-      email: "anasantosbatista@hotmail.com",
-      turno: "noturno",
-    },
-    {
-      id: "11",
-      nome: "Prexeco Barros Almeida",
-      cpf: 82318598029,
-      role: "secretary",
-      matricula: 4517423,
-      periodoCursado: "2020.1",
-      telefone: 11999999999,
-      disciplinaMinistrada: "",
-      idOrientador: "123456789",
-      email: "LuizBarros1998@gmail.com",
-      turno: "vespertino",
-    },
-    
-  ]);
+
 
   const [isEditing, setIsEditing] = useState<any>();
 
@@ -209,15 +64,6 @@ export default function Pacientes({
       );
     });
   }
-
-  useEffect(() => {
-    if (searchTerm.length > 0) {
-      const result = pesquisar(searchTerm, data);
-      setResult(result);
-    } else {
-      setResult(undefined);
-    }
-  }, [searchTerm]);
 
   return (
     <Flex
@@ -267,7 +113,7 @@ export default function Pacientes({
       <Flex mt="4" w="100%">
         <Table
           headers={["ID", "Nome", "CPF", "Turno", ""]}
-          data={result ? result : data}
+          data={null}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
         />

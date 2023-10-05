@@ -7,7 +7,7 @@ export interface User {
   telefone?: string;
   role: "admin" | "student" | "secretary" | "professor";
   matricula?: string;
-  periodoCursado?: number;
+  periodoCursado?: String;
   disciplinaMinistrada?: string;
   idOrientador?: string;
   turno?: "noturno" | "vespertino" | "matutino";
@@ -40,5 +40,5 @@ export type AlunoSignUpData = {
   role: "student";
   periodoCursado: string;
   idOrientador: string;
-  periodo: number;
+  periodo: String;
 };

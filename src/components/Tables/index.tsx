@@ -35,27 +35,7 @@ export default function Table({
         })}
       </TableNextUI.Header>
       <TableNextUI.Body>
-        {data.map((data, i) => {
-          return (
-            <TableNextUI.Row key={i}>
-              <TableNextUI.Cell>{data.id}</TableNextUI.Cell>
-              <TableNextUI.Cell>{data.nome}</TableNextUI.Cell>
-              <TableNextUI.Cell>
-                {formatarCPF(String(data.cpf))}
-              </TableNextUI.Cell>
-              <TableNextUI.Cell>{data.turno}</TableNextUI.Cell>
-              <TableNextUI.Cell>
-                <Icon
-                  cursor="pointer"
-                  onClick={() => setIsEditing(data)}
-                  as={FiEdit2}
-                  color="#C760EB"
-                />
-                <Icon cursor="pointer" ml="4" as={FiTrash2} color="#C760EB" />
-              </TableNextUI.Cell>
-            </TableNextUI.Row>
-          );
-        })}
+        
       </TableNextUI.Body>
       <TableNextUI.Pagination
         shadow
