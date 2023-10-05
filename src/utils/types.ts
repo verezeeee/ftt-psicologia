@@ -3,11 +3,11 @@ export interface User {
   id: string;
   nome: string;
   email: string;
-  cpf: number;
-  telefone?: number;
+  cpf: string;
+  telefone?: string;
   role: "admin" | "student" | "secretary" | "professor";
-  matricula?: number;
-  periodoCursado?: string;
+  matricula?: string;
+  periodoCursado?: number;
   disciplinaMinistrada?: string;
   idOrientador?: string;
   turno?: "noturno" | "vespertino" | "matutino";
@@ -32,6 +32,10 @@ export type SecretarioSignUpData = {
 // Interface de registro de aluno
 export type AlunoSignUpData = {
   nome: string;
+  email: string;
+  matricula: string;
+  telefoneContato: string;
+  professor: string;
   cpf: string;
   role: "student";
   periodoCursado: string;

@@ -13,8 +13,9 @@ type CreateResponse = {
 export async function cadastrarProfessor(
   req: ProfessorSignUpData
 ): Promise<CreateResponse> {
-  const res = await api.post("/auth/register", req);
-  if (res.status !== 200) {
+  const res = await api.post("/auth/registroProfessor", req);
+  console.log(res)
+  if (res.status !== 201) {
     return {
       error: "Erro ao criar professor",
     };
@@ -27,7 +28,7 @@ export async function cadastrarProfessor(
 export async function cadastrarSecretario(
   req: SecretarioSignUpData
 ): Promise<CreateResponse> {
-  const res = await api.post("/auth/register", req);
+  const res = await api.post("/auth/registroSecretario", req);
   if (res.status !== 200) {
     return {
       error: "Erro ao criar secretário",
@@ -41,11 +42,14 @@ export async function cadastrarSecretario(
 export async function cadastrarAluno(
   req: AlunoSignUpData
 ): Promise<CreateResponse> {
-  const res = await api.post("/auth/register", req);
+  const res = await api.post("/auth/registroAluno", req);
+  console.log(res)
   if (res.status !== 200) {
     return {
       error: "Erro ao criar aluno",
     };
+
+    return res.data
   } else {
     return {
       message: "Aluno criado com sucesso",
