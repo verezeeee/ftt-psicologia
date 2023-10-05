@@ -164,6 +164,8 @@ export default function CadastrarSecretario({
                 cpf,
                 turno,
                 role: "secretary",
+                telefoneContato: "string",
+                email: "string"
               });
               if (res.error) {
                 toast({

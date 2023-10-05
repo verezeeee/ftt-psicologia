@@ -158,6 +158,9 @@ export default function CadastrarProfessor({
                 cpf,
                 disciplinaMinistrada: disciplina,
                 role: "professor",
+                telefoneContato: "string",
+                email: "string",
+                disciplina: "string"
               });
               if (res.error) {
                 toast({
