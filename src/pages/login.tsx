@@ -16,9 +16,8 @@ export default function Login() {
   const [password, setPassword] = useState<string>("");
 
   const handleSignIn = async () => {
-    var token = localStorage.getItem("authToken");
     const res = await signIn({
-      email,
+      cpf: email,
       password,
     });
     if (res.error) {
@@ -34,9 +33,10 @@ export default function Login() {
         description: "Login realizado com sucesso",
         duration: 500,
       });
+      localStorage.setItem("authToken", res.token)
+      console.log(res.token)
       router.push("/");
       window.scrollTo(0, 0);
-      console.log(token)
     }
   };
 

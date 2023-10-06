@@ -18,9 +18,9 @@ export type ProfessorSignUpData = {
   nome: string;
   cpf: string;
   role: "professor";
-  telefoneContato: "string";
-  email: "string";
-  disciplina: "string";
+  telefoneContato: string;
+  email: string;
+  disciplina: string;
   disciplinaMinistrada: string;
 };
 

@@ -1,5 +1,5 @@
 import { Flex, Modal, Text } from "@chakra-ui/react";
-import { User } from "../../../utils/types";
+import { User, ProfessorSignUpData } from "../../../utils/types";
 import { useMediaQuery } from "../../../utils/useMediaQuery";
 import Table from "../../../components/Tables";
 import Search from "../../../components/Search";
@@ -16,7 +16,7 @@ export default function Alunos({
   user,
   activeTab,
 }: {
-  user: User;
+  user: ProfessorSignUpData;
   activeTab?: string;
 }) {
   const { mobile, tablet, desktop } = useMediaQuery();
@@ -24,57 +24,57 @@ export default function Alunos({
   const [cadastrarOpened, setCadastrarOpened] = useState<boolean>(false);
 
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [data, setData] = useState<User[]>([
+  const [data, setData] = useState<ProfessorSignUpData[]>([
     
   ]);
 
   const [isEditing, setIsEditing] = useState<any>();
+  const [result, setResult] = useState<ProfessorSignUpData[]>();
+  const [shouldFetchData, setShouldFetchData] = useState<boolean>(true);
+  
+  async function getUsers(): Promise<ProfessorSignUpData[]> {	
+    const res = await axios.get('http://localhost:8080/auth/getProfessores')
+    const data = await res.data
+    return data
+  }
 
   const finalRef = useRef(null);
   const initialRef = useRef(null);
 
   useEffect(() => {
-    if (isEditing) {
-      console.log(isEditing);
+    async function fetchData() {
+      const data = await getUsers();
+      setResult(data);
+      setShouldFetchData(false);
     }
-  }, [isEditing]);
+    if (shouldFetchData) {
+      fetchData();
+    }
+  }, [shouldFetchData]);
 
-  const [result, setResult] = useState<User[]>();
 
-  function pesquisar(searchTerm: string, data: User[]): User[] {
+  function pesquisar(searchTerm: string, data: ProfessorSignUpData[]): ProfessorSignUpData[] {
     const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();
 
     return data.filter((user) => {
       const lowerCaseNome = removeAcentos(user.nome.toLowerCase());
-      const lowerCaseRole = user.role.toLowerCase();
-      const lowerCasePeriodoCursado = user.periodoCursado?.toLowerCase() || "";
-      const lowerCaseDisciplinaMinistrada =
-        user.disciplinaMinistrada?.toLowerCase() || "";
-      const lowerCaseIdOrientador = user.idOrientador?.toLowerCase() || "";
-      const lowerCaseEmail = user.email.toLowerCase();
 
       return (
-        lowerCaseNome.includes(lowerCaseSearchTerm) ||
-        (user.cpf &&
-          removeAcentos(user.cpf.toString()).includes(lowerCaseSearchTerm)) ||
-        lowerCaseRole.includes(lowerCaseSearchTerm) ||
-        (user.matricula &&
-          user.matricula.toString().includes(lowerCaseSearchTerm)) ||
-        lowerCasePeriodoCursado.includes(lowerCaseSearchTerm) ||
-        lowerCaseDisciplinaMinistrada.includes(lowerCaseSearchTerm) ||
-        lowerCaseIdOrientador.includes(lowerCaseSearchTerm) ||
-        lowerCaseEmail.includes(lowerCaseSearchTerm)
+        lowerCaseNome.includes(lowerCaseSearchTerm)
       );
     });
   }
 
   useEffect(() => {
-    if (searchTerm.length > 0) {
-      const result = pesquisar(searchTerm, data);
-      setResult(result);
-    } else {
-      setResult(undefined);
+    async function fetchData() {
+      if (searchTerm.length > 0) {
+        const result = pesquisar(searchTerm, await getUsers());
+        setResult(result);
+      } else {
+        setResult(await getUsers());
+      }
     }
+    fetchData();
   }, [searchTerm]);
 
   return (
@@ -124,10 +124,11 @@ export default function Alunos({
       </Flex>
       <Flex mt="4" w="100%">
         <Table
-          headers={["ID", "Nome", "CPF", "Turno", ""]}
-          data={result ? result : data}
+          headers={["Nome", "CPF", "Telefone"]}
+          data={result}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
+          type="professor"
         />
       </Flex>
       <Cadastrar

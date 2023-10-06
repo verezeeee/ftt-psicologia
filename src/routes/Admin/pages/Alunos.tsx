@@ -32,7 +32,8 @@ export default function Alunos({
   
 
   const [isEditing, setIsEditing] = useState<any>();
-
+  const [result, setResult] = useState<AlunoSignUpData[]>();
+  const [shouldFetchData, setShouldFetchData] = useState<boolean>(true);
   const finalRef = useRef(null);
   const initialRef = useRef(null);
 
@@ -40,50 +41,36 @@ export default function Alunos({
     async function fetchData() {
       const data = await getUsers();
       setResult(data);
-      console.log(data);
+      setShouldFetchData(false);
     }
-    fetchData();
-    if (isEditing) {
-      console.log(isEditing);
-    }
-  }, [isEditing]);
+    if (shouldFetchData) {
+      fetchData();
+    } 
+  }, [shouldFetchData]);
 
-  const [result, setResult] = useState<AlunoSignUpData[]>();
+  
 
-  function pesquisar(searchTerm: string, data: any): any {
+  function pesquisar(searchTerm: string, users: AlunoSignUpData[]): AlunoSignUpData[] {
     const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();
 
-    return data.filter((user: any) => {
+    return users.filter((user: AlunoSignUpData) => {
       const lowerCaseNome = removeAcentos(user.nome.toLowerCase());
-      const lowerCaseRole = user.role.toLowerCase();
-      const lowerCasePeriodoCursado = user.periodoCursado?.toLowerCase() || "";
-      const lowerCaseDisciplinaMinistrada =
-        user.disciplinaMinistrada?.toLowerCase() || "";
-      const lowerCaseIdOrientador = user.idOrientador?.toLowerCase() || "";
-      const lowerCaseEmail = user.email.toLowerCase();
-
       return (
-        lowerCaseNome.includes(lowerCaseSearchTerm) ||
-        (user.cpf &&
-          removeAcentos(user.cpf.toString()).includes(lowerCaseSearchTerm)) ||
-        lowerCaseRole.includes(lowerCaseSearchTerm) ||
-        (user.matricula &&
-          user.matricula.toString().includes(lowerCaseSearchTerm)) ||
-        lowerCasePeriodoCursado.includes(lowerCaseSearchTerm) ||
-        lowerCaseDisciplinaMinistrada.includes(lowerCaseSearchTerm) ||
-        lowerCaseIdOrientador.includes(lowerCaseSearchTerm) ||
-        lowerCaseEmail.includes(lowerCaseSearchTerm)
+        lowerCaseNome.includes(lowerCaseSearchTerm)
       );
     });
   }
 
   useEffect(() => {
-    if (searchTerm.length > 0) {
-      const result = pesquisar(searchTerm, getUsers());
-      setResult(result);
-    } else {
-      setResult(undefined);
+    async function fetchData() {
+      if (searchTerm.length > 0) {
+        const result = pesquisar(searchTerm, await getUsers());
+        setResult(result);
+      } else {
+        setResult(await getUsers());
+      }
     }
+    fetchData();
   }, [searchTerm]);
   return (
     <Flex
@@ -136,6 +123,7 @@ export default function Alunos({
           data={result}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
+          type="aluno"    
         />
       </Flex>
       <Cadastrar

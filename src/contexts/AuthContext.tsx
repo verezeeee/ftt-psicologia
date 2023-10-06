@@ -9,7 +9,7 @@ let authChannel: BroadcastChannel;
 
 // Interface da requisição de login
 interface ISignInRequest {
-  email: string;
+  cpf: string;
   password: string;
 }
 
@@ -42,10 +42,10 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
 
   // Lógica de autenticação
   async function signIn({
-    email,
+    cpf,
     password,
   }: ISignInRequest): Promise<ISignInResponse> {
-    if (email === "admin" && password === "admin") {
+    if (cpf === "admin" && password === "admin") {
       setUser({
         id: "0",
         email: "admin@mail.com",
@@ -61,13 +61,15 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
           role: "admin",
           cpf: '37151994826',
         },
-        token: "notAToken",
+        token: "aRealToken",
       };
     } else {
+      console.log(cpf, password);
       const res = await api.post("/auth/login", {
-        email,
+        cpf,
         password,
       });
+      console.log(res)
       if (res.status !== 200) {
         return {
           error: res.data,
@@ -83,6 +85,8 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
           maxAge: 60 * 60 * 24 * 30, // 30 days
           path: "/",
         });
+        localStorage.setItem("authToken", data.token)
+        console.log(data.token)
         data.refreshToken &&
           setCookie(undefined, "nextauth.refreshToken", data.refreshToken, {
             maxAge: 60 * 60 * 24 * 30, // 30 days
@@ -92,7 +96,7 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
         await setUser(data.user);
 
         api.defaults.headers["Authorization"] = `Bearer ${data.token}`;
-
+        
         return {
           user: data.user,
           token: data.token,
@@ -104,6 +108,8 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
   // Lógica de logout
   function signOut() {
     setUser(null);
+    destroyCookie(undefined, "nextauth.token");
+    localStorage.clear()
   }
 
   return (
@@ -127,6 +133,7 @@ export function withAuth(Component) {
 
     // check if user have token
     // if not, redirect to login page
+    
 
     // check if user token is valid
     // if not, redirect to login page
@@ -147,7 +154,11 @@ export function signOut() {
   destroyCookie(undefined, "nextauth.token");
   destroyCookie(undefined, "nextauth.refreshToken");
 
-  authChannel.postMessage("signOut");
+  if (authChannel) {
+    authChannel.postMessage('signOut');
+  } else {
+    console.log("authChannel is not defined");
+  }
 }
 
 export default AuthContext as React.Context<AuthContextData>;

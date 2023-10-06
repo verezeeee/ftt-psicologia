@@ -20,7 +20,7 @@ export async function cadastrarProfessor(
 ): Promise<CreateResponse> {
   const res = await api.post("/auth/registroProfessor", req);
   console.log(res)
-  if (res.status !== 201) {
+  if (res.status !== 200) {
     return {
       error: "Erro ao criar professor",
     };

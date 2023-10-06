@@ -3,9 +3,9 @@ export function formatarTelefone(telefone: string) {
     telefone = telefone.replace(/\D/g, "");
   
     // Verifica se o telefone tem 11 dígitos
-    if (telefone.length !== 11) {
-      throw new Error("Telefone deve ter 11 dígitos");
-    }
+    // if (telefone.length !== 10) {
+    //   throw new Error("Telefone deve ter 11 dígitos");
+    // }
   
     // Formata o telefone na string desejada
     const telefoneFormatado = `(${telefone.slice(0, 2)}) ${telefone.slice(

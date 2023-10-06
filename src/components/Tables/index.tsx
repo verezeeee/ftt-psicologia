@@ -1,22 +1,27 @@
 import { Table as TableNextUI } from "@nextui-org/react";
 import { useMediaQuery } from "../../utils/useMediaQuery";
-import { User, AlunoSignUpData } from "../../utils/types";
+import { AlunoSignUpData, ProfessorSignUpData, SecretarioSignUpData } from "../../utils/types";
 import React from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@chakra-ui/react";
 import { BiEdit, BiEditAlt } from "react-icons/bi";
 import { FiEdit, FiEdit2, FiTrash2 } from "react-icons/fi";
 import { formatarCPF } from "../../utils/cpf";
+import axios from "axios";
+import { formatarTelefone } from "../../utils/formatarTelefone";
 
 export default function Table({
   headers,
   data,
   isEditing,
   setIsEditing,
+  type
 }: {
   headers: string[];
-  data: AlunoSignUpData[];
+  data: AlunoSignUpData[] | ProfessorSignUpData[] | SecretarioSignUpData[];
   isEditing: any;
   setIsEditing: any;
+  type: "aluno" | "secretario" | "professor"
 }) {
   const { mobile } = useMediaQuery();
 
@@ -35,16 +40,36 @@ export default function Table({
         })}
       </TableNextUI.Header>
       <TableNextUI.Body>
-        {data?.map((user) => {
-          console.log(user.periodo, user.turno)
-          return (
-            <TableNextUI.Row key={user.role}>
-              <TableNextUI.Cell>{user.nome}</TableNextUI.Cell>
-              <TableNextUI.Cell>{user.email}</TableNextUI.Cell>
-              <TableNextUI.Cell>{formatarCPF(user.cpf)}</TableNextUI.Cell>
-              <TableNextUI.Cell>{user.periodo}º Período</TableNextUI.Cell>
-            </TableNextUI.Row>
-          );
+        {data?.map((user: any) => {
+          if (type === "aluno") {
+            return (
+              <TableNextUI.Row key={user.role}>
+                <TableNextUI.Cell key={user.nome}>{user.nome}</TableNextUI.Cell>
+                <TableNextUI.Cell key={user.email}>{user.email}</TableNextUI.Cell>
+                <TableNextUI.Cell key={user.cpf}>{formatarCPF(user.cpf)}</TableNextUI.Cell>
+                <TableNextUI.Cell key={user.periodo}>{user.periodo}</TableNextUI.Cell>
+              </TableNextUI.Row>
+            );
+          } else if (type === "secretario") {
+            return (
+              <TableNextUI.Row key={user.role}>
+                <TableNextUI.Cell key={user.nome}>{user.nome}</TableNextUI.Cell>
+                <TableNextUI.Cell key={user.email}>{user.email}</TableNextUI.Cell>
+                <TableNextUI.Cell key={user.cpf}>{formatarCPF(user.cpf)}</TableNextUI.Cell>
+                <TableNextUI.Cell key={user.turno}>{user.turno}</TableNextUI.Cell>
+              </TableNextUI.Row>
+            )
+          } else if (type === "professor") {
+            return (
+              <TableNextUI.Row key={user.role}>
+                <TableNextUI.Cell key={user.nome}>{user.nome}</TableNextUI.Cell>
+                <TableNextUI.Cell key={user.cpf}>{formatarCPF(user.cpf)}</TableNextUI.Cell>
+                <TableNextUI.Cell key={user.telefoneContato}>
+                  {formatarTelefone(user.telefoneContato)}
+                </TableNextUI.Cell>
+              </TableNextUI.Row>
+            )
+          }
         })}
       </TableNextUI.Body>
       <TableNextUI.Pagination

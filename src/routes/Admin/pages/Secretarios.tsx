@@ -1,5 +1,5 @@
 import { Flex, Modal, Text } from "@chakra-ui/react";
-import { User } from "../../../utils/types";
+import { User, SecretarioSignUpData } from "../../../utils/types";
 import { useMediaQuery } from "../../../utils/useMediaQuery";
 import Table from "../../../components/Tables";
 import Search from "../../../components/Search";
@@ -10,12 +10,14 @@ import { useEffect, useRef, useState } from "react";
 import { removeAcentos } from "../../../utils/removeAcentos";
 import Cadastrar from "../components/Cadastrar";
 import Editar from "../components/Editar";
+import axios from "axios";
+import { set } from "react-hook-form";
 
 export default function Pacientes({
   user,
   activeTab,
 }: {
-  user: User;
+  user: SecretarioSignUpData;
   activeTab?: string;
 }) {
   const { mobile, tablet, desktop } = useMediaQuery();
@@ -23,48 +25,53 @@ export default function Pacientes({
   const [cadastrarOpened, setCadastrarOpened] = useState<boolean>(false);
 
   const [searchTerm, setSearchTerm] = useState<string>("");
-
+  async function getUsers(): Promise<SecretarioSignUpData[]> {	
+    const res = await axios.get('http://localhost:8080/auth/getSecretarios')
+    const data = await res.data
+    return data
+  }
 
   const [isEditing, setIsEditing] = useState<any>();
-
+  const [result, setResult] = useState<SecretarioSignUpData[]>([]);
+  const [shouldFetchData, setShouldFetchData] = useState<boolean>(true);
   const finalRef = useRef(null);
   const initialRef = useRef(null);
 
   useEffect(() => {
-    if (isEditing) {
-      console.log(isEditing);
+    async function fetchData() {
+      const data = await getUsers();
+      setResult(data);
+      setShouldFetchData(false);
     }
-  }, [isEditing]);
+    if (shouldFetchData){
+      fetchData();
+    }
+  }, [shouldFetchData]);
 
-  const [result, setResult] = useState<User[]>();
+ 
 
-  function pesquisar(searchTerm: string, data: User[]): User[] {
+  function pesquisar(searchTerm: string, users: SecretarioSignUpData[]): SecretarioSignUpData[] {
     const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();
 
-    return data.filter((user) => {
+    return users.filter((user: SecretarioSignUpData) => {
       const lowerCaseNome = removeAcentos(user.nome.toLowerCase());
-      const lowerCaseRole = user.role.toLowerCase();
-      const lowerCasePeriodoCursado = user.periodoCursado?.toLowerCase() || "";
-      const lowerCaseDisciplinaMinistrada =
-        user.disciplinaMinistrada?.toLowerCase() || "";
-      const lowerCaseIdOrientador = user.idOrientador?.toLowerCase() || "";
-      const lowerCaseEmail = user.email.toLowerCase();
-
       return (
-        lowerCaseNome.includes(lowerCaseSearchTerm) ||
-        (user.cpf &&
-          removeAcentos(user.cpf.toString()).includes(lowerCaseSearchTerm)) ||
-        lowerCaseRole.includes(lowerCaseSearchTerm) ||
-        (user.matricula &&
-          user.matricula.toString().includes(lowerCaseSearchTerm)) ||
-        lowerCasePeriodoCursado.includes(lowerCaseSearchTerm) ||
-        lowerCaseDisciplinaMinistrada.includes(lowerCaseSearchTerm) ||
-        lowerCaseIdOrientador.includes(lowerCaseSearchTerm) ||
-        lowerCaseEmail.includes(lowerCaseSearchTerm)
+        lowerCaseNome.includes(lowerCaseSearchTerm) 
       );
     });
   }
 
+  useEffect(() => {
+    async function fetchData() {
+      if (searchTerm.length > 0) {
+        const result = pesquisar(searchTerm, await getUsers());
+        setResult(result);
+      } else {
+        setResult(await getUsers());
+      }
+    }
+    fetchData();
+  }, [searchTerm]);
   return (
     <Flex
       p="4"
@@ -112,10 +119,11 @@ export default function Pacientes({
       </Flex>
       <Flex mt="4" w="100%">
         <Table
-          headers={["ID", "Nome", "CPF", "Turno", ""]}
-          data={null}
+          headers={["Nome","Email", "CPF", "Turno",]}
+          data={result}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
+          type="secretario"
         />
       </Flex>
       <Cadastrar

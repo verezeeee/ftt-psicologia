@@ -157,10 +157,10 @@ export default function CadastrarProfessor({
                 nome,
                 cpf,
                 disciplinaMinistrada: disciplina,
+                telefoneContato: telefone,
+                email,
+                disciplina,
                 role: "professor",
-                telefoneContato: "string",
-                email: "string",
-                disciplina: "string"
               });
               if (res.error) {
                 toast({
@@ -168,6 +168,7 @@ export default function CadastrarProfessor({
                   description: res.error,
                   duration: 500,
                 });
+                console.log(res.error);
               } else {
                 toast({
                   status: "success",

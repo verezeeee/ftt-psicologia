@@ -211,14 +211,15 @@ export default function CadastrarAluno({
               //     description: "Secretário cadastrado com sucesso",
               //     duration: 500,
               //   });
-              axios.post('http://localhost:8080/auth/register', {
+              axios.post('http://localhost:8080/auth/registroAluno', {
                 matricula,
                 periodo,
                 nome,
                 cpf,
-                telefone,
+                telefoneContato: telefone,
                 email,
-                professor 
+                professor,
+                role: "student",
               }).then((response) => {
                 console.log(response);
                 toast({
@@ -234,7 +235,6 @@ export default function CadastrarAluno({
                   duration: 500,
                 })
               });
-              
               closeModal();
             }
           }}
