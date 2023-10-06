@@ -1,5 +1,5 @@
-import { Flex, Modal, Text } from "@chakra-ui/react";
-import { User } from "../../../utils/types";
+import { Flex, Modal, TableProps, Text } from "@chakra-ui/react";
+import { User, AlunoSignUpData } from "../../../utils/types";
 import { useMediaQuery } from "../../../utils/useMediaQuery";
 import Table from "../../../components/Tables";
 import Search from "../../../components/Search";
@@ -10,12 +10,13 @@ import { useEffect, useRef, useState } from "react";
 import { removeAcentos } from "../../../utils/removeAcentos";
 import Cadastrar from "../components/Cadastrar";
 import Editar from "../components/Editar";
+import axios from "axios";
 
 export default function Alunos({
   user,
   activeTab,
 }: {
-  user: User;
+  user: AlunoSignUpData;
   activeTab?: string;
 }) {
   const { mobile, tablet, desktop } = useMediaQuery();
@@ -23,9 +24,12 @@ export default function Alunos({
   const [cadastrarOpened, setCadastrarOpened] = useState<boolean>(false);
 
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [data, setData] = useState<User[]>([
-    
-  ]);
+  async function getUsers(): Promise<AlunoSignUpData[]> {	
+    const res = await axios.get('http://localhost:8080/auth/getAlunos')
+    const data = await res.data
+    return data
+  }
+  
 
   const [isEditing, setIsEditing] = useState<any>();
 
@@ -33,17 +37,23 @@ export default function Alunos({
   const initialRef = useRef(null);
 
   useEffect(() => {
+    async function fetchData() {
+      const data = await getUsers();
+      setResult(data);
+      console.log(data);
+    }
+    fetchData();
     if (isEditing) {
       console.log(isEditing);
     }
   }, [isEditing]);
 
-  const [result, setResult] = useState<User[]>();
+  const [result, setResult] = useState<AlunoSignUpData[]>();
 
-  function pesquisar(searchTerm: string, data: User[]): User[] {
+  function pesquisar(searchTerm: string, data: any): any {
     const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();
 
-    return data.filter((user) => {
+    return data.filter((user: any) => {
       const lowerCaseNome = removeAcentos(user.nome.toLowerCase());
       const lowerCaseRole = user.role.toLowerCase();
       const lowerCasePeriodoCursado = user.periodoCursado?.toLowerCase() || "";
@@ -69,13 +79,12 @@ export default function Alunos({
 
   useEffect(() => {
     if (searchTerm.length > 0) {
-      const result = pesquisar(searchTerm, data);
+      const result = pesquisar(searchTerm, getUsers());
       setResult(result);
     } else {
       setResult(undefined);
     }
   }, [searchTerm]);
-
   return (
     <Flex
       p="4"
@@ -123,8 +132,8 @@ export default function Alunos({
       </Flex>
       <Flex mt="4" w="100%">
         <Table
-          headers={["ID", "Nome", "CPF", "Turno", ""]}
-          data={result ? result : data}
+          headers={["Nome", "Email", "CPF", "Período",]}
+          data={result}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
         />

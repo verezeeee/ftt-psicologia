@@ -4,6 +4,11 @@ import {
   ProfessorSignUpData,
   SecretarioSignUpData
 } from "../../../../utils/types";
+import { useEffect } from "react";
+
+if (typeof window !== "undefined") {
+  var token = localStorage.getItem("authToken");
+}
 
 type CreateResponse = {
   error?: string;
@@ -42,7 +47,11 @@ export async function cadastrarSecretario(
 export async function cadastrarAluno(
   req: AlunoSignUpData
 ): Promise<CreateResponse> {
-  const res = await api.post("/auth/registroAluno", req);
+  const res = await api.post("/auth/registroAluno", req, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   console.log(res)
   if (res.status !== 200) {
     return {

@@ -43,6 +43,7 @@ export type AlunoSignUpData = {
   professor: string;
   cpf: string;
   role: "student";
+  turno: "noturno" | "vespertino" | "matutino";
   periodoCursado: string;
   idOrientador: string;
   periodo: string;

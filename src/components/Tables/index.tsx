@@ -1,6 +1,6 @@
 import { Table as TableNextUI } from "@nextui-org/react";
 import { useMediaQuery } from "../../utils/useMediaQuery";
-import { User } from "../../utils/types";
+import { User, AlunoSignUpData } from "../../utils/types";
 import React from "react";
 import { Icon } from "@chakra-ui/react";
 import { BiEdit, BiEditAlt } from "react-icons/bi";
@@ -14,7 +14,7 @@ export default function Table({
   setIsEditing,
 }: {
   headers: string[];
-  data: User[];
+  data: AlunoSignUpData[];
   isEditing: any;
   setIsEditing: any;
 }) {
@@ -35,7 +35,17 @@ export default function Table({
         })}
       </TableNextUI.Header>
       <TableNextUI.Body>
-        
+        {data?.map((user) => {
+          console.log(user.periodo, user.turno)
+          return (
+            <TableNextUI.Row key={user.role}>
+              <TableNextUI.Cell>{user.nome}</TableNextUI.Cell>
+              <TableNextUI.Cell>{user.email}</TableNextUI.Cell>
+              <TableNextUI.Cell>{formatarCPF(user.cpf)}</TableNextUI.Cell>
+              <TableNextUI.Cell>{user.periodo}º Período</TableNextUI.Cell>
+            </TableNextUI.Row>
+          );
+        })}
       </TableNextUI.Body>
       <TableNextUI.Pagination
         shadow

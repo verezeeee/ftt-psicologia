@@ -1,6 +1,6 @@
-import { Flex, Image, Input, Spacer, Text, useToast } from "@chakra-ui/react";
+import { Flex, Image, Input, useToast } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import AuthContext, { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/router";
 import Button from "../components/Button";
 
@@ -9,12 +9,14 @@ export default function Login() {
   const { signIn } = useAuth();
   const router = useRouter();
   const toast = useToast();
+  useContext(AuthContext);
 
   // Valores de email e senha
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handleSignIn = async () => {
+    var token = localStorage.getItem("authToken");
     const res = await signIn({
       email,
       password,
@@ -34,6 +36,7 @@ export default function Login() {
       });
       router.push("/");
       window.scrollTo(0, 0);
+      console.log(token)
     }
   };
 

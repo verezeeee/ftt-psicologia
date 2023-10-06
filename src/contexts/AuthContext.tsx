@@ -51,7 +51,7 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
         email: "admin@mail.com",
         nome: "Admin",
         role: "admin",
-        cpf: 37151994826,
+        cpf: '37151994826',
       });
       return {
         user: {
@@ -59,7 +59,7 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
           email: "admin@mail.com",
           nome: "Admin",
           role: "admin",
-          cpf: 37151994826,
+          cpf: '37151994826',
         },
         token: "notAToken",
       };

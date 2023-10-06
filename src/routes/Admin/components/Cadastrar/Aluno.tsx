@@ -5,6 +5,7 @@ import Select from "../../../../components/Select";
 import { validarCPF } from "../../../../utils/cpf";
 import { validarEmail } from "../../../../utils/email";
 import { cadastrarAluno } from "./services";
+import axios from "axios";
 
 export default function CadastrarAluno({
   mobile,
@@ -108,16 +109,8 @@ export default function CadastrarAluno({
           </Flex>
         )}
         <Input label="E-mail" value={email} setValue={setEmail} />
-        <Select
+        <Input
           label="Professor"
-          options={[
-            "Professor 1",
-            "Professor 2",
-            "Professor 3",
-            "Professor 4",
-            "Professor 5",
-            "Professor 6",
-          ]}
           value={professor}
           setValue={setProfessor}
         />
@@ -194,32 +187,55 @@ export default function CadastrarAluno({
                 duration: 500,
               });
             } else {
-              const res = await cadastrarAluno({
+              // const res = await cadastrarAluno({
+              //   nome,
+              //   cpf,
+              //   periodo,
+              //   email,
+              //   matricula,
+              //   professor,
+              //   telefoneContato: telefone,
+              //   idOrientador: professor,
+              //   periodoCursado: periodo,
+              //   role: "student",
+              // });
+              // if (res.error) {
+              //   toast({
+              //     status: "error",
+              //     description: res.error,
+              //     duration: 500,
+              //   });
+              // } else {
+              //   toast({
+              //     status: "success",
+              //     description: "Secretário cadastrado com sucesso",
+              //     duration: 500,
+              //   });
+              axios.post('http://localhost:8080/auth/register', {
+                matricula,
+                periodo,
                 nome,
                 cpf,
-                periodo,
+                telefone,
                 email,
-                matricula,
-                professor,
-                telefoneContato: telefone,
-                idOrientador: professor,
-                periodoCursado: periodo,
-                role: "student",
-              });
-              if (res.error) {
-                toast({
-                  status: "error",
-                  description: res.error,
-                  duration: 500,
-                });
-              } else {
+                professor 
+              }).then((response) => {
+                console.log(response);
                 toast({
                   status: "success",
-                  description: "Secretário cadastrado com sucesso",
+                  description: "Aluno cadastrado com sucesso",
                   duration: 500,
-                });
-                closeModal();
-              }
+                })
+              }, (error) => {
+                console.log(error);
+                toast({
+                  status: "error",
+                  description: error.message,
+                  duration: 500,
+                })
+              });
+              
+              closeModal();
             }
           }}
           mt={0.1}
