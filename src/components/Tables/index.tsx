@@ -9,6 +9,7 @@ import { FiEdit, FiEdit2, FiTrash2 } from "react-icons/fi";
 import { formatarCPF } from "../../utils/cpf";
 import axios from "axios";
 import { formatarTelefone } from "../../utils/formatarTelefone";
+import Link from "next/link";
 
 export default function Table({
   headers,
@@ -44,28 +45,28 @@ export default function Table({
           if (type === "aluno") {
             return (
               <TableNextUI.Row key={user.role}>
-                <TableNextUI.Cell key={user.nome}>{user.nome}</TableNextUI.Cell>
-                <TableNextUI.Cell key={user.email}>{user.email}</TableNextUI.Cell>
-                <TableNextUI.Cell key={user.cpf}>{formatarCPF(user.cpf)}</TableNextUI.Cell>
-                <TableNextUI.Cell key={user.periodo}>{user.periodo}</TableNextUI.Cell>
+                <TableNextUI.Cell key={user.nome}><Link href='/visualizar'>{user.nome}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.email}><Link href='/visualizar'>{user.email}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.cpf}><Link href='/visualizar'>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.periodo}><Link href='/visualizar'>{user.periodo}</Link></TableNextUI.Cell>
               </TableNextUI.Row>
             );
           } else if (type === "secretario") {
             return (
               <TableNextUI.Row key={user.role}>
-                <TableNextUI.Cell key={user.nome}>{user.nome}</TableNextUI.Cell>
-                <TableNextUI.Cell key={user.email}>{user.email}</TableNextUI.Cell>
-                <TableNextUI.Cell key={user.cpf}>{formatarCPF(user.cpf)}</TableNextUI.Cell>
-                <TableNextUI.Cell key={user.turno}>{user.turno}</TableNextUI.Cell>
+                <TableNextUI.Cell key={user.nome}><Link href='/visualizar'>{user.nome}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.email}><Link href='/visualizar'>{user.email}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.cpf}><Link href='/visualizar'>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.turno}><Link href='/visualizar'>{user.turno}</Link></TableNextUI.Cell>
               </TableNextUI.Row>
             )
           } else if (type === "professor") {
             return (
               <TableNextUI.Row key={user.role}>
-                <TableNextUI.Cell key={user.nome}>{user.nome}</TableNextUI.Cell>
-                <TableNextUI.Cell key={user.cpf}>{formatarCPF(user.cpf)}</TableNextUI.Cell>
+                <TableNextUI.Cell key={user.nome}><Link href='/visualizar'>{user.nome}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.cpf}><Link href='/visualizar'>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
                 <TableNextUI.Cell key={user.telefoneContato}>
-                  {formatarTelefone(user.telefoneContato)}
+                <Link href='/visualizar'>{formatarTelefone(user.telefoneContato)}</Link>
                 </TableNextUI.Cell>
               </TableNextUI.Row>
             )
