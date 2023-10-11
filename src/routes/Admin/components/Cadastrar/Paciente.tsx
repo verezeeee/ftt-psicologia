@@ -1,4 +1,4 @@
-import { Divider, Flex, Text, Box, Spacer, HStack} from "@chakra-ui/react";
+import { Divider, Flex, Text, Box} from "@chakra-ui/react";
 import Button from "../../../../components/Button";
 import { useRouter } from 'next/router';
 import Header from "../../../../components/Header";
@@ -6,7 +6,6 @@ import Sidebar from "../../../../components/Sidebar";
 import { useState } from "react";
 import Table from "../../../../components/Tables";
 import { SecretarioSignUpData } from "../../../../utils/types";
-import Search from "../../../../components/Search";
 
 export default function Visualizar({
   mobile,
@@ -49,7 +48,6 @@ export default function Visualizar({
       ml={mobile ? 0 : 300} 
       transition="margin-left 0.3s ease" 
       color="#787878"
-      
       >
         <Header 
         activeTab={activeTab} 
@@ -57,128 +55,121 @@ export default function Visualizar({
         />
         <Flex 
         flexDir="column" 
-        p="0" 
+        p="8" 
         pt="6"
         >
           <Flex 
           w="100%" 
           flexDir="row" 
           justify="space-between" 
+          align="end"
+          position='relative'
           mt='5rem'
-          >
-            <Flex 
-            display='flex'
-            flexDir='row'
-            justifyContent='space-between'
-            w='100%'
-            >
+          p='0'>
             <Text 
             color="#787878" 
             fontSize="1.8rem" 
             flexDir="column"
-            p='4'
             >
-              Informações sobre aluno
+              Informações sobre professor
             </Text>
-
+            <Flex
+            position='absolute'
+            marginLeft="calc(100% - 3%)"
+            align='end'>
             <Button 
             label="Editar"
             onPress={navegarParaHome} 
             filled
-            width='7rem'
             />
-            </Flex>
             </Flex>
           </Flex>
           <Divider mt="4" />
-          <Box 
-          p='6'
-          fontSize='1rem'>
-            <Flex>
-            <Box >
-            <Text 
-            minWidth='18rem'
-            maxWidth='18rem'>
-            Nome
+          <Flex 
+          flexDir="column"
+          py="4" 
+          w={mobile ? "100%" : "50%"} 
+          transition="width 0.3s ease" >
+          <Text 
+          fontSize="1rem" >
+              Nome
             </Text>
-            <Text fontSize='1.6rem'>
-              Higor Giovane
+            <Text fontSize="1.6rem" >
+              Higor Giovane 
             </Text>
-            </Box>  
-            <Spacer/>
-            <Box>
-            <Text>
-            Matrícula
-            </Text>
-            <Text fontSize='1.6rem'>
-              2310870
-            </Text>
-            </Box>
-            <Spacer/>
-            <Box>
-            <Text>
-            Periodo
-            </Text>
-            <Text fontSize='1.6rem'>
-            4
-            </Text>
-            </Box>
-            <Spacer/>
-            </Flex>
+            {!mobile ? (
             <Flex
-            mt='1rem'>
-            <Box >
-            <Text>
-            Email
+             w="100%"  
+             justify="space-between">
+            <Box 
+            flexDir='column'>
+            <Text 
+            fontSize="1rem" >
+              E-mail
             </Text>
             <Text 
-            fontSize='1.6rem' 
-            minWidth='18rem'
-            maxWidth='18rem'>
-              
-            higorgiovane7@gmail.com
-            </Text>
-            </Box>  
-            <Spacer/>
-            <Box>
-            <Text>
-            Telefone
-            </Text>
-            <Text fontSize='1.6rem'>
-             62 985194415
+            fontSize="1.6rem" >
+              higorgiovaneteste@gmail.com 
             </Text>
             </Box>
-            <Spacer/>
-            <Spacer/>
-            </Flex>
-            <Flex
-            mt='1rem'>
-            <Box >
-            <Text>
-            Disciplina
+            <Flex 
+            w={10}  />
+            <Box 
+            flexDir='column'>
+            <Text 
+            fontSize="1rem"  >
+              Telefone
             </Text>
             <Text 
-            fontSize='1.6rem' 
-            minWidth='18rem'
-            maxWidth='18rem'>
-              
-            Psicologia Ativa
-            </Text>
-            </Box>  
-            <Spacer/>
-            <Box>
-            <Text>
-            Professor
-            </Text>
-            <Text fontSize='1.6rem'>
-            Henrique Lima
+            fontSize="1.6rem">
+              00 00000-0000
             </Text>
             </Box>
-            <Spacer/>
-            <Spacer/>
             </Flex>
+            ) : (
+              <Flex
+               w="100%" 
+               justify="space-between" >
+            <Box 
+            flexDir='column'>
+            <Text 
+            fontSize="1rem" >
+              E-mail
+            </Text>
+            <Text 
+            fontSize="1.6rem">
+              higorgiovaneteste@gmail.com 
+            </Text>
             </Box>
-            <Box>
+            <Box 
+            flexDir='column'>
+            <Text 
+            fontSize="1rem">
+              Telefone
+            </Text>
+            <Text 
+            fontSize="1.6rem">
+              00 00000-0000
+            </Text>
+            </Box>
+            </Flex>
+            )}
+            <Flex 
+            justify="space-between">
+            <Box 
+            flexDir='column'>
+            <Text 
+            fontSize="1rem">
+              Disciplina
+            </Text>
+            <Text 
+            fontSize="1.6rem">
+              Psicologia ativa
+            </Text>
+            </Box>
+            </Flex>
+            </Flex>
+            </Flex>
             <Flex 
             w="100%" 
             p='4' 
@@ -186,41 +177,48 @@ export default function Visualizar({
             backgroundColor: "#fff",
             display: "flex",
             flexDirection: "column",
+            border: "1px black"
             }}>
-            <Box 
-            display='flex'
-            flexDir='row'
-            justifyContent='space-between'
-            marginRight='2rem'
-            > 
             <Text 
             fontSize="1.5rem" 
-            p='2'
+            paddingLeft='1rem'
             >
-            Relatorio
+            Alunos
             </Text>
-            <Search />
-
-            </Box>
             <Table
-            headers={["Id","Data", "Paciente", "Tratamento",]}
+            headers={["Id","Nome", "CPF", "Período",]}
             data={result}
             isEditing={isEditing}
             setIsEditing={setIsEditing}
             type="secretario"     
             />
           </Flex>
-          </Box>
           <Box 
           width={!mobile ? '100%' : '2rem'} 
           px={mobile ? '0' : '2rem'} 
           mt="4"
           mb="4"
+          display='flex'
+          flexDir='row'
+          justifyContent='space-between'
+          
           >
             <Button 
             onPress={navegarParaHome} 
-            label="Voltar"
-            width='7rem'/>
+            label="Voltar"/>
+            <Button 
+            onPress={navegarParaHome} 
+            label="Excluir"
+            bg="white"
+            border="2px solid #C30B0B;"
+            color="#C30B0B;"
+            _hover= {{
+              backgroundColor: "#C30B0B",
+              opacity: 0.9,
+              color: "#FFF",
+              transition: "0.3s",
+            }}
+            />
           </Box>
         </Flex>
       </Flex>

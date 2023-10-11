@@ -33,7 +33,7 @@ export default function Cadastrar({
   const [entidadeHover, setEntidadeHover] = useState<string>();
 
   const [etapa, setEtapa] = useState<
-    "selecionar" | "Professor" | "Secretário" | "Aluno"
+    "selecionar" | "Paciente" |"Professor" | "Secretário" | "Aluno" 
   >("selecionar");
 
   const [nome, setNome] = useState<string>("");
@@ -108,7 +108,7 @@ export default function Cadastrar({
             flexDir="column"
             align="center"
             justify="center"
-            p="4"
+            p="3"
             borderRadius={5}
             border="2px solid #C760EB"
             _hover={{
@@ -118,7 +118,7 @@ export default function Cadastrar({
             }}
             style={{
               height: 150,
-              width: mobile ? "100%" : 150,
+              width: (mobile ? "100%" : 150),
             }}
             mt={mobile ? 4 : 0}
             color="#868686"
@@ -152,7 +152,7 @@ export default function Cadastrar({
         <ModalContent borderRadius={8}>
           {etapa === "selecionar" && (
             <Flex flexDir="column" p="6" pt="6">
-              <Flex align="center" justify="space-between" w="100%">
+              <Flex align="center" justify="space-between" w="100%" >
                 <Text color="#787878" fontSize="1.8rem">
                   Novo cadastro
                 </Text>
@@ -163,9 +163,18 @@ export default function Cadastrar({
               <Flex
                 flexDir={mobile ? "column" : "row"}
                 mt={mobile ? "2" : "6"}
-                align="center"
-                justify="space-between"
+                display='grid'
+                gridTemplateColumns='repeat(2, 1fr)'
+                gridTemplateRows='repeat(2), 1fr)'
+                gap= "1rem"
+                justifyItems='center'
+                p='-'
               >
+                <Entidade
+                  entidade="Paciente"
+                  iconImage="/cadastro_paciente.png"
+                  hoverImage="/cadastro_paciente_hover.png"
+                />
                 <Entidade
                   entidade="Professor"
                   iconImage="/cadastro_professor.png"
