@@ -153,7 +153,7 @@ export default function Cadastrar({
         <ModalContent borderRadius={8}>
           {etapa === "selecionar" && (
             <Flex flexDir="column" p="6" pt="6" >
-              <Flex align="center" justify="space-between" w="100%" >
+              <Flex align="center" justify='space-around' w="100%" >
                 <Text color="#787878" fontSize="1.8rem">
                   Novo cadastro
                 </Text>
@@ -165,7 +165,7 @@ export default function Cadastrar({
                 flexDir={mobile ? "column" : "row"}
                 mt={mobile ? "2" : "6"}
                 display='grid'
-                gridTemplateColumns='repeat(2, 1fr)'
+                gridTemplateColumns='repeat(2, 0fr)'
                 gridTemplateRows='repeat(2, 1fr)'
                 gap={4}
                 justifyItems='center'
