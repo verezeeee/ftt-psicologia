@@ -1,4 +1,4 @@
-import { Divider, Flex, Text, Box, Spacer, HStack, Checkbox} from "@chakra-ui/react";
+import { Divider, Flex, Text, Box, Grid, GridItem} from "@chakra-ui/react";
 import Button from "../components/Button";
 import { useRouter } from 'next/router';
 import Header from "../components/Header";
@@ -6,7 +6,6 @@ import Sidebar from "../components/Sidebar";
 import { useState } from "react";
 import Table from "../components/Tables";
 import { SecretarioSignUpData } from "../utils/types";
-import Search from "../components/Search";
 
 export default function Visualizar({
   mobile,
@@ -49,7 +48,6 @@ export default function Visualizar({
       ml={mobile ? 0 : 300} 
       transition="margin-left 0.3s ease" 
       color="#787878"
-      
       >
         <Header 
         activeTab={activeTab} 
@@ -57,320 +55,138 @@ export default function Visualizar({
         />
         <Flex 
         flexDir="column" 
-        p="0" 
+        p="8" 
         pt="6"
         >
           <Flex 
-          w="100%" 
+          w="95%" 
           flexDir="row" 
           justify="space-between" 
+          align="end"
+          position='relative'
           mt='5rem'
-          >
-            <Flex 
-            display='flex'
-            flexDir='row'
-            justifyContent='space-between'
-            w='100%'
-            >
+          p='0'>
             <Text 
             color="#787878" 
             fontSize="1.8rem" 
             flexDir="column"
-            p='4'
             >
-              Informações do paciente
+              Informações sobre professor
             </Text>
-
+            <Flex
+            position='absolute'
+            marginLeft="calc(100% - 3%)"
+            align='end'>
             <Button 
             label="Editar"
             onPress={navegarParaHome} 
             filled
-            width='7rem'
             />
-            </Flex>
             </Flex>
           </Flex>
           <Divider mt="4" />
+          <Grid templateColumns='repeat(2, 1fr)' gap={6} p='4' position='relative'>
+          <GridItem w='100%' h='10'>
           <Box 
-          p='6'
-          fontSize='1rem'>
-            <Flex>
-            <Box >
+            >
             <Text 
             minWidth='18rem'
             maxWidth='18rem'>
             Nome completo
             </Text>
             <Text fontSize='1.6rem'>
-              Higor Giovane
-            </Text>
-            </Box>  
-            <Spacer
-            maxW='10rem'
-            />
-            <Box>
-            <Text>
-            CPF
-            </Text>
-            <Text fontSize='1.6rem'>
-              123.456.789-01
+              Higor Giovane Monteiro Torres
             </Text>
             </Box>
-            <Spacer
-            maxW='10rem'
-            />
-            <Box>
-            <Text>
-            Data de Nascimento
+          </GridItem>
+          <GridItem w='100%' h='10'/>
+          <GridItem w='100%' h='10' mt='9'>
+          <Box 
+            >
+            <Text >
+            E-mail
             </Text>
             <Text fontSize='1.6rem'>
-             29/04/2005
+              higorgiovane7@gmail.com
             </Text>
             </Box>
-            <Spacer/>
-            </Flex>
-            <Flex
-            mt='1rem'>
-            <Box >
-            <Text>
-            Email
-            </Text>
-            <Text 
-            fontSize='1.6rem' 
-            minWidth='18rem'
-            maxWidth='18rem'>
-              
-            higorgiovane7@gmail.com
-            </Text>
-            </Box>  
-            <Spacer
-            maxW='10rem'
-            />
-            <Box>
+          </GridItem>
+          <GridItem w='100%' h='10' mt='9'>
+          <Box 
+            >
             <Text>
             Telefone
             </Text>
-            <Text fontSize='1.6rem'
-            >
-             62 985194415
+            <Text fontSize='1.6rem'>
+              (62) 98519-4415
             </Text>
             </Box>
-            <Spacer
-            maxW='10rem'
+          </GridItem>
+          <GridItem w='100%' h='10' mt='9' mb='4'>
+          <Box 
+            >
+            <Text >
+            Disciplina
+            </Text>
+            <Text fontSize='1.6rem'>
+              Psicologia Ativa
+            </Text>
+            </Box>
+          </GridItem>
+          
+          </Grid>
+          <Flex 
+            w="100%" 
+            p='4' 
+            style={{
+            backgroundColor: "#fff",
+            display: "flex",
+            flexDirection: "column",
+            border: "1px black"
+            }}>
+            <Text 
+            fontSize="1.5rem" 
+            paddingLeft='1rem'
+            >
+            Alunos
+            </Text>
+            <Table
+            headers={["Id","Nome", "CPF", "Período",]}
+            data={result}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            type="secretario"     
             />
-            <Box>
-            <Text>
-              Sexo
-            </Text>
-            <Text fontSize='1.6rem'>
-              MAACHO
-            </Text>
-            </Box>
-            <Spacer/>
-            <Spacer/>
-            </Flex>
-            <Flex
-            mt='1rem'>
-            <Box >
-            <Text>
-            Estado Civil
-            </Text>
-            <Text 
-            fontSize='1.6rem' 
-            minWidth='18rem'
-            maxWidth='18rem'>
-              
-            Solteiro
-            </Text>
-            </Box>  
-            <Spacer/>
-            <Box>
-            <Text>
-            Religião
-            </Text>
-            <Text fontSize='1.6rem'>
-            Católico
-            </Text>
-            </Box>
-            <Spacer/>
-            <Box>
-            <Text>
-            Renda familiar
-            </Text>
-            <Text fontSize='1.6rem'>
-            1 a 3 salários minimos
-            </Text>
-            </Box>
-            <Spacer/>
-            <Box>
-            <Text>
-            Profissão
-            </Text>
-            <Text fontSize='1.6rem'>
-            Professor
-            </Text>
-            </Box>
-            <Spacer/>
-            <Spacer/>
-            </Flex>
-            <Flex>
-              <Box
-              fontSize='1rem'
-              >
-                <Text>
-                  Outro Contato
-                </Text>
-                <Text
-                fontSize='1.6rem'>
-                  (62) 98519-4415
-                </Text>
-              </Box>
-              <Spacer/>
-              <Box>
-                <Text>
-                  Nome de contato/responsável
-                </Text>
-                <Text
-                fontSize='1.6rem'
-                >
-                  Pablo Henrique Martins
-                </Text>
-              </Box>
-              <Spacer/>
-              <Box
-              display='flex'
-              flexDir='row'
-              alignItems='center'
-              >
-                <Checkbox value='menor'>
-                Menor de idade
-                </Checkbox> 
-              </Box>
-              <Spacer/>
-            </Flex>
-            <Flex>
-              <Box
-              fontSize='1rem'
-              >
-                <Text>
-                  Naturalidade
-                </Text>
-                <Text fontSize='1.6rem'>
-                  Anápolis
-                </Text>
-              </Box>
-              <Spacer/>
-              <Box>
-                <Text>
-                  Nacionalidade
-                </Text>
-                <Text fontSize='1.6rem'>
-                  Brasileira
-                </Text>
-              </Box>
-              <Spacer/>
-              <Spacer/>
-            </Flex>
-            </Box>
-            <Text 
-            color="#787878" 
-            fontSize="1.8rem" 
-            flexDir="column"
-            p='4'
-            >
-              Endereço
-            </Text>
-
-            <Divider mt='4'/>
-            <Flex 
-            p='4'
-            >
-            <Flex 
-            fontSize='1rem'>
-              <Box>
-                <Text>
-                  CEP
-                </Text>
-                <Text fontSize='1.6rem'>
-                  75083-125
-                </Text>
-              </Box>
-              <Spacer/>
-              <Box>
-                <Text>
-                  Logradouro
-                </Text>
-                <Text fontSize='1.6rem'>
-                  Rua das Flores
-                </Text>
-              </Box>
-              <Spacer/>
-              <Box>
-                <Text>
-                  Bairro
-                </Text>
-                <Text fontSize='1.6rem'>
-                  Jardim Primavera
-                </Text>
-              </Box>
-              <Spacer/>
-            </Flex>
-            <Flex
-            fontSize='1rem'>
-              <Box>
-                <Text>
-                  Complemento
-                </Text>
-                <Text fontSize='1.6rem'>
-                  AAAA
-                </Text>
-              </Box>
-              <Spacer/>
-              <Box>
-                <Text>
-                  Cidade
-                </Text>
-                <Text fontSize='1.6rem'>
-                  Anápolis
-                </Text>
-              </Box>
-              <Spacer/>
-              <Box>
-                <Text>
-                  UF
-                </Text>
-                <Text fontSize='1.6rem'>
-                  GO
-                </Text>
-              </Box>
-            </Flex>
-            </Flex>
-
-
-            <Text 
-            color="#787878" 
-            fontSize="1.8rem" 
-            flexDir="column"
-            p='4'
-            >
-              Informações de tratamento
-            </Text>
-
-            <Divider mt='4'/>
-          
-          
+          </Flex>
           <Box 
           width={!mobile ? '100%' : '2rem'} 
           px={mobile ? '0' : '2rem'} 
           mt="4"
           mb="4"
+          display='flex'
+          flexDir='row'
+          justifyContent='space-between'
+          
           >
             <Button 
             onPress={navegarParaHome} 
-            label="Voltar"
-            width='7rem'/>
+            label="Voltar"/>
+            <Button 
+            onPress={navegarParaHome} 
+            label="Excluir"
+            bg="white"
+            border="2px solid #C30B0B;"
+            color="#C30B0B;"
+            _hover= {{
+              backgroundColor: "#C30B0B",
+              opacity: 0.9,
+              color: "#FFF",
+              transition: "0.3s",
+            }}
+            />
           </Box>
         </Flex>
+       </Flex>
       </Flex>
   );
 }

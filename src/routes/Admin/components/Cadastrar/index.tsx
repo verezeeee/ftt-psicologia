@@ -20,6 +20,7 @@ import { useMediaQuery } from "../../../../utils/useMediaQuery";
 import CadastrarProfessor from "./Professor";
 import CadastrarSecretario from "./Secretario";
 import CadastrarAluno from "./Aluno";
+import CadastrarPaciente from "./Paciente";
 
 export default function Cadastrar({
   cadastrarOpened,
@@ -151,7 +152,7 @@ export default function Cadastrar({
         <ModalOverlay />
         <ModalContent borderRadius={8}>
           {etapa === "selecionar" && (
-            <Flex flexDir="column" p="6" pt="6">
+            <Flex flexDir="column" p="6" pt="6" >
               <Flex align="center" justify="space-between" w="100%" >
                 <Text color="#787878" fontSize="1.8rem">
                   Novo cadastro
@@ -165,10 +166,10 @@ export default function Cadastrar({
                 mt={mobile ? "2" : "6"}
                 display='grid'
                 gridTemplateColumns='repeat(2, 1fr)'
-                gridTemplateRows='repeat(2), 1fr)'
-                gap= "1rem"
+                gridTemplateRows='repeat(2, 1fr)'
+                gap={4}
                 justifyItems='center'
-                p='-'
+                w='100%'
               >
                 <Entidade
                   entidade="Paciente"
@@ -247,6 +248,23 @@ export default function Cadastrar({
               setEmail={setEmail}
               setEtapa={setEtapa}
             />
+          )}
+          {etapa === "Paciente" && (
+            <CadastrarPaciente
+            mobile={mobile}
+            closeModal={closeModal}
+            nome={nome}
+            setNome={setNome}
+            cpf={cpf}
+            setCPF={setCPF}
+            telefone={telefone}
+            setTelefone={setTelefone}
+            disciplina={disciplina}
+            setDisciplina={setDisciplina}
+            email={email}
+            setEmail={setEmail}
+            setEtapa={setEtapa}
+          />
           )}
         </ModalContent>
       </Modal>

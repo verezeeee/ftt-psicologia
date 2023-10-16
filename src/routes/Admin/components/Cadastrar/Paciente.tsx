@@ -1,226 +1,191 @@
-import { Divider, Flex, Text, Box} from "@chakra-ui/react";
+import { AbsoluteCenter, Divider, Flex, Text, useToast } from "@chakra-ui/react";
+import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
-import { useRouter } from 'next/router';
-import Header from "../../../../components/Header";
-import Sidebar from "../../../../components/Sidebar";
-import { useState } from "react";
-import Table from "../../../../components/Tables";
-import { SecretarioSignUpData } from "../../../../utils/types";
+import { cadastrarProfessor } from "./services";
+import { validarCPF } from "../../../../utils/cpf";
+import { validarEmail } from "../../../../utils/email";
 
-export default function Visualizar({
+export default function CadastrarPaciente({
   mobile,
+  closeModal,
   nome,
-  email,
+  setNome,
   cpf,
+  setCPF,
   telefone,
-  turno,
-  setMobile,
-  user,
+  setTelefone,
+  disciplina,
+  setDisciplina,
+  email,
+  setEmail,
+  setEtapa,
 }: {
   mobile: boolean;
+  closeModal: () => void;
   nome: string;
-  email: string;
+  setNome: any;
   cpf: string;
+  setCPF: any;
   telefone: string;
-  turno: string;
-  setMobile: false;
-  user: SecretarioSignUpData;
+  setTelefone: any;
+  disciplina: string;
+  setDisciplina: any;
+  email: string;
+  setEmail: any;
+  setEtapa: any;
 }) {
-  const router = useRouter();
+  const toast = useToast();
 
-  const navegarParaHome = () => {
-    router.push('/');
-  };
-
-  const [activeTab, setActiveTab] = useState("tab1");
-  const [isEditing, setIsEditing] = useState<any>();
-  const [result, setResult] = useState<SecretarioSignUpData[]>([]);
-  
-  
   return (
-    <Flex>
-      <Sidebar 
-      activeTab={activeTab} 
-      setActiveTab={setActiveTab} />
-      <Flex 
-      flexDir="column" 
-      w="100%" 
-      ml={mobile ? 0 : 300} 
-      transition="margin-left 0.3s ease" 
-      color="#787878"
-      >
-        <Header 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab}
-        />
-        <Flex 
-        flexDir="column" 
-        p="8" 
-        pt="6"
-        >
-          <Flex 
-          w="100%" 
-          flexDir="row" 
-          justify="space-between" 
-          align="end"
-          position='relative'
-          mt='5rem'
-          p='0'>
-            <Text 
-            color="#787878" 
-            fontSize="1.8rem" 
-            flexDir="column"
-            >
-              Informações sobre professor
-            </Text>
-            <Flex
-            position='absolute'
-            marginLeft="calc(100% - 3%)"
-            align='end'>
-            <Button 
-            label="Editar"
-            onPress={navegarParaHome} 
-            filled
-            />
-            </Flex>
-          </Flex>
-          <Divider mt="4" />
-          <Flex 
-          flexDir="column"
-          py="4" 
-          w={mobile ? "100%" : "50%"} 
-          transition="width 0.3s ease" >
-          <Text 
-          fontSize="1rem" >
-              Nome
-            </Text>
-            <Text fontSize="1.6rem" >
-              Higor Giovane 
-            </Text>
-            {!mobile ? (
-            <Flex
-             w="100%"  
-             justify="space-between">
-            <Box 
-            flexDir='column'>
-            <Text 
-            fontSize="1rem" >
-              E-mail
-            </Text>
-            <Text 
-            fontSize="1.6rem" >
-              higorgiovaneteste@gmail.com 
-            </Text>
-            </Box>
-            <Flex 
-            w={10}  />
-            <Box 
-            flexDir='column'>
-            <Text 
-            fontSize="1rem"  >
-              Telefone
-            </Text>
-            <Text 
-            fontSize="1.6rem">
-              00 00000-0000
-            </Text>
-            </Box>
-            </Flex>
-            ) : (
-              <Flex
-               w="100%" 
-               justify="space-between" >
-            <Box 
-            flexDir='column'>
-            <Text 
-            fontSize="1rem" >
-              E-mail
-            </Text>
-            <Text 
-            fontSize="1.6rem">
-              higorgiovaneteste@gmail.com 
-            </Text>
-            </Box>
-            <Box 
-            flexDir='column'>
-            <Text 
-            fontSize="1rem">
-              Telefone
-            </Text>
-            <Text 
-            fontSize="1.6rem">
-              00 00000-0000
-            </Text>
-            </Box>
-            </Flex>
-            )}
-            <Flex 
-            justify="space-between">
-            <Box 
-            flexDir='column'>
-            <Text 
-            fontSize="1rem">
-              Disciplina
-            </Text>
-            <Text 
-            fontSize="1.6rem">
-              Psicologia ativa
-            </Text>
-            </Box>
-            </Flex>
-            </Flex>
-            </Flex>
-            <Flex 
-            w="100%" 
-            p='4' 
-            style={{
-            backgroundColor: "#fff",
-            display: "flex",
-            flexDirection: "column",
-            border: "1px black"
-            }}>
-            <Text 
-            fontSize="1.5rem" 
-            paddingLeft='1rem'
-            >
-            Alunos
-            </Text>
-            <Table
-            headers={["Id","Nome", "CPF", "Período",]}
-            data={result}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            type="secretario"     
-            />
-          </Flex>
-          <Box 
-          width={!mobile ? '100%' : '2rem'} 
-          px={mobile ? '0' : '2rem'} 
-          mt="4"
-          mb="4"
-          display='flex'
-          flexDir='row'
-          justifyContent='space-between'
-          
-          >
-            <Button 
-            onPress={navegarParaHome} 
-            label="Voltar"/>
-            <Button 
-            onPress={navegarParaHome} 
-            label="Excluir"
-            bg="white"
-            border="2px solid #C30B0B;"
-            color="#C30B0B;"
-            _hover= {{
-              backgroundColor: "#C30B0B",
-              opacity: 0.9,
-              color: "#FFF",
-              transition: "0.3s",
-            }}
-            />
-          </Box>
-        </Flex>
+    <Flex flexDir="column" p="8" pt="6">
+      <Flex align="center" justify="space-between" w="100%">
+        <Text color="#787878" fontSize="1.8rem">
+          Cadastro de Paciente
+        </Text>
       </Flex>
+      <Divider mt="2" />
+      <Text color="#787878" fontSize="1.8rem">
+          Informações pessoais
+        </Text>
+      <Flex
+        flexDir="column"
+        py="4"
+        align="center"
+        justify="space-between"
+        w="100%"
+      >
+        <Input label="Nome completo" value={nome} setValue={setNome} />
+        {mobile ? (
+          <Flex
+            w="100%"
+            flexDir="column"
+            align="center"
+            justify="space-between"
+          >
+            <Input
+              label="CPF"
+              mask="000.000.000-00"
+              value={cpf}
+              setValue={setCPF}
+            />
+            <Flex w={10} />
+            <Input
+              label="Telefone"
+              mask="(00) 00000-0000"
+              value={telefone}
+              setValue={setTelefone}
+            />
+          </Flex>
+        ) : (
+          <Flex w="100%" align="center" justify="space-between">
+            <Input
+              label="CPF"
+              mask="000.000.000-00"
+              value={cpf}
+              setValue={setCPF}
+            />
+            <Flex w={10} />
+            <Input
+              label="Telefone"
+              mask="(00) 00000-0000"
+              value={telefone}
+              setValue={setTelefone}
+            />
+          </Flex>
+        )}
+        <Input label="Disciplina" value={disciplina} setValue={setDisciplina} />
+        <Input label="E-mail" value={email} setValue={setEmail} />
+      </Flex>
+      <Flex align="center" mt="4" justify="space-between" w="100%">
+        <Button label="Cancelar" onPress={closeModal} mt={0.1} />
+        <Button
+          label="Cadastrar"
+          onPress={async () => {
+            if (!nome) {
+              toast({
+                status: "error",
+                description: "Insira o nome do professor",
+                duration: 500,
+              });
+            } else if (!nome.split(" ")[1]) {
+              toast({
+                status: "error",
+                description: "Insira o sobrenome do professor",
+                duration: 500,
+              });
+            } else if (!cpf) {
+              toast({
+                status: "error",
+                description: "Insira o CPF do professor",
+                duration: 500,
+              });
+            } else if (!validarCPF(cpf)) {
+              toast({
+                status: "error",
+                description: "Insira um CPF válido",
+                duration: 500,
+              });
+            } else if (!telefone) {
+              toast({
+                status: "error",
+                description: "Insira o telefone do professor",
+                duration: 500,
+              });
+            } else if (telefone.length !== 15) {
+              toast({
+                status: "error",
+                description: "Insira um telefone válido",
+                duration: 500,
+              });
+            } else if (!disciplina) {
+              toast({
+                status: "error",
+                description: "Insira a disciplina do professor",
+                duration: 500,
+              });
+            } else if (!email) {
+              toast({
+                status: "error",
+                description: "Insira o e-mail do professor",
+                duration: 500,
+              });
+            } else if (!validarEmail(email)) {
+              toast({
+                status: "error",
+                description: "Insira um e-mail válido",
+                duration: 500,
+              });
+            } else {
+              const res = await cadastrarProfessor({
+                nome,
+                cpf,
+                disciplinaMinistrada: disciplina,
+                telefoneContato: telefone,
+                email,
+                disciplina,
+                role: "professor",
+              });
+              if (res.error) {
+                toast({
+                  status: "error",
+                  description: res.error,
+                  duration: 500,
+                });
+                console.log(res.error);
+              } else {
+                toast({
+                  status: "success",
+                  description: "Professor cadastrado com sucesso!",
+                  duration: 500,
+                });
+                closeModal();
+              }
+            }
+          }}
+          mt={0.1}
+          filled
+        />
+      </Flex>
+    </Flex>
   );
 }
