@@ -1,14 +1,13 @@
-import { Divider, Flex, Text, Box, Grid, GridItem} from "@chakra-ui/react";
+import { Divider, Flex, Text, Box, Grid, GridItem, Checkbox } from "@chakra-ui/react";
 import Button from "../components/Button";
 import { useRouter } from 'next/router';
-import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
-import { useState } from "react";
-import Table from "../components/Tables";
 import { SecretarioSignUpData } from "../utils/types";
+import { useMediaQuery } from "@chakra-ui/react";
+import Sidebar from "../components/Sidebar";
+import Header from "../components/Header";
+import { useState } from "react";
 
 export default function Visualizar({
-  mobile,
   nome,
   email,
   cpf,
@@ -17,176 +16,161 @@ export default function Visualizar({
   setMobile,
   user,
 }: {
-  mobile: boolean;
   nome: string;
   email: string;
   cpf: string;
   telefone: string;
   turno: string;
-  setMobile: false;
+  setMobile: (mobile: boolean) => void;
   user: SecretarioSignUpData;
 }) {
   const router = useRouter();
 
-  const navegarParaHome = () => {
+  const navegarParaOutraPasta = () => {
     router.push('/');
   };
 
+  const [ isMobile] = useMediaQuery("(max-width: 768px)");
   const [activeTab, setActiveTab] = useState("tab1");
-  const [isEditing, setIsEditing] = useState<any>();
-  const [result, setResult] = useState<SecretarioSignUpData[]>([]);
-  
-  
+
   return (
-    <Flex>
-      <Sidebar 
-      activeTab={activeTab} 
-      setActiveTab={setActiveTab} />
-      <Flex 
-      flexDir="column" 
-      w="100%" 
-      ml={mobile ? 0 : 300} 
-      transition="margin-left 0.3s ease" 
-      color="#787878"
-      >
-        <Header 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab}
-        />
-        <Flex 
-        flexDir="column" 
-        p="8" 
-        pt="6"
-        >
-          <Flex 
-          w="95%" 
-          flexDir="row" 
-          justify="space-between" 
-          align="end"
-          position='relative'
-          mt='5rem'
-          p='0'>
-            <Text 
-            color="#787878" 
-            fontSize="1.8rem" 
-            flexDir="column"
-            >
-              Informações sobre professor
+    <>
+      {isMobile ? (
+        <Flex flexDir="column" w="100%" ml={isMobile ? 0 : 300} transition="margin-left 0.3s ease" color="#787878">
+        <Header activeTab={activeTab} setActiveTab={setActiveTab}/>
+        <Flex flexDir="column" p="0" pt="6" w='100%'>
+          <Flex w="100%" flexDir="row" justify="space-between" mt='5rem'>
+            <Text color="#787878" fontSize="1.8rem" flexDir="column" p='4'>
+              Informações sobre secretário
             </Text>
-            <Flex
-            position='absolute'
-            marginLeft="calc(100% - 3%)"
-            align='end'>
-            <Button 
-            label="Editar"
-            onPress={navegarParaHome} 
-            filled
-            />
-            </Flex>
           </Flex>
-          <Divider mt="4" />
-          <Grid templateColumns='repeat(2, 1fr)' gap={6} p='4' position='relative'>
-          <GridItem w='100%' h='10'>
-          <Box 
-            >
-            <Text 
-            minWidth='18rem'
-            maxWidth='18rem'>
-            Nome completo
+        </Flex>
+        <Divider />
+        <Grid templateColumns='1fr' gap={6} p='4'>
+          <GridItem w='100%' h='100'>
+            <Text>
+              Nome completo
             </Text>
             <Text fontSize='1.6rem'>
               Higor Giovane Monteiro Torres
             </Text>
-            </Box>
           </GridItem>
-          <GridItem w='100%' h='10'/>
-          <GridItem w='100%' h='10' mt='9'>
-          <Box 
-            >
-            <Text >
-            E-mail
+          <GridItem w='100%' h='100'>
+            <Text>
+              E-mail
             </Text>
             <Text fontSize='1.6rem'>
-              higorgiovane7@gmail.com
+              julianaalvespach@gmail.com
             </Text>
-            </Box>
           </GridItem>
-          <GridItem w='100%' h='10' mt='9'>
-          <Box 
-            >
+          <GridItem w='100%' h='100'>
             <Text>
-            Telefone
+              Telefone
             </Text>
             <Text fontSize='1.6rem'>
               (62) 98519-4415
             </Text>
-            </Box>
           </GridItem>
-          <GridItem w='100%' h='10' mt='9' mb='4'>
-          <Box 
-            >
-            <Text >
-            Disciplina
+          <GridItem w='100%' h='100'>
+            <Text>
+              Turno
             </Text>
             <Text fontSize='1.6rem'>
-              Psicologia Ativa
+              Matutino
             </Text>
-            </Box>
           </GridItem>
-          
-          </Grid>
-          <Flex 
-            w="100%" 
-            p='4' 
-            style={{
-            backgroundColor: "#fff",
-            display: "flex",
-            flexDirection: "column",
-            border: "1px black"
-            }}>
-            <Text 
-            fontSize="1.5rem" 
-            paddingLeft='1rem'
-            >
-            Alunos
+          <GridItem w='100%' h='100'>
+            <Text>
+              CPF
             </Text>
-            <Table
-            headers={["Id","Nome", "CPF", "Período",]}
-            data={result}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            type="secretario"     
-            />
-          </Flex>
-          <Box 
-          width={!mobile ? '100%' : '2rem'} 
-          px={mobile ? '0' : '2rem'} 
-          mt="4"
-          mb="4"
-          display='flex'
-          flexDir='row'
-          justifyContent='space-between'
-          
-          >
-            <Button 
-            onPress={navegarParaHome} 
-            label="Voltar"/>
-            <Button 
-            onPress={navegarParaHome} 
-            label="Excluir"
-            bg="white"
-            border="2px solid #C30B0B;"
-            color="#C30B0B;"
-            _hover= {{
-              backgroundColor: "#C30B0B",
-              opacity: 0.9,
-              color: "#FFF",
-              transition: "0.3s",
-            }}
-            />
-          </Box>
-        </Flex>
-       </Flex>
+            <Text fontSize='1.6rem'>
+              065.127.1431-13
+            </Text>
+          </GridItem>
+        </Grid>
+        <Button onPress={navegarParaOutraPasta} label="Voltar"/>
       </Flex>
+      ) : (
+        <Flex>
+          <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+          <Flex
+            flexDir="column"
+            w="100%"
+            ml={isMobile ? 0 : 300}
+            transition="margin-left 0.3s ease"
+            color="#787878"
+          >
+            <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+            <Flex flexDir="column" p="0" pt="6" w='100%'>
+              <Flex w="100%" flexDir="row" justify="space-between" mt='5rem'>
+                <Flex display='flex' flexDir='row' justifyContent='space-between' w='100%'>
+                  <Text color="#787878" fontSize="1.8rem" flexDir="column" p='4'>
+                    Informações do paciente
+                  </Text>
+                  <Divider mt={2} px={2} />
+                </Flex>
+              </Flex>
+            </Flex>
+            <Divider />
+            <Grid templateColumns='repeat(2, 1fr)' gap={6} p='4'>
+              <GridItem w='100%' h='10'>
+                <Box>
+                  <Text>
+                    Nome completo
+                  </Text>
+                  <Text fontSize='1.6rem'>
+                    Higor Giovane Monteiro Torres
+                  </Text>
+                </Box>
+              </GridItem>
+              <GridItem w='100%' h='10' />
+              <GridItem w='100%' h='10' mt='9'>
+                <Box>
+                  <Text>
+                    E-mail
+                  </Text>
+                  <Text fontSize='1.6rem'>
+                    julianaalvespach@gmail.com
+                  </Text>
+                </Box>
+              </GridItem>
+              <GridItem w='100%' h='10' mt='9'>
+                <Box>
+                  <Text>
+                    Telefone
+                  </Text>
+                  <Text fontSize='1.6rem'>
+                    (62) 98519-4415
+                  </Text>
+                </Box>
+              </GridItem>
+              <GridItem w='100%' h='10' mt='9'>
+                <Box>
+                  <Text>
+                    Turno
+                  </Text>
+                  <Text fontSize='1.6rem'>
+                    Matutino
+                  </Text>
+                </Box>
+              </GridItem>
+              <GridItem w='100%' h='10' mt='9'>
+                <Box>
+                  <Text>
+                    CPF
+                  </Text>
+                  <Text fontSize='1.6rem'>
+                    065.127.1431-13
+                  </Text>
+                </Box>
+              </GridItem>
+            </Grid>
+            <Box width={isMobile ? '100%' : '2rem'} px={isMobile ? '0' : '2rem'} mt="4">
+              <Button onPress={navegarParaOutraPasta} label="Voltar" />
+            </Box>
+          </Flex>
+        </Flex>
+      )}
+    </>
   );
 }

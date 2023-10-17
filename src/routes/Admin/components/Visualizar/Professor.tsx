@@ -1,11 +1,13 @@
-import { Divider, Flex, Text, Box} from "@chakra-ui/react";
+import { Divider, Flex, Text, Box, Grid, GridItem} from "@chakra-ui/react";
 import Button from "../../../../components/Button";
 import { useRouter } from 'next/router';
 import Header from "../../../../components/Header";
 import Sidebar from "../../../../components/Sidebar";
 import { useState } from "react";
 import Table from "../../../../components/Tables";
+import { useMediaQuery } from "@chakra-ui/react";
 import { SecretarioSignUpData } from "../../../../utils/types";
+
 
 export default function Visualizar({
   mobile,
@@ -32,16 +34,106 @@ export default function Visualizar({
     router.push('/');
   };
 
+  const [isMobile] = useMediaQuery("(max-width: 768px)")
   const [activeTab, setActiveTab] = useState("tab1");
   const [isEditing, setIsEditing] = useState<any>();
   const [result, setResult] = useState<SecretarioSignUpData[]>([]);
   
   
   return (
-    <Flex>
-      <Sidebar 
-      activeTab={activeTab} 
-      setActiveTab={setActiveTab} />
+    <>
+    {isMobile ? (
+       <Flex
+       flexDir="column"
+       alignItems={isMobile ? "center" : null} 
+     >
+       
+       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+       <Text
+         color="#787878"
+         fontSize="1.8rem"
+         margin={isMobile ? "5rem 0" : 0}
+       >
+         Informações sobre professor
+       </Text>
+       <Divider />
+       <Grid templateColumns={isMobile ? "1fr" : "repeat(2, 1fr)"} gap={6} p="4">
+         <GridItem w="100%" h="10">
+           <Box>
+             <Text minWidth="18rem" maxWidth="18rem">
+               Nome completo
+             </Text>
+             <Text fontSize="1.6rem">Higor Giovane Monteiro Torres</Text>
+           </Box>
+         </GridItem>
+         <GridItem w="100%" h="10" />
+         <GridItem w="100%" h="10" mt="9">
+           <Box>
+             <Text>E-mail</Text>
+             <Text fontSize="1.6rem">higorgiovane7@gmail.com</Text>
+           </Box>
+         </GridItem>
+         <GridItem w="100%" h="10" mt="9">
+           <Box>
+             <Text>Telefone</Text>
+             <Text fontSize="1.6rem">(62) 98519-4415</Text>
+           </Box>
+         </GridItem>
+         <GridItem w="100%" h="10" mt="9" mb="4">
+           <Box>
+             <Text>Disciplina</Text>
+             <Text fontSize="1.6rem">Psicologia Ativa</Text>
+           </Box>
+         </GridItem>
+       </Grid>
+       <Flex
+         w="100%"
+         p="4"
+         style={{
+           backgroundColor: "#fff",
+           display: "flex",
+           flexDirection: "column",
+           border: "1px black",
+         }}
+       >
+         <Text fontSize="1.5rem" paddingLeft="1rem">
+           Alunos
+         </Text>
+         <Table
+           headers={["Id", "Nome", "CPF", "Período"]}
+           data={result}
+           isEditing={isEditing}
+           setIsEditing={setIsEditing}
+           type="secretario"
+         />
+       </Flex>
+       <Flex
+         w="100%"
+         p="4"
+         flexDir={isMobile ? "column" : "row"}
+         justifyContent={isMobile ? "center" : "space-between"}
+       >
+         <Button onPress={navegarParaHome} label="Voltar" />
+         <Button
+           onPress={navegarParaHome}
+           label="Excluir"
+           bg="white"
+           border="2px solid #C30B0B"
+           color="#C30B0B"
+           _hover={{
+             backgroundColor: "#C30B0B",
+             opacity: 0.9,
+             color: "#FFF",
+             transition: "0.3s",
+           }}
+         />
+       </Flex>
+     </Flex>
+    ) : (
+      <Flex>
+      {isMobile ? null : (
+        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      )}
       <Flex 
       flexDir="column" 
       w="100%" 
@@ -59,7 +151,7 @@ export default function Visualizar({
         pt="6"
         >
           <Flex 
-          w="100%" 
+          w="95%" 
           flexDir="row" 
           justify="space-between" 
           align="end"
@@ -85,92 +177,57 @@ export default function Visualizar({
             </Flex>
           </Flex>
           <Divider mt="4" />
+          <Grid templateColumns='repeat(2, 1fr)' gap={6} p='4' position='relative'>
+          <GridItem w='100%' h='10'>
+          <Box 
+            >
+            <Text 
+            minWidth='18rem'
+            maxWidth='18rem'>
+            Nome completo
+            </Text>
+            <Text fontSize='1.6rem'>
+              Higor Giovane Monteiro Torres
+            </Text>
+            </Box>
+          </GridItem>
+          <GridItem w='100%' h='10'/>
+          <GridItem w='100%' h='10' mt='9'>
+          <Box 
+            >
+            <Text >
+            E-mail
+            </Text>
+            <Text fontSize='1.6rem'>
+              higorgiovane7@gmail.com
+            </Text>
+            </Box>
+          </GridItem>
+          <GridItem w='100%' h='10' mt='9'>
+          <Box 
+            >
+            <Text>
+            Telefone
+            </Text>
+            <Text fontSize='1.6rem'>
+              (62) 98519-4415
+            </Text>
+            </Box>
+          </GridItem>
+          <GridItem w='100%' h='10' mt='9' mb='4'>
+          <Box 
+            >
+            <Text >
+            Disciplina
+            </Text>
+            <Text fontSize='1.6rem'>
+              Psicologia Ativa
+            </Text>
+            </Box>
+          </GridItem>
+          
+          </Grid>
           <Flex 
-          flexDir="column"
-          py="4" 
-          w={mobile ? "100%" : "50%"} 
-          transition="width 0.3s ease" >
-          <Text 
-          fontSize="1rem" >
-              Nome
-            </Text>
-            <Text fontSize="1.6rem" >
-              Higor Giovane 
-            </Text>
-            {!mobile ? (
-            <Flex
-             w="100%"  
-             justify="space-between">
-            <Box 
-            flexDir='column'>
-            <Text 
-            fontSize="1rem" >
-              E-mail
-            </Text>
-            <Text 
-            fontSize="1.6rem" >
-              higorgiovaneteste@gmail.com 
-            </Text>
-            </Box>
-            <Flex 
-            w={10}  />
-            <Box 
-            flexDir='column'>
-            <Text 
-            fontSize="1rem"  >
-              Telefone
-            </Text>
-            <Text 
-            fontSize="1.6rem">
-              00 00000-0000
-            </Text>
-            </Box>
-            </Flex>
-            ) : (
-              <Flex
-               w="100%" 
-               justify="space-between" >
-            <Box 
-            flexDir='column'>
-            <Text 
-            fontSize="1rem" >
-              E-mail
-            </Text>
-            <Text 
-            fontSize="1.6rem">
-              higorgiovaneteste@gmail.com 
-            </Text>
-            </Box>
-            <Box 
-            flexDir='column'>
-            <Text 
-            fontSize="1rem">
-              Telefone
-            </Text>
-            <Text 
-            fontSize="1.6rem">
-              00 00000-0000
-            </Text>
-            </Box>
-            </Flex>
-            )}
-            <Flex 
-            justify="space-between">
-            <Box 
-            flexDir='column'>
-            <Text 
-            fontSize="1rem">
-              Disciplina
-            </Text>
-            <Text 
-            fontSize="1.6rem">
-              Psicologia ativa
-            </Text>
-            </Box>
-            </Flex>
-            </Flex>
-            </Flex>
-            <Flex 
             w="100%" 
             p='4' 
             style={{
@@ -221,6 +278,9 @@ export default function Visualizar({
             />
           </Box>
         </Flex>
+       </Flex>
       </Flex>
+    )}
+    </>
   );
 }

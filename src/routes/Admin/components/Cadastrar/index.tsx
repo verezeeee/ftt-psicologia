@@ -46,7 +46,8 @@ export default function Cadastrar({
   const [matricula, setMatricula] = useState<string>("");
   const [periodo, setPeriodo] = useState<string>("");
   const [professor, setProfessor] = useState<string>("");
-
+  const [modalSize, setModalSize] = useState("sm");
+  
   function closeModal() {
     setEtapa("selecionar");
     setEntidadeHover("");
@@ -60,6 +61,7 @@ export default function Cadastrar({
     setMatricula("");
     setPeriodo(undefined);
     setTurno(undefined);
+    setModalSize("sm")
   }
 
   function Entidade({ iconImage, hoverImage, entidade }) {
@@ -100,6 +102,7 @@ export default function Cadastrar({
           <Flex
             onClick={() => {
               setEtapa(entidade);
+              setModalSize("lg");
             }}
             onMouseOver={() => {
               setEntidadeHover(entidade);
@@ -131,6 +134,14 @@ export default function Cadastrar({
                 height: 75,
                 width: 75,
               }}
+              onClick={() => {
+                if (etapa === "Paciente"){
+                  setModalSize("xl")
+                }else{
+                  setModalSize("lg")
+                }
+                console.log(modalSize)
+              }}  
             />
             <Text mt="2" fontSize="1.2rem" fontWeight={600}>
               {entidade}
@@ -144,33 +155,31 @@ export default function Cadastrar({
   return (
     <>
       <Modal
-        size={mobile ? "xs" : "xl"}
+        size={mobile ? "xs" : modalSize}
         isCentered
         isOpen={cadastrarOpened}
         onClose={closeModal}
       >
         <ModalOverlay />
-        <ModalContent borderRadius={8}>
+        <ModalContent borderRadius={8} >
           {etapa === "selecionar" && (
-            <Flex flexDir="column" p="6" pt="6" >
-              <Flex align="center" justify='space-around' w="100%" >
+            <Flex flexDir="column" p="6" pt="6" align='center'>
+              <Flex align="center" justify='space-between' w="100%" >
                 <Text color="#787878" fontSize="1.8rem">
                   Novo cadastro
                 </Text>
-                <Button label="Voltar" onPress={closeModal} mt={0.1} filled />
+                <Button label="Voltar" onPress={closeModal} mt={0.1} />
               </Flex>
-
               <Divider mt="2" />
               <Flex
                 flexDir={mobile ? "column" : "row"}
-                mt={mobile ? "2" : "6"}
+                mt={!mobile ? "2" : "6"}
                 display='grid'
-                gridTemplateColumns='repeat(2, 0fr)'
+                gridTemplateColumns='repeat(2, 1fr)'
                 gridTemplateRows='repeat(2, 1fr)'
                 gap={4}
                 justifyItems='center'
-                w='100%'
-              >
+                >
                 <Entidade
                   entidade="Paciente"
                   iconImage="/cadastro_paciente.png"
