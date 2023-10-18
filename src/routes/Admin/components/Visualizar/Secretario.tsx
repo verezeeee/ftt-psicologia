@@ -105,9 +105,8 @@ export default function Visualizar({
               <Flex w="100%" flexDir="row" justify="space-between" mt='5rem'>
                 <Flex display='flex' flexDir='row' justifyContent='space-between' w='100%'>
                   <Text color="#787878" fontSize="1.8rem" flexDir="column" p='4'>
-                    Informações do paciente
+                    Informações sobre secretário
                   </Text>
-                  <Divider mt={2} px={2} />
                 </Flex>
               </Flex>
             </Flex>

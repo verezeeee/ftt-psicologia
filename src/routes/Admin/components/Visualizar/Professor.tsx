@@ -66,7 +66,6 @@ export default function Visualizar({
              <Text fontSize="1.6rem">Higor Giovane Monteiro Torres</Text>
            </Box>
          </GridItem>
-         <GridItem w="100%" h="10" />
          <GridItem w="100%" h="10" mt="9">
            <Box>
              <Text>E-mail</Text>
