@@ -41,32 +41,32 @@ export default function Table({
         })}
       </TableNextUI.Header>
       <TableNextUI.Body>
-        {data?.map((user: any) => {
+        {data.map((user: any) => {
           if (type === "aluno") {
             return (
               <TableNextUI.Row key={user.role}>
-                <TableNextUI.Cell key={user.nome}><Link href='/visualizar'>{user.nome}</Link></TableNextUI.Cell>
-                <TableNextUI.Cell key={user.email}><Link href='/visualizar'>{user.email}</Link></TableNextUI.Cell>
-                <TableNextUI.Cell key={user.cpf}><Link href='/visualizar'>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
-                <TableNextUI.Cell key={user.periodo}><Link href='/visualizar'>{user.periodo}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.nome}><Link href={`/visualizar/${user._id}`}>{user.nome}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.email}><Link href={`/visualizar/${user._id}`}>{user.email}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.cpf}><Link href={`/visualizar/${user._id}`}>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.periodo}><Link href={`/visualizar/${user._id}`}>{user.periodo}</Link></TableNextUI.Cell>
               </TableNextUI.Row>
             );
           } else if (type === "secretario") {
             return (
               <TableNextUI.Row key={user.role}>
-                <TableNextUI.Cell key={user.nome}><Link href='/visualizar'>{user.nome}</Link></TableNextUI.Cell>
-                <TableNextUI.Cell key={user.email}><Link href='/visualizar'>{user.email}</Link></TableNextUI.Cell>
-                <TableNextUI.Cell key={user.cpf}><Link href='/visualizar'>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
-                <TableNextUI.Cell key={user.turno}><Link href='/visualizar'>{user.turno}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.nome}><Link href={`/visualizar/${user._id}`}>{user.nome}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.email}><Link href={`/visualizar/${user._id}`}>{user.email}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.cpf}><Link href={`/visualizar/${user._id}`}>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.turno}><Link href={`/visualizar/${user._id}`}>{user.turno}</Link></TableNextUI.Cell>
               </TableNextUI.Row>
             )
           } else if (type === "professor") {
             return (
               <TableNextUI.Row key={user.role}>
-                <TableNextUI.Cell key={user.nome}><Link href='/visualizar'>{user.nome}</Link></TableNextUI.Cell>
-                <TableNextUI.Cell key={user.cpf}><Link href='/visualizar'>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.nome}><Link href={`/visualizar/${user._id}`}>{user.nome}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.cpf}><Link href={`/visualizar/${user._id}`}>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
                 <TableNextUI.Cell key={user.telefoneContato}>
-                <Link href='/visualizar'>{formatarTelefone(user.telefoneContato)}</Link>
+                <Link href={`/visualizar/${user._id}`}>{formatarTelefone(user.telefoneContato)}</Link>
                 </TableNextUI.Cell>
               </TableNextUI.Row>
             )

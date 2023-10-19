@@ -1,10 +1,10 @@
 import { Divider, Flex, Text, Box, Grid, GridItem, Checkbox, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react";
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import { useRouter } from 'next/router';
-import { SecretarioSignUpData } from "../utils/types";
+import { SecretarioSignUpData } from "../../utils/types";
 import { useMediaQuery } from "@chakra-ui/react";
-import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
+import Sidebar from "../../components/Sidebar";
+import Header from "../../components/Header";
 import { useState } from "react";
 
 export default function Visualizar({
@@ -25,7 +25,8 @@ export default function Visualizar({
   user: SecretarioSignUpData;
 }) {
   const router = useRouter();
-
+  const { query } = useRouter()
+  const id = query.id;
   const navegarParaOutraPasta = () => {
     router.push('/');
   };
