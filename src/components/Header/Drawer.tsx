@@ -65,7 +65,7 @@ export default function Drawer({
           />
         </Flex>
 
-        {user.role === "admin" && (
+        {user && user.role === "admin" && (
           <Flex h="100%" flexDir="column" justify="space-between" px="4">
             <Flex flexDir="column">
               <Flex h="4" />

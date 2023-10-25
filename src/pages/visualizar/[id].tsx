@@ -7,6 +7,7 @@ import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import { useState } from "react";
 
+
 export default function Visualizar({
   nome,
   email,
@@ -61,7 +62,7 @@ export default function Visualizar({
              Nome completo
            </Text>
            <Text fontSize='1.6rem'>
-             Higor Giovane Monteiro Torres
+             Higor Giovane 
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>

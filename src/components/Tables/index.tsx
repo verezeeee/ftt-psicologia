@@ -45,8 +45,8 @@ export default function Table({
           if (type === "aluno") {
             return (
               <TableNextUI.Row key={user.role}>
-                <TableNextUI.Cell key={user.nome}><Link href={`/visualizar/${user._id}`}>{user.nome}</Link></TableNextUI.Cell>
-                <TableNextUI.Cell key={user.email}><Link href={`/visualizar/${user._id}`}>{user.email}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.nome}><Link href={`/view/${user._id}`}>{user.nome}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.email}><Link href={`/view${user._id}`}>{user.email}</Link></TableNextUI.Cell>
                 <TableNextUI.Cell key={user.cpf}><Link href={`/visualizar/${user._id}`}>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
                 <TableNextUI.Cell key={user.periodo}><Link href={`/visualizar/${user._id}`}>{user.periodo}</Link></TableNextUI.Cell>
               </TableNextUI.Row>
@@ -54,10 +54,10 @@ export default function Table({
           } else if (type === "secretario") {
             return (
               <TableNextUI.Row key={user.role}>
-                <TableNextUI.Cell key={user.nome}><Link href={`/visualizar/${user._id}`}>{user.nome}</Link></TableNextUI.Cell>
-                <TableNextUI.Cell key={user.email}><Link href={`/visualizar/${user._id}`}>{user.email}</Link></TableNextUI.Cell>
-                <TableNextUI.Cell key={user.cpf}><Link href={`/visualizar/${user._id}`}>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
-                <TableNextUI.Cell key={user.turno}><Link href={`/visualizar/${user._id}`}>{user.turno}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.nome}><Link href={`/view/${user._id}`}>{user.nome}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.email}><Link href={`/view/${user._id}`}>{user.email}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.cpf}><Link href={`/view/${user._id}`}>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.turno}><Link href={`/view/${user._id}`}>{user.turno}</Link></TableNextUI.Cell>
               </TableNextUI.Row>
             )
           } else if (type === "professor") {

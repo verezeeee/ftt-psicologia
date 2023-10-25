@@ -26,7 +26,7 @@ export default function Sidebar({
       p="4"
       bg="#E9E9E9"
     >
-      {user.role === "admin" && (
+      {user && user.role === "admin" && (
         <Flex flexDir="column">
           <Greeting user={user} />
           <Flex h="4" />

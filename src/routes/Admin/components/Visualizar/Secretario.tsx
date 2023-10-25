@@ -6,6 +6,8 @@ import { useMediaQuery } from "@chakra-ui/react";
 import Sidebar from "../../../../components/Sidebar";
 import Header from "../../../../components/Header";
 import { useState } from "react";
+import { formatarCPF } from "../../../../utils/cpf";
+import { formatarTelefone } from "../../../../utils/formatarTelefone";
 
 export default function Visualizar({
   nome,
@@ -52,7 +54,7 @@ export default function Visualizar({
               Nome completo
             </Text>
             <Text fontSize='1.6rem'>
-              Higor Giovane Monteiro Torres
+              {nome}
             </Text>
           </GridItem>
           <GridItem w='100%' h='100'>
@@ -60,7 +62,7 @@ export default function Visualizar({
               E-mail
             </Text>
             <Text fontSize='1.6rem'>
-              julianaalvespach@gmail.com
+              {email}
             </Text>
           </GridItem>
           <GridItem w='100%' h='100'>
@@ -68,7 +70,7 @@ export default function Visualizar({
               Telefone
             </Text>
             <Text fontSize='1.6rem'>
-              (62) 98519-4415
+            {formatarTelefone(telefone)}
             </Text>
           </GridItem>
           <GridItem w='100%' h='100'>
@@ -76,7 +78,7 @@ export default function Visualizar({
               Turno
             </Text>
             <Text fontSize='1.6rem'>
-              Matutino
+              {turno}
             </Text>
           </GridItem>
           <GridItem w='100%' h='100'>
@@ -84,7 +86,7 @@ export default function Visualizar({
               CPF
             </Text>
             <Text fontSize='1.6rem'>
-              065.127.1431-13
+            {formatarCPF(cpf)}
             </Text>
           </GridItem>
         </Grid>
@@ -118,7 +120,7 @@ export default function Visualizar({
                     Nome completo
                   </Text>
                   <Text fontSize='1.6rem'>
-                    Higor Giovane Monteiro Torres
+                    {nome}
                   </Text>
                 </Box>
               </GridItem>
@@ -129,7 +131,7 @@ export default function Visualizar({
                     E-mail
                   </Text>
                   <Text fontSize='1.6rem'>
-                    julianaalvespach@gmail.com
+                    {email}
                   </Text>
                 </Box>
               </GridItem>
@@ -139,7 +141,7 @@ export default function Visualizar({
                     Telefone
                   </Text>
                   <Text fontSize='1.6rem'>
-                    (62) 98519-4415
+                   {formatarTelefone(telefone)}
                   </Text>
                 </Box>
               </GridItem>
@@ -149,7 +151,7 @@ export default function Visualizar({
                     Turno
                   </Text>
                   <Text fontSize='1.6rem'>
-                    Matutino
+                    {turno}
                   </Text>
                 </Box>
               </GridItem>
@@ -159,7 +161,7 @@ export default function Visualizar({
                     CPF
                   </Text>
                   <Text fontSize='1.6rem'>
-                    065.127.1431-13
+                  {formatarCPF(cpf)}
                   </Text>
                 </Box>
               </GridItem>
