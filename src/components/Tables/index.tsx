@@ -10,6 +10,9 @@ import { formatarCPF } from "../../utils/cpf";
 import axios from "axios";
 import { formatarTelefone } from "../../utils/formatarTelefone";
 import Link from "next/link";
+import styles from "./Tables.module.css"
+
+
 
 export default function Table({
   headers,
@@ -28,12 +31,13 @@ export default function Table({
 
   return (
     <TableNextUI
-      color="secondary"
-      shadow={false}
-      css={{
-        width: mobile ? "calc(100vw - 40px)" : "calc(100vw - 350px)",
-        paddingRight: mobile ? 10 : 30,
-      }}
+    color="secondary"
+    shadow={false}
+    css={{
+      width: mobile ? "calc(100vw - 40px)" : "calc(100vw - 350px)",
+      paddingRight: mobile ? 10 : 30,
+      
+    }} 
     >
       <TableNextUI.Header>
         {headers.map((header) => {
@@ -44,7 +48,7 @@ export default function Table({
         {data.map((user: any) => {
           if (type === "aluno") {
             return (
-              <TableNextUI.Row key={user.role}>
+              <TableNextUI.Row key={user.role} >
                 <TableNextUI.Cell key={user.nome}><Link href={`/view/${user._id}`}>{user.nome}</Link></TableNextUI.Cell>
                 <TableNextUI.Cell key={user.email}><Link href={`/view${user._id}`}>{user.email}</Link></TableNextUI.Cell>
                 <TableNextUI.Cell key={user.cpf}><Link href={`/visualizar/${user._id}`}>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>

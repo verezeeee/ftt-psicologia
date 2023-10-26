@@ -12,6 +12,7 @@ import Cadastrar from "../components/Cadastrar";
 import Editar from "../components/Editar";
 import axios from "axios";
 import { set } from "react-hook-form";
+import Link from "next/link";
 
 export default function Pacientes({
   user,

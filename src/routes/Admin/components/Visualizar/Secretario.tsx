@@ -23,7 +23,7 @@ export default function Visualizar({
   cpf: string;
   telefone: string;
   turno: string;
-  setMobile: (mobile: boolean) => void;
+  setMobile?: (mobile: boolean) => void;
   user: SecretarioSignUpData;
 }) {
   const router = useRouter();

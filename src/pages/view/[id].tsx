@@ -17,7 +17,6 @@ export default function SecretarioID () {
     useEffect(() => {
     if(!router.isReady) return
     axios.get(`http://localhost:8080/auth/getSecretarioById/${router.query.id}`).then((data) => {
-        console.log(data.data)
         setSecretario(data.data)
     })
     

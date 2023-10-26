@@ -46,9 +46,11 @@ export default function Cadastrar({
   const [matricula, setMatricula] = useState<string>("");
   const [periodo, setPeriodo] = useState<string>("");
   const [professor, setProfessor] = useState<string>("");
+
   const [modalSize, setModalSize] = useState("sm");
   
   function closeModal() {
+    setModalSize("sm")
     setEtapa("selecionar");
     setEntidadeHover("");
     setCadastrarOpened(false);
@@ -61,7 +63,6 @@ export default function Cadastrar({
     setMatricula("");
     setPeriodo(undefined);
     setTurno(undefined);
-    setModalSize("sm")
   }
 
   function Entidade({ iconImage, hoverImage, entidade }) {
@@ -102,7 +103,9 @@ export default function Cadastrar({
           <Flex
             onClick={() => {
               setEtapa(entidade);
-              setModalSize("lg");
+              if(entidade === "Paciente"){
+                setModalSize("4xl");
+              }
             }}
             onMouseOver={() => {
               setEntidadeHover(entidade);
@@ -134,14 +137,6 @@ export default function Cadastrar({
                 height: 75,
                 width: 75,
               }}
-              onClick={() => {
-                if (etapa === "Paciente"){
-                  setModalSize("xl")
-                }else{
-                  setModalSize("lg")
-                }
-                console.log(modalSize)
-              }}  
             />
             <Text mt="2" fontSize="1.2rem" fontWeight={600}>
               {entidade}

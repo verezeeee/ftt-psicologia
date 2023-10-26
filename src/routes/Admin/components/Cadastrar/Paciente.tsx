@@ -12,10 +12,10 @@ export default function CadastrarPaciente({
   setNome,
   cpf,
   setCPF,
+  datadenascimento,
+  setDataDeNascimento,
   telefone,
   setTelefone,
-  disciplina,
-  setDisciplina,
   email,
   setEmail,
   setEtapa,
@@ -26,10 +26,10 @@ export default function CadastrarPaciente({
   setNome: any;
   cpf: string;
   setCPF: any;
-  telefone: string;
+  datadenascimento: string;
+  setDataDeNascimento: any;
+  telefone: number;
   setTelefone: any;
-  disciplina: string;
-  setDisciplina: any;
   email: string;
   setEmail: any;
   setEtapa: any;
@@ -70,10 +70,10 @@ export default function CadastrarPaciente({
             />
             <Flex w={10} />
             <Input
-              label="Telefone"
-              mask="(00) 00000-0000"
-              value={telefone}
-              setValue={setTelefone}
+              label="Data de nascimento"
+              mask=" / / "
+              value={datadenascimento}
+              setValue={setDataDeNascimento}
             />
           </Flex>
         ) : (
@@ -87,14 +87,15 @@ export default function CadastrarPaciente({
             <Flex w={10} />
             <Input
               label="Telefone"
-              mask="(00) 00000-0000"
-              value={telefone}
-              setValue={setTelefone}
+              mask=" / /"
+              value={datadenascimento}
+              setValue={setDataDeNascimento}
             />
           </Flex>
         )}
-        <Input label="Disciplina" value={disciplina} setValue={setDisciplina} />
         <Input label="E-mail" value={email} setValue={setEmail} />
+        <Input label="Telefone" value={telefone} setValue={setTelefone}/>
+        
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
         <Button label="Cancelar" onPress={closeModal} mt={0.1} />
