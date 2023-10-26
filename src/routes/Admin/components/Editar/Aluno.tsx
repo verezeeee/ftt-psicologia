@@ -1,221 +1,122 @@
-import { Divider, Flex, Text, Box, Spacer, HStack} from "@chakra-ui/react";
+import { Divider, Flex, Text } from "@chakra-ui/react";
+import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
-import { useRouter } from 'next/router';
-import Header from "../../../../components/Header";
-import Sidebar from "../../../../components/Sidebar";
-import { useState } from "react";
-import Table from "../../../../components/Tables";
-import { SecretarioSignUpData } from "../../../../utils/types";
-import Search from "../../../../components/Search";
+import Select from "../../../../components/Select";
 
-export default function Visualizar({
+export default function EditarAluno({
   mobile,
+  closeModal,
   nome,
-  email,
+  setNome,
+  matricula,
+  setMatricula,
+  periodo,
+  setPeriodo,
   cpf,
+  setCPF,
   telefone,
-  turno,
-  setMobile,
-  user,
-}: {
-  mobile: boolean;
-  nome: string;
-  email: string;
-  cpf: string;
-  telefone: string;
-  turno: string;
-  setMobile: false;
-  user: SecretarioSignUpData;
+  setTelefone,
+  email,
+  setEmail,
 }) {
-  const router = useRouter();
-
-  const navegarParaHome = () => {
-    router.push('/');
-  };
-
-  const [activeTab, setActiveTab] = useState("tab1");
-  const [isEditing, setIsEditing] = useState<any>();
-  const [result, setResult] = useState<SecretarioSignUpData[]>([]);
-  
-  
   return (
-    <Flex>
-      <Sidebar 
-      activeTab={activeTab} 
-      setActiveTab={setActiveTab} />
-      <Flex 
-      flexDir="column" 
-      w="100%" 
-      ml={mobile ? 0 : 300} 
-      transition="margin-left 0.3s ease" 
-      color="#787878"
+    <Flex flexDir="column" p="8" pt="6">
+      <Flex align="center" justify="space-between" w="100%">
+        <Text color="#787878" fontSize="1.8rem">
+          Editar aluno
+        </Text>
+      </Flex>
+      <Divider mt="2" />
+      <Flex
+        flexDir="column"
+        py="4"
+        align="center"
+        justify="space-between"
+        w="100%"
       >
-        <Header 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab}
-        />
-        <Flex 
-        flexDir="column" 
-        p="8" 
-        pt="6"
-        >
-          <Flex 
-          w="100%" 
-          flexDir="row" 
-          justify="space-between" 
-          mt='5rem'
-          >
-            <Flex 
-            >
-            <Text 
-            color="#787878" 
-            fontSize="1.8rem" 
-            flexDir="column"
-            >
-              Informações sobre aluno
-            </Text>
-            <Flex
-            position='relative'
-            align=''
-            >
-            <Button 
-            label="Editar"
-            onPress={navegarParaHome} 
-            filled
-            />
-            </Flex>
-            </Flex>
-          </Flex>
-          <Divider mt="4" />
-          <Box 
-          p='4'
-          fontSize='1rem'>
-            <Flex>
-            <Box >
-            <Text 
-            minWidth='18rem'
-            maxWidth='18rem'>
-            Nome
-            </Text>
-            <Text fontSize='1.6rem'>
-              Higor Giovane
-            </Text>
-            </Box>  
-            <Spacer/>
-            <Box>
-            <Text>
-            Matrícula
-            </Text>
-            <Text fontSize='1.6rem'>
-              2310870
-            </Text>
-            </Box>
-            <Spacer/>
-            <Box>
-            <Text>
-            Periodo
-            </Text>
-            <Text fontSize='1.6rem'>
-            4
-            </Text>
-            </Box>
-            <Spacer/>
-            </Flex>
-            <Flex>
-            <Box >
-            <Text>
-            Email
-            </Text>
-            <Text 
-            fontSize='1.6rem' 
-            minWidth='18rem'
-            maxWidth='18rem'>
-              
-            higorgiovane7@gmail.com
-            </Text>
-            </Box>  
-            <Spacer/>
-            <Box>
-            <Text>
-            Telefone
-            </Text>
-            <Text fontSize='1.6rem'>
-             62 985194415
-            </Text>
-            </Box>
-            <Spacer/>
-            <Spacer/>
-            </Flex>
-            <Flex>
-            <Box >
-            <Text>
-            Disciplina
-            </Text>
-            <Text 
-            fontSize='1.6rem' 
-            minWidth='18rem'
-            maxWidth='18rem'>
-              
-            Psicologia Ativa
-            </Text>
-            </Box>  
-            <Spacer/>
-            <Box>
-            <Text>
-            Professor
-            </Text>
-            <Text fontSize='1.6rem'>
-            Henrique Lima
-            </Text>
-            </Box>
-            <Spacer/>
-            <Spacer/>
-            </Flex>
-            </Box>
-            <Box>
-            <Flex 
-            w="100%" 
-            p='4' 
-            style={{
-            backgroundColor: "#fff",
-            display: "flex",
-            flexDirection: "column",
-            }}>
-            <Box 
-            display='flex'
-            flexDir='row'
-            justifyContent='space-between'
-            marginRight='2rem'
-            > 
-            <Text 
-            fontSize="1.5rem" 
-            paddingLeft='1rem'
-            >
-            Relatorio
-            </Text>
-            <Search />
-
-            </Box>
-            <Table
-            headers={["Id","Data", "Paciente", "Tratamento",]}
-            data={result}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            type="secretario"     
-            />
-          </Flex>
-          </Box>
-          <Box 
-          width={!mobile ? '100%' : '2rem'} 
-          px={mobile ? '0' : '2rem'} 
-          mt="4"
-          mb="4"
-          >
-            <Button 
-            onPress={navegarParaHome} 
-            label="Voltar"/>
-          </Box>
+        <Flex w="100%" align="center" justify="space-between">
+          <Input
+            label="Matrícula"
+            mask="0000000"
+            value={matricula}
+            setValue={setMatricula}
+          />
+          <Flex w={10} />
+          <Select
+            label="Periodo"
+            options={[
+              "1º Periodo",
+              "2º Periodo",
+              "3º Periodo",
+              "4º Periodo",
+              "5º Periodo",
+              "6º Periodo",
+              "7º Periodo",
+              "8º Periodo",
+              "9º Periodo",
+              "10º Periodo",
+            ]}
+            value={periodo}
+            setValue={setPeriodo}
+          />
         </Flex>
+        <Input label="Nome completo" value={nome} setValue={setNome} />
+        {mobile ? (
+          <Flex
+            w="100%"
+            flexDir="column"
+            align="center"
+            justify="space-between"
+          >
+            <Input
+              label="CPF"
+              mask="000.000.000-00"
+              value={cpf}
+              setValue={setCPF}
+            />
+            <Flex w={10} />
+            <Input
+              label="Telefone"
+              mask="(00) 00000-0000"
+              value={telefone}
+              setValue={setTelefone}
+            />
+          </Flex>
+        ) : (
+          <Flex w="100%" align="center" justify="space-between">
+            <Input
+              label="CPF"
+              mask="000.000.000-00"
+              value={cpf}
+              setValue={setCPF}
+            />
+            <Flex w={10} />
+            <Input
+              label="Telefone"
+              mask="(00) 00000-0000"
+              value={telefone}
+              setValue={setTelefone}
+            />
+          </Flex>
+        )}
+        <Input label="E-mail" value={email} setValue={setEmail} />
+        <Select
+          label="Professor"
+          options={[
+            "Professor 1",
+            "Professor 2",
+            "Professor 3",
+            "Professor 4",
+            "Professor 5",
+            "Professor 6",
+          ]}
+          value={periodo}
+          setValue={setPeriodo}
+        />
+      </Flex>
+      <Flex align="center" mt="4" justify="space-between" w="100%">
+        <Button label="Cancelar" onPress={() => {}} mt={0.1} />
+        <Button label="Cadastrar" onPress={closeModal} mt={0.1} filled />
       </Flex>
     </Flex>
   );
