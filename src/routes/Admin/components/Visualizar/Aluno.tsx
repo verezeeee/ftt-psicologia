@@ -9,24 +9,29 @@ import { useMediaQuery } from "@chakra-ui/react";
 import { SecretarioSignUpData } from "../../../../utils/types";
 import Search from "../../../../components/Search";
 
-export default function Visualizar({
+export default function VisualizarAluno({
   mobile,
+  userData: {
   nome,
   email,
-  cpf,
-  telefone,
-  turno,
+  matricula,
+  professor,
+  telefoneContato,
+  periodo,
+  },
   setMobile,
   user,
 }: {
   mobile: boolean;
   nome: string;
   email: string;
-  cpf: string;
-  telefone: string;
-  turno: string;
+  matricula: string;
+  telefoneContato: string;
+  professor: string;
+  periodo: string;
   setMobile: false;
   user: SecretarioSignUpData;
+  userData: any;
 }) {
   const router = useRouter();
 
@@ -34,6 +39,7 @@ export default function Visualizar({
     router.push('/');
   };
 
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [isMobile] = useMediaQuery("(max-width: 768px)")
   const [activeTab, setActiveTab] = useState("tab1");
   const [isEditing, setIsEditing] = useState<any>();
@@ -205,47 +211,61 @@ export default function Visualizar({
               <Text w="100%" mt="9">
                   Nome completo
               </Text>
-              <Text fontSize="1.6rem">Higor Giovane Monteiro Torres</Text>
+              <Text fontSize="1.6rem">
+                {nome}
+                </Text>
             </Box>
           </GridItem>
           <GridItem/>
           <GridItem w="100%" mt="9">
             <Box>
               <Text>Matricula</Text>
-              <Text fontSize="1.6rem">7654321</Text>
+              <Text fontSize="1.6rem">
+                {matricula}
+                </Text>
             </Box>
           </GridItem>
           <GridItem w="100%" mt="9">
             <Box>
               <Text>Periodo</Text>
-              <Text fontSize="1.6rem">4</Text>
+              <Text fontSize="1.6rem">
+                {periodo}
+                </Text>
             </Box>
           </GridItem>
           <GridItem w="100%" mt="9" mb="4">
             <Box>
               <Text>E-mail</Text>
-              <Text fontSize="1.6rem">ana.oliveira@aluno.unievangelica.edu.br</Text>
+              <Text fontSize="1.6rem">
+                {email}
+                </Text>
             </Box>
           </GridItem>
           <GridItem/>
           <GridItem w="100%" mt="9" mb="4">
             <Box>
               <Text>Telefone</Text>
-              <Text fontSize="1.6rem">(11) 12345-6789</Text>
+              <Text fontSize="1.6rem">
+                {telefoneContato}
+              </Text>
             </Box>
           </GridItem>
           <GridItem/>
           <GridItem w="100%" mt="9" mb="4">
             <Box>
               <Text>Disciplina</Text>
-              <Text fontSize="1.6rem">Psicologia Ativa</Text>
+              <Text fontSize="1.6rem">
+                não é recebido do banco
+                </Text>
             </Box>
           </GridItem>
           <GridItem/>
           <GridItem w="100%" mt="9" mb="4">
             <Box>
               <Text>Professor</Text>
-              <Text fontSize="1.6rem">Henrique Lima</Text>
+              <Text fontSize="1.6rem">
+                {professor}
+              </Text>
             </Box>
           </GridItem>
           <GridItem/>
@@ -270,8 +290,7 @@ export default function Visualizar({
             >
             Relatorio
             </Text>
-            <Search />
-
+            <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             </Box>
             <Table
             headers={["Id","Data", "Paciente", "Tratamento",]}

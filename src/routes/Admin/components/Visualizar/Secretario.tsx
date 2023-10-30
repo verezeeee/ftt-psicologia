@@ -9,12 +9,14 @@ import { useState } from "react";
 import { formatarCPF } from "../../../../utils/cpf";
 import { formatarTelefone } from "../../../../utils/formatarTelefone";
 
-export default function Visualizar({
+export default function VisualizarSecretario({
+  userData: {
   nome,
   email,
   cpf,
-  telefone,
+  telefoneContato,
   turno,
+  },
   setMobile,
   user,
 }: {
@@ -25,13 +27,12 @@ export default function Visualizar({
   turno: string;
   setMobile?: (mobile: boolean) => void;
   user: SecretarioSignUpData;
+  userData: any;
 }) {
   const router = useRouter();
-
   const navegarParaOutraPasta = () => {
     router.push('/');
   };
-
   const [ isMobile] = useMediaQuery("(max-width: 768px)");
   const [activeTab, setActiveTab] = useState("tab1");
 
@@ -70,7 +71,7 @@ export default function Visualizar({
               Telefone
             </Text>
             <Text fontSize='1.6rem'>
-            {formatarTelefone(telefone)}
+            {formatarTelefone(telefoneContato)}
             </Text>
           </GridItem>
           <GridItem w='100%' h='100'>
@@ -141,7 +142,7 @@ export default function Visualizar({
                     Telefone
                   </Text>
                   <Text fontSize='1.6rem'>
-                   {formatarTelefone(telefone)}
+                   {formatarTelefone(telefoneContato)}
                   </Text>
                 </Box>
               </GridItem>

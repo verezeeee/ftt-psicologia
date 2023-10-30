@@ -9,7 +9,7 @@ import { useMediaQuery } from "@chakra-ui/react";
 import { SecretarioSignUpData } from "../../../../utils/types";
 
 
-export default function Visualizar({
+export default function VisualizarProfessor({
   mobile,
   nome,
   email,

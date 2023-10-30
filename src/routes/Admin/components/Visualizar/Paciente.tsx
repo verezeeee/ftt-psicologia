@@ -7,7 +7,7 @@ import Sidebar from "../../../../components/Sidebar";
 import Header from "../../../../components/Header";
 import { useState } from "react";
 
-export default function Visualizar({
+export default function VisualizarPaciente({
   nome,
   email,
   cpf,
@@ -32,6 +32,8 @@ export default function Visualizar({
 
   const [ isMobile] = useMediaQuery("(max-width: 768px)");
   const [activeTab, setActiveTab] = useState("tab1");
+
+
 
   return( 
     <>
