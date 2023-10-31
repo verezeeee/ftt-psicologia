@@ -75,7 +75,7 @@ export default function Drawer({
                 setActiveTab={setActiveTab}
                 sidebarOpened={sidebarOpened}
                 setSidebarOpened={setSidebarOpened}
-                href="Pacientes"
+                href="Secretários"
                 icon={IoMdPerson}
               />
               <Item
@@ -94,6 +94,15 @@ export default function Drawer({
                 sidebarOpened={sidebarOpened}
                 setSidebarOpened={setSidebarOpened}
                 href="Professores"
+                icon={IoMdPerson}
+              />
+              <Item
+                user={user}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                sidebarOpened={sidebarOpened}
+                setSidebarOpened={setSidebarOpened}
+                href="Pacientes"
                 icon={IoMdPerson}
               />
             </Flex>

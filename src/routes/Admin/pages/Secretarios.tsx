@@ -14,7 +14,7 @@ import axios from "axios";
 import { set } from "react-hook-form";
 import Link from "next/link";
 
-export default function Pacientes({
+export default function Secretarios({
   user,
   activeTab,
 }: {

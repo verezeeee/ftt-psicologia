@@ -51,6 +51,13 @@ export default function Sidebar({
             href="Professores"
             icon={IoMdPerson}
           />
+          <Item
+            user={user}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            href="Pacientes"
+            icon={IoMdPerson}
+          />
         </Flex>
       )}
     </Flex>

@@ -4,7 +4,7 @@ import { Flex, Text } from "@chakra-ui/react";
 import { useAuth, withAuth } from "../../../contexts/AuthContext";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
-import { Secretarios, Alunos, Professores } from "./screens";
+import { Secretarios, Alunos, Professores, Pacientes } from "./screens";
 
 import { useMediaQuery } from "../../../utils/useMediaQuery";
 import Table from "../../../components/Tables";
@@ -31,6 +31,7 @@ function Dashboard() {
         {activeTab === "Professores" && (
           <Professores user={user} activeTab={activeTab} />
         )}
+        {activeTab === "Pacientes" && <Pacientes user={user} activeTab={activeTab}/> }
       </Flex>
     </Flex>
   );

@@ -25,7 +25,7 @@ export default function Table({
   data: AlunoSignUpData[] | ProfessorSignUpData[] | SecretarioSignUpData[];
   isEditing: any;
   setIsEditing: any;
-  type: "aluno" | "secretario" | "professor"
+  type: "aluno" | "secretario" | "professor" | "paciente"
 }) {
   const { mobile } = useMediaQuery();
 
@@ -71,6 +71,16 @@ export default function Table({
                 <TableNextUI.Cell key={user.cpf}><Link href={`/view/${type}/${user._id}`}>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
                 <TableNextUI.Cell key={user.telefoneContato}>
                 <Link href={`/view/${type}/${user._id}`}>{formatarTelefone(user.telefoneContato)}</Link>
+                </TableNextUI.Cell>
+              </TableNextUI.Row>
+            )
+          } else if (type === "paciente") {
+            return (
+              <TableNextUI.Row key={user.role}>
+                <TableNextUI.Cell key={user.nome}><Link href={`/view/${type}/${user._id}`}>{user.nome}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.cpf}><Link href={`/view/${type}/${user._id}`}>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
+                <TableNextUI.Cell key={user.Tratamento}>
+                <Link href={`/view/${type}/${user._id}`}>{user.tratamento}</Link>
                 </TableNextUI.Cell>
               </TableNextUI.Row>
             )

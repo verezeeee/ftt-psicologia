@@ -48,3 +48,8 @@ export type AlunoSignUpData = {
   idOrientador: string;
   periodo: string;
 };
+
+// Interface de registro do paciente
+export type PacienteSignUpData = {
+  
+}

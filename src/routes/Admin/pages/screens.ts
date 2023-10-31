@@ -1,5 +1,6 @@
 import Secretarios from "./Secretarios";
 import Alunos from "./Alunos";
 import Professores from "./Professores";
+import Pacientes from "./Pacientes";
 
-export { Secretarios, Alunos, Professores };
+export { Secretarios, Alunos, Professores, Pacientes };
