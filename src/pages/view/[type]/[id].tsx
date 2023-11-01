@@ -44,7 +44,7 @@ export default function VisualizarUsuário() {
         )
     }else if(type === "professor"){
         return(
-            <Visualizar type="paciente"
+            <Visualizar type="professor"
             userData={professor}/>
         )
     }else if(type === "paciente"){

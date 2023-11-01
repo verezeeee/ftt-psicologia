@@ -9,6 +9,7 @@ export default function Input({
   mask,
   defaultValue,
   disabled,
+  type,
 }: {
   label: string;
   value: string;
@@ -16,6 +17,7 @@ export default function Input({
   mask?: string;
   defaultValue?: string;
   disabled?: boolean;
+  type?: string;
 }) {
   return (
     <Flex flexDir="column" w="100%" my="1">
@@ -27,6 +29,7 @@ export default function Input({
         as={IMaskInput}
         mask={mask}
         borderRadius={12}
+        type={type}
         mt="2"
         w="100%"
         _hover={{

@@ -1,4 +1,4 @@
-import { AbsoluteCenter, Divider, Flex, Text, useToast } from "@chakra-ui/react";
+import { AbsoluteCenter, Divider, Flex, Text, useToast, Select, Spacer, Checkbox } from "@chakra-ui/react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import { cadastrarProfessor } from "./services";
@@ -18,7 +18,38 @@ export default function CadastrarPaciente({
   setTelefone,
   email,
   setEmail,
-  setEtapa,
+  religiao,
+  setReligiao,
+  profissao,
+  setProfissao,
+  outrocontato,
+  setOutroContato,
+  contatoresponsavel,
+  setContatoResponsavel,
+  naturalidade,
+  setNaturalidade,
+  nacionalidade,
+  setNacionalidade,
+  cep,
+  setCep,
+  logradouro,
+  setLogradouro,
+  bairro,
+  setBairro,
+  complemento,
+  setComplemento,
+  cidade,
+  setCidade,
+  uf,
+  setUf,
+  iniciotratamento,
+  setInicioTratamento,
+  terminotratamento,
+  setTerminoTratamento,
+  encaminhador, 
+  setEncaminhador,
+  tipotratamento,
+  setTipoTratamento,
 }: {
   mobile: boolean;
   closeModal: () => void;
@@ -28,11 +59,43 @@ export default function CadastrarPaciente({
   setCPF: any;
   datadenascimento: string;
   setDataDeNascimento: any;
-  telefone: number;
+  telefone: string;
   setTelefone: any;
   email: string;
   setEmail: any;
   setEtapa: any;
+  religiao: string;
+  setReligiao: any;
+  profissao: string;
+  setProfissao: any;
+  outrocontato: string;
+  setOutroContato: any;
+  contatoresponsavel: string;
+  setContatoResponsavel: any;
+  naturalidade: string;
+  setNaturalidade: any;
+  nacionalidade: string;
+  setNacionalidade: any;
+  cep: string;
+  setCep: any;
+  logradouro: string;
+  setLogradouro: any;
+  bairro: string;
+  setBairro: any;
+  complemento: string;
+  setComplemento: any;
+  cidade: string;
+  setCidade: any;
+  uf: string;
+  setUf: any;
+  iniciotratamento: string;
+  setInicioTratamento: any;
+  terminotratamento: string;
+  setTerminoTratamento: any;
+  encaminhador: string;
+  setEncaminhador: any;
+  tipotratamento: string;
+  setTipoTratamento: any;
 }) {
   const toast = useToast();
 
@@ -44,7 +107,7 @@ export default function CadastrarPaciente({
         </Text>
       </Flex>
       <Divider mt="2" />
-      <Text color="#787878" fontSize="1.8rem">
+      <Text color="#787878" fontSize="1.8rem" w='100%' textAlign='center'>
           Informações pessoais
         </Text>
       <Flex
@@ -67,14 +130,177 @@ export default function CadastrarPaciente({
               mask="000.000.000-00"
               value={cpf}
               setValue={setCPF}
+              type="tel"
             />
             <Flex w={10} />
             <Input
               label="Data de nascimento"
-              mask=" / / "
               value={datadenascimento}
               setValue={setDataDeNascimento}
+              type="date"
             />
+            <Input
+              label="E-mail"
+              value={email}
+              setValue={setEmail}
+              type="email"
+            />
+            <Input
+              label="Telefone"
+              value={telefone}
+              setValue={setTelefone}
+              type="tel"
+            />
+            <Flex
+            mt={4}
+            flexDir="column"
+            w='100%'>
+            Sexo
+            <Select 
+            placeholder='-'
+            border="2px solid #C760EB">
+              <option value='option1'>Masculino</option>
+              <option value='option2'>Feminino</option>
+              <option value='option3'>Outros</option>
+            </Select>
+            </Flex>
+            <Flex
+            mt={4}
+            w='100%'
+            flexDir="column">
+            Estado Civil
+            <Select 
+            placeholder='-'
+            border="2px solid #C760EB">
+              <option value='option1'>Solteiro</option>
+              <option value='option2'>Casado</option>
+              <option value='option3'>Divorciado</option>
+              <option value='option4'>Viúvo</option>
+              <option value='option5'>Separado judicialmente</option>
+            </Select>
+            </Flex>
+            <Input
+              label="Religião"
+              value={religiao}
+              setValue={setReligiao}
+              type="string"
+            />
+            <Flex
+            mt={4}
+            w='100%'
+            flexDir="column">
+            Renda familiar
+            <Select 
+            placeholder='-'
+            border="2px solid #C760EB">
+              <option value='option1'>Solteiro</option>
+              <option value='option2'>Casado</option>
+              <option value='option3'>Divorciado</option>
+              <option value='option4'>Viúvo</option>
+              <option value='option5'>Separado judicialmente</option>
+            </Select>
+            </Flex>
+            <Input
+              label="Profissão"
+              value={profissao}
+              setValue={setProfissao}
+              type="string"
+            />
+            <Input
+              label="Outro contato"
+              value={outrocontato}
+              setValue={setOutroContato}
+              type="string"
+            />
+            <Input
+              label="Nome do contato/responsável"
+              value={contatoresponsavel}
+              setValue={setContatoResponsavel}
+              type="string"
+            />
+            <Checkbox my={4} textAlign="initial" w="100%">Menor de idade</Checkbox>
+            <Input
+              label="Naturalidade"
+              value={naturalidade}
+              setValue={setNaturalidade}
+              type="string"
+            />
+            <Input
+              label="Nacionalidade"
+              value={nacionalidade}
+              setValue={setNacionalidade}
+              type="string"
+            />
+            <Divider mt={5}/>
+            <Text color="#787878" fontSize="1.8rem" mt={4} w="100%" textAlign='center'>
+              Endereço
+            </Text>
+            <Input
+              label="CEP"
+              value={cep}
+              setValue={setCep}
+              type="string"
+            />
+            <Input
+              label="Logradouro"
+              value={logradouro}
+              setValue={setLogradouro}
+              type="string"
+            />
+            <Input
+              label="Bairro"
+              value={bairro}
+              setValue={setBairro}
+              type="string"
+            />
+            <Input
+              label="Complemento"
+              value={complemento}
+              setValue={setComplemento}
+              type="string"
+            />
+            <Input
+              label="Cidade"
+              value={cidade}
+              setValue={setCidade}
+              type="string"
+            />
+            <Input
+              label="UF"
+              value={uf}
+              setValue={setUf}
+              type="string"
+            />
+            <Divider mt={5}/>
+            <Text color="#787878" fontSize="1.8rem" mt={4} w="100%" textAlign='center'>
+            Informações de tratamento
+            </Text>
+            <Input
+              label="Inicio do tratamento"
+              value={iniciotratamento}
+              setValue={setInicioTratamento}
+              type="date"
+            />
+            <Input
+              label="Término do tratamento"
+              value={terminotratamento}
+              setValue={setTerminoTratamento}
+              type="date"
+            />
+            <Input
+              label="Quem encaminhou?"
+              value={encaminhador}
+              setValue={setEncaminhador}
+              type="string"
+            />
+            <Input
+              label="Tipo de tratamento"
+              value={tipotratamento}
+              setValue={setTipoTratamento}
+              type="string"
+            />
+            <Checkbox my={4} textAlign="initial" w="100%">Aluno UniEvangélica</Checkbox>
+            <Checkbox textAlign="initial" w="100%">Funcionário da Associação Educativa Evangélica</Checkbox>
           </Flex>
         ) : (
           <Flex w="100%" align="center" justify="space-between">
@@ -92,10 +318,7 @@ export default function CadastrarPaciente({
               setValue={setDataDeNascimento}
             />
           </Flex>
-        )}
-        <Input label="E-mail" value={email} setValue={setEmail} />
-        <Input label="Telefone" value={telefone} setValue={setTelefone}/>
-        
+        )}        
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
         <Button label="Cancelar" onPress={closeModal} mt={0.1} />
