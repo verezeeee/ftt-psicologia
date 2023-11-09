@@ -51,5 +51,7 @@ export type AlunoSignUpData = {
 
 // Interface de registro do paciente
 export type PacienteSignUpData = {
-  
+  nome: string;
+  cpf: string;
+  role: "paciente";
 }

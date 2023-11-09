@@ -1,9 +1,10 @@
-import { AbsoluteCenter, Divider, Flex, Text, useToast, Select, Spacer, Checkbox } from "@chakra-ui/react";
+import { AbsoluteCenter, Divider, Flex, Text, useToast, Spacer, Checkbox, Grid, GridItem, Box } from "@chakra-ui/react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
-import { cadastrarProfessor } from "./services";
+import { cadastrarPaciente } from "./services";
 import { validarCPF } from "../../../../utils/cpf";
 import { validarEmail } from "../../../../utils/email";
+import Select from "../../../../components/Select";
 
 export default function CadastrarPaciente({
   mobile,
@@ -12,19 +13,25 @@ export default function CadastrarPaciente({
   setNome,
   cpf,
   setCPF,
-  datadenascimento,
+  dataDeNascimento,
   setDataDeNascimento,
   telefone,
   setTelefone,
   email,
   setEmail,
+  sexo,
+  setSexo,
+  estadoCivil,
+  setEstadoCivil,
+  rendaFamiliar,
+  setRendaFamiliar,
   religiao,
   setReligiao,
   profissao,
   setProfissao,
-  outrocontato,
+  outroContato,
   setOutroContato,
-  contatoresponsavel,
+  contatoResponsavel,
   setContatoResponsavel,
   naturalidade,
   setNaturalidade,
@@ -42,13 +49,13 @@ export default function CadastrarPaciente({
   setCidade,
   uf,
   setUf,
-  iniciotratamento,
+  inicioTratamento,
   setInicioTratamento,
-  terminotratamento,
+  terminoTratamento,
   setTerminoTratamento,
   encaminhador, 
   setEncaminhador,
-  tipotratamento,
+  tipoTratamento,
   setTipoTratamento,
 }: {
   mobile: boolean;
@@ -57,20 +64,26 @@ export default function CadastrarPaciente({
   setNome: any;
   cpf: string;
   setCPF: any;
-  datadenascimento: string;
+  dataDeNascimento: string;
   setDataDeNascimento: any;
   telefone: string;
   setTelefone: any;
   email: string;
   setEmail: any;
+  sexo: string;
+  setSexo: any;
+  estadoCivil: string;
+  setEstadoCivil: any; 
+  rendaFamiliar: string;
+  setRendaFamiliar: any;
   setEtapa: any;
   religiao: string;
   setReligiao: any;
   profissao: string;
   setProfissao: any;
-  outrocontato: string;
+  outroContato: string;
   setOutroContato: any;
-  contatoresponsavel: string;
+  contatoResponsavel: string;
   setContatoResponsavel: any;
   naturalidade: string;
   setNaturalidade: any;
@@ -88,13 +101,13 @@ export default function CadastrarPaciente({
   setCidade: any;
   uf: string;
   setUf: any;
-  iniciotratamento: string;
+  inicioTratamento: string;
   setInicioTratamento: any;
-  terminotratamento: string;
+  terminoTratamento: string;
   setTerminoTratamento: any;
   encaminhador: string;
   setEncaminhador: any;
-  tipotratamento: string;
+  tipoTratamento: string;
   setTipoTratamento: any;
 }) {
   const toast = useToast();
@@ -107,9 +120,6 @@ export default function CadastrarPaciente({
         </Text>
       </Flex>
       <Divider mt="2" />
-      <Text color="#787878" fontSize="1.8rem" w='100%' textAlign='center'>
-          Informações pessoais
-        </Text>
       <Flex
         flexDir="column"
         py="4"
@@ -117,14 +127,22 @@ export default function CadastrarPaciente({
         justify="space-between"
         w="100%"
       >
-        <Input label="Nome completo" value={nome} setValue={setNome} />
         {mobile ? (
+          
           <Flex
             w="100%"
             flexDir="column"
             align="center"
             justify="space-between"
           >
+          <Text color="#787878" fontSize="1.8rem" w='100%' textAlign='center'>
+            Informações pessoais
+          </Text>
+            <Input 
+            label="Nome completo" 
+            value={nome} 
+            setValue={setNome} 
+            />
             <Input
               label="CPF"
               mask="000.000.000-00"
@@ -135,7 +153,7 @@ export default function CadastrarPaciente({
             <Flex w={10} />
             <Input
               label="Data de nascimento"
-              value={datadenascimento}
+              value={dataDeNascimento}
               setValue={setDataDeNascimento}
               type="date"
             />
@@ -151,73 +169,63 @@ export default function CadastrarPaciente({
               setValue={setTelefone}
               type="tel"
             />
-            <Flex
-            mt={4}
-            flexDir="column"
-            w='100%'>
-            Sexo
-            <Select 
-            placeholder='-'
-            border="2px solid #C760EB">
-              <option value='option1'>Masculino</option>
-              <option value='option2'>Feminino</option>
-              <option value='option3'>Outros</option>
-            </Select>
-            </Flex>
-            <Flex
-            mt={4}
-            w='100%'
-            flexDir="column">
-            Estado Civil
-            <Select 
-            placeholder='-'
-            border="2px solid #C760EB">
-              <option value='option1'>Solteiro</option>
-              <option value='option2'>Casado</option>
-              <option value='option3'>Divorciado</option>
-              <option value='option4'>Viúvo</option>
-              <option value='option5'>Separado judicialmente</option>
-            </Select>
-            </Flex>
+            <Select
+            label="Sexo"
+            options={[
+              "Feminino",
+              "Masculino",
+              "Outros",
+            ]}
+            value={sexo}
+            setValue={setSexo}
+          />
+            <Select
+            label="Estado Civil"
+            options={[
+              "Solteiro",
+              "Casado",
+              "Divorciado",
+              "Viúvo",
+              "Separado judicialmente",
+            ]}
+            value={estadoCivil}
+            setValue={setEstadoCivil}
+            />
             <Input
               label="Religião"
               value={religiao}
               setValue={setReligiao}
               type="string"
             />
-            <Flex
-            mt={4}
-            w='100%'
-            flexDir="column">
-            Renda familiar
-            <Select 
-            placeholder='-'
-            border="2px solid #C760EB">
-              <option value='option1'>Solteiro</option>
-              <option value='option2'>Casado</option>
-              <option value='option3'>Divorciado</option>
-              <option value='option4'>Viúvo</option>
-              <option value='option5'>Separado judicialmente</option>
-            </Select>
-            </Flex>
-            <Input
-              label="Profissão"
-              value={profissao}
-              setValue={setProfissao}
-              type="string"
+            <Select
+            label="Renda Familiar"
+            options={[
+              "1 a 3 salários minimos",
+              "3 a 5 salários minimos",
+              "5 a 7 salários minimos",
+              "Mais que 7 salários minimos",
+            ]}
+            value={rendaFamiliar}
+            setValue={setRendaFamiliar}
             />
-            <Input
-              label="Outro contato"
-              value={outrocontato}
-              setValue={setOutroContato}
-              type="string"
-            />
-            <Input
-              label="Nome do contato/responsável"
-              value={contatoresponsavel}
-              setValue={setContatoResponsavel}
-              type="string"
-            />
+              <Input
+                label="Profissão"
+                value={profissao}
+                setValue={setProfissao}
+                type="string"
+              />
+              <Input
+                label="Outro contato"
+                value={outroContato}
+                setValue={setOutroContato}
+                type="string"
+              />
+              <Input
+                label="Nome do contato/responsável"
+                value={contatoResponsavel}
+                setValue={setContatoResponsavel}
+                type="string"
+              />
             <Checkbox my={4} textAlign="initial" w="100%">Menor de idade</Checkbox>
             <Input
               label="Naturalidade"
@@ -277,13 +285,13 @@ export default function CadastrarPaciente({
             </Text>
             <Input
               label="Inicio do tratamento"
-              value={iniciotratamento}
+              value={inicioTratamento}
               setValue={setInicioTratamento}
               type="date"
             />
             <Input
               label="Término do tratamento"
-              value={terminotratamento}
+              value={terminoTratamento}
               setValue={setTerminoTratamento}
               type="date"
             />
@@ -295,7 +303,7 @@ export default function CadastrarPaciente({
             />
             <Input
               label="Tipo de tratamento"
-              value={tipotratamento}
+              value={tipoTratamento}
               setValue={setTipoTratamento}
               type="string"
             />
@@ -303,21 +311,288 @@ export default function CadastrarPaciente({
             <Checkbox textAlign="initial" w="100%">Funcionário da Associação Educativa Evangélica</Checkbox>
           </Flex>
         ) : (
-          <Flex w="100%" align="center" justify="space-between">
+          <>
+          <Text color="#787878" fontSize="1.8rem" w='100%' textAlign='initial'>
+            Informações pessoais
+          </Text>
+          <Grid templateColumns='repeat(4, 1fr)' gap={6} p='4' >
+          <GridItem w='100%' h='100' colSpan={2}>
+            <Input 
+              label="Nome completo" 
+              value={nome} 
+              setValue={setNome} 
+              />
+          </GridItem>
+          <GridItem w='100%' h='100'>
             <Input
               label="CPF"
               mask="000.000.000-00"
               value={cpf}
               setValue={setCPF}
+              type="string"
             />
-            <Flex w={10} />
+          </GridItem>
+          <GridItem w='100%' h='100'>
             <Input
-              label="Telefone"
-              mask=" / /"
-              value={datadenascimento}
+              label="Data de nascimento"
+              value={dataDeNascimento}
               setValue={setDataDeNascimento}
+              type="date"
             />
-          </Flex>
+          </GridItem>
+          <GridItem w='100%' h='100' colSpan={2}>
+            <Input
+              label="E-mail"
+              value={email}
+              setValue={setEmail}
+              type="email"
+            />
+          </GridItem>
+          <GridItem w='100%' h='100'>
+           <Input
+              label="Telefone"
+              value={telefone}
+              setValue={setTelefone}
+              type="tel"
+            />
+          </GridItem>
+          <GridItem w='100%' h='100'>
+          <Select
+            label="Sexo"
+            options={[
+              "Feminino",
+              "Masculino",
+              "Outros",
+            ]}
+            value={sexo}
+            setValue={setSexo}
+          />
+          </GridItem>
+          <GridItem w='100%' h='100' >
+            <Select
+              label="Estado Civil"
+              options={[
+                "Solteiro",
+                "Casado",
+                "Divorciado",
+                "Viúvo",
+                "Separado judicialmente",
+              ]}
+              value={estadoCivil}
+              setValue={setEstadoCivil}
+              />
+          </GridItem>
+          <GridItem w='100%' h='100'>
+          <Input
+              label="Religião"
+              value={religiao}
+              setValue={setReligiao}
+              type="string"
+            />
+          </GridItem>
+          <GridItem w='100%' h='100'>
+            <Select
+              label="Renda Familiar"
+              options={[
+                "1 a 3 salários minimos",
+                "3 a 5 salários minimos",
+                "5 a 7 salários minimos",
+                "Mais que 7 salários minimos",
+              ]}
+              value={rendaFamiliar}
+              setValue={setRendaFamiliar}
+            />
+          </GridItem>
+          <GridItem w='100%' h='100'>
+            <Input
+              label="Profissão"
+              value={profissao}
+              setValue={setProfissao}
+              type="string"
+            />
+          </GridItem>
+          <GridItem w='100%' h='100' colSpan={1}>
+            <Input
+                label="Outro contato"
+                value={outroContato}
+                setValue={setOutroContato}
+                type="string"
+              />
+          </GridItem>
+          <GridItem w='100%' h='100' colSpan={2}>
+            <Input
+                label="Nome do contato/responsável"
+                value={contatoResponsavel}
+                setValue={setContatoResponsavel}
+                type="string"
+              />
+          </GridItem>
+          <GridItem w='100%' h='100'>
+            <Checkbox 
+            my={10} 
+            textAlign="initial" 
+            w="100%">
+            Menor de idade
+            </Checkbox>
+          </GridItem>
+          <GridItem w='100%' h='100' colSpan={2}>
+           <Input
+              label="Naturalidade"
+              value={naturalidade}
+              setValue={setNaturalidade}
+              type="string"
+            />
+          </GridItem>
+          <GridItem w='100%' h='100'>
+            <Input
+              label="Nacionalidade"
+              value={nacionalidade}
+              setValue={setNacionalidade}
+              type="string"
+            />
+          </GridItem>
+         </Grid>
+         <Divider mt={2}/>
+         <Text color="#787878" fontSize="1.8rem" w='100%' textAlign='initial'>
+            Endereço
+         </Text>
+          <Grid templateColumns='repeat(4, 1fr)' gap={6} p='4' >
+          <GridItem w='100%' h='100'>
+            <Input
+              label="CEP"
+              value={cep}
+              setValue={setCep}
+              type="string"
+            />
+          </GridItem>
+          <GridItem w='100%' h='100' colSpan={2}>
+            <Input
+              label="Logradouro"
+              value={logradouro}
+              setValue={setLogradouro}
+              type="string"
+            />
+          </GridItem>
+          <GridItem w='100%' h='100'>
+            <Input
+              label="Bairro"
+              value={bairro}
+              setValue={setBairro}
+              type="string"
+            />
+          </GridItem>
+          <GridItem w='100%' h='100' colSpan={2}>
+            <Input
+              label="Complemento"
+              value={complemento}
+              setValue={setComplemento}
+              type="string"
+            />
+          </GridItem>
+          <GridItem w='100%' h='100' >
+            <Input
+              label="Cidade"
+              value={cidade}
+              setValue={setCidade}
+              type="string"
+            />
+          </GridItem>
+          <GridItem w='100%' h='100'>
+          <Select
+            label="Estado Civil"
+            options={[
+              "AC",
+              "AL",
+              "AP", 
+              "AM", 
+              "BA", 
+              "CE", 
+              "DF", 
+              "ES", 
+              "GO", 
+              "MA", 
+              "MT", 
+              "MS", 
+              "MG", 
+              "PA",
+              "PB", 
+              "PR", 
+              "PE", 
+              "PI", 
+              "RJ", 
+              "RN", 
+              "RS", 
+              "RO", 
+              "RR", 
+              "SC", 
+              "SP", 
+              "SE", 
+              "TO"
+            ]}
+            value={uf}
+            setValue={setUf}
+            />
+          </GridItem>
+          </Grid>
+          <Divider 
+          mt={2}
+          />
+          <Text color="#787878" fontSize="1.8rem" w='100%' textAlign='initial'>
+          Informações de tratamento
+         </Text>
+         <Grid templateColumns='repeat(4, 1fr)' gap={6} p='4' >
+         <GridItem w='100%' h='100'>
+            <Input
+              label="Inicio do tratamento"
+              value={inicioTratamento}
+              setValue={setInicioTratamento}
+              type="date"
+            />
+          </GridItem>
+          <GridItem w='100%' h='100'>
+            <Input
+              label="Término do tratamento"
+              value={terminoTratamento}
+              setValue={setTerminoTratamento}
+              type="date"
+            />
+          </GridItem>
+          <GridItem w='100%' h='100' colSpan={2}>
+            <Input
+              label="Quem encaminhou?"
+              value={encaminhador}
+              setValue={setEncaminhador}
+              type="string"
+            />
+          </GridItem>
+          <GridItem w='100%' h='100' colSpan={3}>
+            <Input
+              label="Tipo de tratamento"
+              value={tipoTratamento}
+              setValue={setTipoTratamento}
+              type="string"
+            />
+          </GridItem>
+          <GridItem/>
+          <GridItem colSpan={2}>
+            <Checkbox
+            my={4} 
+            textAlign="initial" 
+            w="100%">
+            Aluno UniEvangélica
+            </Checkbox> 
+          </GridItem>
+          <GridItem colSpan={2}>
+          <Checkbox 
+          textAlign="initial"
+          w="100%"
+          my={4}
+          >
+          Funcionário da Associação Educativa Evangélica
+          </Checkbox>
+          </GridItem>
+         </Grid>
+         </>
         )}        
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
@@ -328,19 +603,19 @@ export default function CadastrarPaciente({
             if (!nome) {
               toast({
                 status: "error",
-                description: "Insira o nome do professor",
+                description: "Insira o nome do paciente",
                 duration: 500,
               });
             } else if (!nome.split(" ")[1]) {
               toast({
                 status: "error",
-                description: "Insira o sobrenome do professor",
+                description: "Insira o sobrenome do paciente",
                 duration: 500,
               });
             } else if (!cpf) {
               toast({
                 status: "error",
-                description: "Insira o CPF do professor",
+                description: "Insira o CPF do paciente",
                 duration: 500,
               });
             } else if (!validarCPF(cpf)) {
@@ -352,7 +627,7 @@ export default function CadastrarPaciente({
             } else if (!telefone) {
               toast({
                 status: "error",
-                description: "Insira o telefone do professor",
+                description: "Insira o telefone do paciente",
                 duration: 500,
               });
             } else if (telefone.length !== 15) {
@@ -361,16 +636,10 @@ export default function CadastrarPaciente({
                 description: "Insira um telefone válido",
                 duration: 500,
               });
-            } else if (!disciplina) {
-              toast({
-                status: "error",
-                description: "Insira a disciplina do professor",
-                duration: 500,
-              });
             } else if (!email) {
               toast({
                 status: "error",
-                description: "Insira o e-mail do professor",
+                description: "Insira o e-mail do paciente",
                 duration: 500,
               });
             } else if (!validarEmail(email)) {
@@ -380,14 +649,11 @@ export default function CadastrarPaciente({
                 duration: 500,
               });
             } else {
-              const res = await cadastrarProfessor({
+              const res = await cadastrarPaciente({
                 nome,
                 cpf,
-                disciplinaMinistrada: disciplina,
-                telefoneContato: telefone,
-                email,
-                disciplina,
-                role: "professor",
+
+                role: "paciente",
               });
               if (res.error) {
                 toast({
@@ -399,7 +665,7 @@ export default function CadastrarPaciente({
               } else {
                 toast({
                   status: "success",
-                  description: "Professor cadastrado com sucesso!",
+                  description: "Paciente cadastrado com sucesso!",
                   duration: 500,
                 });
                 closeModal();

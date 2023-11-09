@@ -1,6 +1,7 @@
 import { api } from "../../../../services/apiClient";
 import {
   AlunoSignUpData,
+  PacienteSignUpData,
   ProfessorSignUpData,
   SecretarioSignUpData
 } from "../../../../utils/types";
@@ -30,6 +31,23 @@ export async function cadastrarProfessor(
     };
   }
 }
+
+export async function cadastrarPaciente(
+  req: PacienteSignUpData
+): Promise<CreateResponse> {
+  const res = await api.post("/auth/registroPaciente", req);
+  console.log(res)
+  if (res.status !== 200) {
+    return {
+      error: "Erro ao criar paciente",
+    };
+  } else {
+    return {
+      message: "Paciente criado com sucesso",
+    };
+  }
+}
+
 export async function cadastrarSecretario(
   req: SecretarioSignUpData
 ): Promise<CreateResponse> {
