@@ -51,7 +51,35 @@ export type AlunoSignUpData = {
 
 // Interface de registro do paciente
 export type PacienteSignUpData = {
-  nome: string;
-  cpf: string;
+  // Informações pessoais:
+  nome: string,
+  cpf: string,
+  dataDeNascimento: string,
+  email: string,
+  telefoneContato: string,
+  sexo: string,
+  estadoCivil: string,
+  religiao: string,
+  rendaFamiliar: string,
+  profissao: string,
+  outroContato: string,
+  nomeDoContatoResponsavel: string,
+  menorDeIdade: any,
+  naturalidade: string,
+  nacionalidade: string,
+  // Endereço:
+  enderecoCep: string,
+  enderecoLogradouro: string,
+  enderecoBairro: string,
+  enderecoComplemento: string,
+  enderecoCidade: string,
+  enderecoUF: string,
+  // Informação de tratamento:
+  dataInicioTratamento: string,
+  dataTerminoTratamento: string,
+  quemEncaminhou: string,
+  tipoDeTratamento: string,
+  alunoUnieva: string,
+  funcionarioUnieva: string,
   role: "paciente";
 }

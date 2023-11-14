@@ -228,7 +228,8 @@ export default function VisualizarProfessor({
           </Grid>
           <Flex 
             w="100%" 
-            p='4' 
+            p='4'
+             
             style={{
             backgroundColor: "#fff",
             display: "flex",

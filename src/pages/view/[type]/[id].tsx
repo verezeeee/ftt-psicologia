@@ -32,9 +32,8 @@ export default function VisualizarUsuário() {
     */
     }, [router.isReady, type, id])
     if(type === "secretario"){
-        console.log(secretario)
         return(
-            <Visualizar type="secretario" 
+            <Visualizar type="paciente" 
             userData={secretario}/>
         )
     }else if(type === "aluno"){

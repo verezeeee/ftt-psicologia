@@ -120,6 +120,7 @@ export default function CadastrarAluno({
         <Button
           label="Cadastrar"
           onPress={async () => {
+            console.log(cpf)
             if (!matricula) {
               toast({
                 status: "error",
@@ -135,19 +136,19 @@ export default function CadastrarAluno({
             } else if (!nome) {
               toast({
                 status: "error",
-                description: "Insira o nome do professor",
+                description: "Insira o nome do Aluno",
                 duration: 500,
               });
             } else if (!nome.split(" ")[1]) {
               toast({
                 status: "error",
-                description: "Insira o sobrenome do professor",
+                description: "Insira o sobrenome do Aluno",
                 duration: 500,
               });
             } else if (!cpf) {
               toast({
                 status: "error",
-                description: "Insira o CPF do professor",
+                description: "Insira o CPF do Aluno",
                 duration: 500,
               });
             } else if (!validarCPF(cpf)) {
@@ -159,7 +160,7 @@ export default function CadastrarAluno({
             } else if (!telefone) {
               toast({
                 status: "error",
-                description: "Insira o telefone do professor",
+                description: "Insira o telefone do Aluno",
                 duration: 500,
               });
             } else if (telefone.length !== 15) {
@@ -171,7 +172,7 @@ export default function CadastrarAluno({
             } else if (!email) {
               toast({
                 status: "error",
-                description: "Insira o e-mail do professor",
+                description: "Insira o e-mail do Aluno",
                 duration: 500,
               });
             } else if (!validarEmail(email)) {

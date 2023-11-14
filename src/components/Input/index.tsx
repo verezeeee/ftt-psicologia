@@ -12,7 +12,7 @@ export default function Input({
   type,
 }: {
   label: string;
-  value: string;
+  value: any;
   setValue: React.Dispatch<React.SetStateAction<string>>;
   mask?: string;
   defaultValue?: string;

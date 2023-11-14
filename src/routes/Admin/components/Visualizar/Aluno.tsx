@@ -6,7 +6,7 @@ import Sidebar from "../../../../components/Sidebar";
 import { useState } from "react";
 import Table from "../../../../components/Tables";
 import { useMediaQuery } from "@chakra-ui/react";
-import { SecretarioSignUpData } from "../../../../utils/types";
+import { AlunoSignUpData } from "../../../../utils/types";
 import Search from "../../../../components/Search";
 
 export default function VisualizarAluno({
@@ -29,8 +29,8 @@ export default function VisualizarAluno({
   telefoneContato: string;
   professor: string;
   periodo: string;
-  setMobile: false;
-  user: SecretarioSignUpData;
+  setMobile: (mobile: boolean) => void;
+  user: AlunoSignUpData;
   userData: any;
 }) {
   const router = useRouter();
@@ -43,7 +43,7 @@ export default function VisualizarAluno({
   const [isMobile] = useMediaQuery("(max-width: 768px)")
   const [activeTab, setActiveTab] = useState("tab1");
   const [isEditing, setIsEditing] = useState<any>();
-  const [result, setResult] = useState<SecretarioSignUpData[]>([]);
+  const [result, setResult] = useState<AlunoSignUpData[]>([]);
   
   
   return (

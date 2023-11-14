@@ -5,6 +5,8 @@ import { cadastrarPaciente } from "./services";
 import { validarCPF } from "../../../../utils/cpf";
 import { validarEmail } from "../../../../utils/email";
 import Select from "../../../../components/Select";
+import { useState } from "react";
+import axios from "axios";
 
 export default function CadastrarPaciente({
   mobile,
@@ -13,109 +15,41 @@ export default function CadastrarPaciente({
   setNome,
   cpf,
   setCPF,
-  dataDeNascimento,
-  setDataDeNascimento,
   telefone,
   setTelefone,
   email,
   setEmail,
-  sexo,
-  setSexo,
-  estadoCivil,
-  setEstadoCivil,
-  rendaFamiliar,
-  setRendaFamiliar,
-  religiao,
-  setReligiao,
-  profissao,
-  setProfissao,
-  outroContato,
-  setOutroContato,
-  contatoResponsavel,
-  setContatoResponsavel,
-  naturalidade,
-  setNaturalidade,
-  nacionalidade,
-  setNacionalidade,
-  cep,
-  setCep,
-  logradouro,
-  setLogradouro,
-  bairro,
-  setBairro,
-  complemento,
-  setComplemento,
-  cidade,
-  setCidade,
-  uf,
-  setUf,
-  inicioTratamento,
-  setInicioTratamento,
-  terminoTratamento,
-  setTerminoTratamento,
-  encaminhador, 
-  setEncaminhador,
-  tipoTratamento,
-  setTipoTratamento,
-}: {
-  mobile: boolean;
-  closeModal: () => void;
-  nome: string;
-  setNome: any;
-  cpf: string;
-  setCPF: any;
-  dataDeNascimento: string;
-  setDataDeNascimento: any;
-  telefone: string;
-  setTelefone: any;
-  email: string;
-  setEmail: any;
-  sexo: string;
-  setSexo: any;
-  estadoCivil: string;
-  setEstadoCivil: any; 
-  rendaFamiliar: string;
-  setRendaFamiliar: any;
-  setEtapa: any;
-  religiao: string;
-  setReligiao: any;
-  profissao: string;
-  setProfissao: any;
-  outroContato: string;
-  setOutroContato: any;
-  contatoResponsavel: string;
-  setContatoResponsavel: any;
-  naturalidade: string;
-  setNaturalidade: any;
-  nacionalidade: string;
-  setNacionalidade: any;
-  cep: string;
-  setCep: any;
-  logradouro: string;
-  setLogradouro: any;
-  bairro: string;
-  setBairro: any;
-  complemento: string;
-  setComplemento: any;
-  cidade: string;
-  setCidade: any;
-  uf: string;
-  setUf: any;
-  inicioTratamento: string;
-  setInicioTratamento: any;
-  terminoTratamento: string;
-  setTerminoTratamento: any;
-  encaminhador: string;
-  setEncaminhador: any;
-  tipoTratamento: string;
-  setTipoTratamento: any;
 }) {
   const toast = useToast();
-
+  const [alunoUnieva, setAlunoUnieva] = useState(false);
+  const [funcionarioUnieva, setFuncionarioUnieva] = useState(false);
+  const [menorDeIdade, setMenorDeIdade] = useState(false);
+  const [dataDeNascimento, setDataDeNascimento] = useState("");
+  const [sexo, setSexo] = useState("");
+  const [estadoCivil, setEstadoCivil] = useState("");
+  const [religiao, setReligiao] = useState("");
+  const [rendaFamiliar, setRendaFamiliar] = useState("");
+  const [profissao, setProfissao] = useState("");
+  const [outroContato, setOutroContato] = useState("");
+  const [nomeDoContatoResponsavel, setNomeDoContatoResponsavel] = useState("");
+  const [naturalidade, setNaturalidade] = useState("");
+  const [nacionalidade, setNacionalidade] = useState("");
+  const [cep, setCep] = useState("");
+  const [logradouro, setLogradouro]= useState("");
+  const [bairro, setBairro]= useState("");
+  const [complemento, setComplemento]= useState("");
+  const [cidade, setCidade]= useState("");
+  const [uf, setUf] = useState(false);
+  const [inicioTratamento, setInicioTratamento]= useState("");
+  const [terminoTratamento, setTerminoTratamento]= useState("");
+  const [encaminhador, setEncaminhador]= useState("");
+  const [tipoDeTratamento, setTipoTratamento]= useState("");
+  
   return (
+    <>
     <Flex flexDir="column" p="8" pt="6">
       <Flex align="center" justify="space-between" w="100%">
-        <Text color="#787878" fontSize="1.8rem">
+        <Text color="#000000" fontSize="2rem" >
           Cadastro de Paciente
         </Text>
       </Flex>
@@ -222,11 +156,11 @@ export default function CadastrarPaciente({
               />
               <Input
                 label="Nome do contato/responsável"
-                value={contatoResponsavel}
-                setValue={setContatoResponsavel}
+                value={nomeDoContatoResponsavel}
+                setValue={setNomeDoContatoResponsavel}
                 type="string"
               />
-            <Checkbox my={4} textAlign="initial" w="100%">Menor de idade</Checkbox>
+            <Checkbox my={4} textAlign="initial" w="100%" isChecked={menorDeIdade} onChange={(e) => setMenorDeIdade(e.target.checked)}>Menor de idade</Checkbox>
             <Input
               label="Naturalidade"
               value={naturalidade}
@@ -303,12 +237,12 @@ export default function CadastrarPaciente({
             />
             <Input
               label="Tipo de tratamento"
-              value={tipoTratamento}
+              value={tipoDeTratamento}
               setValue={setTipoTratamento}
               type="string"
             />
-            <Checkbox my={4} textAlign="initial" w="100%">Aluno UniEvangélica</Checkbox>
-            <Checkbox textAlign="initial" w="100%">Funcionário da Associação Educativa Evangélica</Checkbox>
+            <Checkbox my={4} textAlign="initial" w="100%"  isChecked={alunoUnieva} onChange={(e) => setAlunoUnieva(e.target.checked)}>Aluno UniEvangélica</Checkbox>
+            <Checkbox textAlign="initial" w="100%" isChecked={funcionarioUnieva} onChange={(e) => setFuncionarioUnieva(e.target.checked)}>Funcionário da Associação Educativa Evangélica</Checkbox>
           </Flex>
         ) : (
           <>
@@ -330,6 +264,7 @@ export default function CadastrarPaciente({
               value={cpf}
               setValue={setCPF}
               type="string"
+              cpf-mask="000.000.000-00"
             />
           </GridItem>
           <GridItem w='100%' h='100'>
@@ -337,7 +272,8 @@ export default function CadastrarPaciente({
               label="Data de nascimento"
               value={dataDeNascimento}
               setValue={setDataDeNascimento}
-              type="date"
+              type="string"
+              mask="00/00/0000"
             />
           </GridItem>
           <GridItem w='100%' h='100' colSpan={2}>
@@ -354,6 +290,7 @@ export default function CadastrarPaciente({
               value={telefone}
               setValue={setTelefone}
               type="tel"
+              mask="(00) 00000-0000"
             />
           </GridItem>
           <GridItem w='100%' h='100'>
@@ -422,8 +359,8 @@ export default function CadastrarPaciente({
           <GridItem w='100%' h='100' colSpan={2}>
             <Input
                 label="Nome do contato/responsável"
-                value={contatoResponsavel}
-                setValue={setContatoResponsavel}
+                value={nomeDoContatoResponsavel}
+                setValue={setNomeDoContatoResponsavel}
                 type="string"
               />
           </GridItem>
@@ -440,7 +377,7 @@ export default function CadastrarPaciente({
               label="Naturalidade"
               value={naturalidade}
               setValue={setNaturalidade}
-              type="string"
+              
             />
           </GridItem>
           <GridItem w='100%' h='100'>
@@ -568,7 +505,7 @@ export default function CadastrarPaciente({
           <GridItem w='100%' h='100' colSpan={3}>
             <Input
               label="Tipo de tratamento"
-              value={tipoTratamento}
+              value={tipoDeTratamento}
               setValue={setTipoTratamento}
               type="string"
             />
@@ -578,23 +515,29 @@ export default function CadastrarPaciente({
             <Checkbox
             my={4} 
             textAlign="initial" 
-            w="100%">
+            w="100%"
+            isChecked={alunoUnieva}
+            onChange={(e) => setAlunoUnieva(e.target.checked)}
+            >
             Aluno UniEvangélica
             </Checkbox> 
           </GridItem>
           <GridItem colSpan={2}>
-          <Checkbox 
-          textAlign="initial"
-          w="100%"
-          my={4}
-          >
-          Funcionário da Associação Educativa Evangélica
-          </Checkbox>
+            <Checkbox 
+            textAlign="initial"
+            w="100%"
+            my={4}
+            isChecked={funcionarioUnieva}
+            onChange={(e) => setFuncionarioUnieva(e.target.checked)}
+            >
+            Funcionário da Associação Educativa Evangélica
+            </Checkbox>
           </GridItem>
          </Grid>
          </>
         )}        
       </Flex>
+      
       <Flex align="center" mt="4" justify="space-between" w="100%">
         <Button label="Cancelar" onPress={closeModal} mt={0.1} />
         <Button
@@ -652,20 +595,46 @@ export default function CadastrarPaciente({
               const res = await cadastrarPaciente({
                 nome,
                 cpf,
-
-                role: "paciente",
+                dataDeNascimento,
+                email,
+                telefoneContato: telefone,
+                sexo,
+                estadoCivil,
+                religiao,
+                rendaFamiliar,
+                profissao,
+                outroContato,
+                nomeDoContatoResponsavel,
+                menorDeIdade : menorDeIdade ? "sim" : "não",
+                naturalidade,
+                nacionalidade,
+                // Endereço:
+                enderecoCep: cep,
+                enderecoLogradouro: logradouro,
+                enderecoBairro: bairro,
+                enderecoComplemento: complemento,
+                enderecoCidade: cidade,
+                enderecoUF: uf,
+                // Informação de tratamento:
+                dataInicioTratamento: inicioTratamento,
+                dataTerminoTratamento: terminoTratamento,
+                quemEncaminhou: encaminhador,
+                tipoDeTratamento,
+                alunoUnieva : alunoUnieva ? "sim" : "não",
+                funcionarioUnieva : funcionarioUnieva ? "sim" : "não",
+                role: "paciente"
               });
+              console.log(typeof(dataDeNascimento))
               if (res.error) {
                 toast({
                   status: "error",
                   description: res.error,
                   duration: 500,
                 });
-                console.log(res.error);
               } else {
                 toast({
                   status: "success",
-                  description: "Paciente cadastrado com sucesso!",
+                  description: "Secretário cadastrado com sucesso",
                   duration: 500,
                 });
                 closeModal();
@@ -677,5 +646,6 @@ export default function CadastrarPaciente({
         />
       </Flex>
     </Flex>
+  </>
   );
 }
