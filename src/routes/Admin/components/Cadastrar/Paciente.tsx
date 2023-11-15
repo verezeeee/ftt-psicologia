@@ -39,7 +39,7 @@ export default function CadastrarPaciente({
   const [bairro, setBairro]= useState("");
   const [complemento, setComplemento]= useState("");
   const [cidade, setCidade]= useState("");
-  const [uf, setUf] = useState(false);
+  const [uf, setUf] = useState("");
   const [inicioTratamento, setInicioTratamento]= useState("");
   const [terminoTratamento, setTerminoTratamento]= useState("");
   const [encaminhador, setEncaminhador]= useState("");
@@ -102,6 +102,7 @@ export default function CadastrarPaciente({
               value={telefone}
               setValue={setTelefone}
               type="tel"
+              mask="(00) 00000-0000"
             />
             <Select
             label="Sexo"
@@ -152,7 +153,8 @@ export default function CadastrarPaciente({
                 label="Outro contato"
                 value={outroContato}
                 setValue={setOutroContato}
-                type="string"
+                type="tel"
+                mask="(00) 00000-0000"
               />
               <Input
                 label="Nome do contato/responsável"
@@ -182,6 +184,7 @@ export default function CadastrarPaciente({
               value={cep}
               setValue={setCep}
               type="string"
+              mask="00000-000"
             />
             <Input
               label="Logradouro"
@@ -353,7 +356,8 @@ export default function CadastrarPaciente({
                 label="Outro contato"
                 value={outroContato}
                 setValue={setOutroContato}
-                type="string"
+                type="tel"
+                mask="(00) 00000-0000"
               />
           </GridItem>
           <GridItem w='100%' h='100' colSpan={2}>
@@ -400,6 +404,7 @@ export default function CadastrarPaciente({
               value={cep}
               setValue={setCep}
               type="string"
+              mask="00000-000"
             />
           </GridItem>
           <GridItem w='100%' h='100' colSpan={2}>
@@ -605,7 +610,7 @@ export default function CadastrarPaciente({
                 profissao,
                 outroContato,
                 nomeDoContatoResponsavel,
-                menorDeIdade : menorDeIdade ? "sim" : "não",
+                menorDeIdade,
                 naturalidade,
                 nacionalidade,
                 // Endereço:
@@ -620,11 +625,10 @@ export default function CadastrarPaciente({
                 dataTerminoTratamento: terminoTratamento,
                 quemEncaminhou: encaminhador,
                 tipoDeTratamento,
-                alunoUnieva : alunoUnieva ? "sim" : "não",
-                funcionarioUnieva : funcionarioUnieva ? "sim" : "não",
+                alunoUnieva,
+                funcionarioUnieva,
                 role: "paciente"
               });
-              console.log(typeof(dataDeNascimento))
               if (res.error) {
                 toast({
                   status: "error",

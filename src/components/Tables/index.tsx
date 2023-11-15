@@ -79,8 +79,8 @@ export default function Table({
               <TableNextUI.Row key={user.role}>
                 <TableNextUI.Cell key={user.nome}><Link href={`/view/${type}/${user._id}`}>{user.nome}</Link></TableNextUI.Cell>
                 <TableNextUI.Cell key={user.cpf}><Link href={`/view/${type}/${user._id}`}>{formatarCPF(user.cpf)}</Link></TableNextUI.Cell>
-                <TableNextUI.Cell key={user.Tratamento}>
-                <Link href={`/view/${type}/${user._id}`}>{user.tratamento}</Link>
+                <TableNextUI.Cell key={user.tipoDeTratamento}>
+                <Link href={`/view/${type}/${user._id}`}>{user.tipoDeTratamento}</Link>
                 </TableNextUI.Cell>
               </TableNextUI.Row>
             )

@@ -64,7 +64,7 @@ export type PacienteSignUpData = {
   profissao: string,
   outroContato: string,
   nomeDoContatoResponsavel: string,
-  menorDeIdade: any,
+  menorDeIdade: boolean,
   naturalidade: string,
   nacionalidade: string,
   // Endereço:
@@ -79,7 +79,7 @@ export type PacienteSignUpData = {
   dataTerminoTratamento: string,
   quemEncaminhou: string,
   tipoDeTratamento: string,
-  alunoUnieva: string,
-  funcionarioUnieva: string,
+  alunoUnieva: boolean,
+  funcionarioUnieva: boolean,
   role: "paciente";
 }
