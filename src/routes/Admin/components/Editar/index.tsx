@@ -91,34 +91,13 @@ export default function Editar({
               editData={editData}
               mobile={mobile}
               closeModal={closeModal}
-              nome={nome}
-              setNome={setNome}
-              cpf={cpf}
-              setCPF={setCPF}
-              telefone={telefone}
-              setTelefone={setTelefone}
-              turno={turno}
-              setTurno={setTurno}
-              email={email}
-              setEmail={setEmail}
             />
           )}
           {role === "student" && (
             <EditarAluno
               mobile={mobile}
               closeModal={closeModal}
-              nome={nome}
-              setNome={setNome}
-              cpf={cpf}
-              setCPF={setCPF}
-              telefone={telefone}
-              setTelefone={setTelefone}
-              matricula={matricula}
-              setMatricula={setMatricula}
-              periodo={periodo}
-              setPeriodo={setPeriodo}
-              email={email}
-              setEmail={setEmail}
+              editData={editData}
             />
           )}
         </ModalContent>

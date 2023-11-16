@@ -19,7 +19,6 @@ export default function VisualizarSecretario({
   telefoneContato,
   turno,
   },
-  setMobile,
   user,
 }: {
   nome: string;
@@ -27,9 +26,8 @@ export default function VisualizarSecretario({
   cpf: string;
   telefone: string;
   turno: string;
-  setMobile?: (mobile: boolean) => void;
   user: SecretarioSignUpData;
-  userData: any;
+  userData?: any;
 }) {
   const router = useRouter();
   const navegarParaOutraPasta = () => {
@@ -206,7 +204,13 @@ export default function VisualizarSecretario({
               <Button onPress={navegarParaOutraPasta} label="Voltar" />
               <Editar
               role="secretary"
-              editData={isEditing}
+              editData={{
+                nome,
+                email,
+                cpf,
+                telefoneContato,
+                turno,
+              }}
               editarOpened={isEditing ? true : false}
               setEditarOpened={setIsEditing}
               />

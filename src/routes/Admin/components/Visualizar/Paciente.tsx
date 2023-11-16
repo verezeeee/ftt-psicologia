@@ -10,11 +10,35 @@ import Editar from "../Editar";
 import { MdCreate } from "react-icons/md";
 
 export default function VisualizarPaciente({
+  userData:{
   nome,
-  email,
   cpf,
   telefone,
-  turno,
+  dataDeNascimento,
+  email,
+  telefoneContato,
+  sexo,
+  estadoCivil,
+  religiao,
+  profissao,
+  outroContato,
+  nomeDoContatoResponsavel,
+  menorDeIdade,
+  naturalidade,
+  nacionalidade,
+  enderecoCep,
+  enderecoLogradouro,
+  enderecoBairro,
+  enderecoComplemento,
+  enderecoCidade,
+  enderecoUF,
+  dataInicioTratamento,
+  dataTerminoTratamento,
+  quemEncaminhou,
+  tipoDeTratamento,
+  alunoUnieva,
+  funcionarioUnieva
+  },
   setMobile,
   user,
 }: {
@@ -25,6 +49,7 @@ export default function VisualizarPaciente({
   turno: string;
   setMobile: (mobile: boolean) => void;
   user: SecretarioSignUpData;
+  userData?: any;
 }) {
   const router = useRouter();
 
@@ -64,7 +89,7 @@ export default function VisualizarPaciente({
              Nome completo
            </Text>
            <Text fontSize='1.6rem'>
-             Higor Giovane Monteiro Torres
+             {nome}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -72,7 +97,7 @@ export default function VisualizarPaciente({
              E-mail
            </Text>
            <Text fontSize='1.6rem'>
-             julianaalvespach@gmail.com
+             {email}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -80,7 +105,7 @@ export default function VisualizarPaciente({
              Estado Civil
            </Text>
            <Text fontSize='1.6rem'>
-             Solteiro
+             {estadoCivil}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -88,7 +113,7 @@ export default function VisualizarPaciente({
              Outro contato
            </Text>
            <Text fontSize='1.6rem'>
-             (11) 12345-6789
+             {outroContato}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -96,7 +121,7 @@ export default function VisualizarPaciente({
              Naturalidade
            </Text>
            <Text fontSize='1.6rem'>
-             Anápolis
+             {naturalidade}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -104,7 +129,7 @@ export default function VisualizarPaciente({
              Religião
            </Text>
            <Text fontSize='1.6rem'>
-             Católico
+             {religiao}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -112,7 +137,7 @@ export default function VisualizarPaciente({
             Nome do contato/responsável
            </Text>
            <Text fontSize='1.6rem'>
-           Pablo Henrique Martins
+           {nomeDoContatoResponsavel}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -120,7 +145,7 @@ export default function VisualizarPaciente({
            Nacionalidade
            </Text>
            <Text fontSize='1.6rem'>
-           Brasileira
+           {nacionalidade}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -128,7 +153,7 @@ export default function VisualizarPaciente({
              CPF
            </Text>
            <Text fontSize='1.6rem'>
-           065.127.431-13
+           {cpf}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -136,7 +161,7 @@ export default function VisualizarPaciente({
            Telefone
            </Text>
            <Text fontSize='1.6rem'>
-           (62) 98519-4415
+           {telefone}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -144,12 +169,12 @@ export default function VisualizarPaciente({
            Renda familiar
            </Text>
            <Text fontSize='1.6rem'>
-           1 a 3 salários minimos
+            ausente
            </Text>
          </GridItem>
          <GridItem w='100%' h='100' alignItems='center' >
          <Box>
-          <Checkbox isDisabled >Menor de idade</Checkbox>
+          <Checkbox isDisabled={menorDeIdade ? false : true} >Menor de idade</Checkbox>
           </Box>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -157,7 +182,7 @@ export default function VisualizarPaciente({
            Data de nascimento
            </Text>
            <Text fontSize='1.6rem'>
-           29/04/2005
+           {dataDeNascimento}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -165,7 +190,7 @@ export default function VisualizarPaciente({
            Sexo
            </Text>
            <Text fontSize='1.6rem'>
-           Feminino
+           {sexo}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -173,7 +198,7 @@ export default function VisualizarPaciente({
            Profissão
            </Text>
            <Text fontSize='1.6rem'>
-           Professor
+           {profissao}
            </Text>
          </GridItem>
        </Grid>
@@ -198,7 +223,7 @@ export default function VisualizarPaciente({
              CEP
            </Text>
            <Text fontSize='1.6rem'>
-           01234-567
+           {enderecoCep}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -206,7 +231,7 @@ export default function VisualizarPaciente({
            Complemento
            </Text>
            <Text fontSize='1.6rem'>
-             aaaaaa
+           {enderecoComplemento}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -214,7 +239,7 @@ export default function VisualizarPaciente({
            Logradouro
            </Text>
            <Text fontSize='1.6rem'>
-           Rua das Flores
+           {enderecoLogradouro}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -222,7 +247,7 @@ export default function VisualizarPaciente({
            Cidade
            </Text>
            <Text fontSize='1.6rem'>
-           Anápolis
+           {enderecoCidade}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -230,7 +255,7 @@ export default function VisualizarPaciente({
            Bairro
            </Text>
            <Text fontSize='1.6rem'>
-           Jardim Primavera
+           {enderecoBairro}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -238,7 +263,7 @@ export default function VisualizarPaciente({
            UF
            </Text>
            <Text fontSize='1.6rem'>
-           GO
+           {enderecoUF}
            </Text>
          </GridItem>
          </Grid>
@@ -262,7 +287,7 @@ export default function VisualizarPaciente({
            Inicio do tratamento
            </Text>
            <Text fontSize='1.6rem'>
-           15/03/2023
+           {dataInicioTratamento}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -270,7 +295,7 @@ export default function VisualizarPaciente({
            Tipo de tratamento
            </Text>
            <Text fontSize='1.6rem'>
-           Gestalt
+           {tipoDeTratamento}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -278,7 +303,7 @@ export default function VisualizarPaciente({
            Termino do tratamento
            </Text>
            <Text fontSize='1.6rem'>
-           15/03/2024
+           {dataTerminoTratamento}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -291,7 +316,7 @@ export default function VisualizarPaciente({
            Quem encaminhou?
            </Text>
            <Text fontSize='1.6rem'>
-           Roberto Fernandes
+           {quemEncaminhou}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -377,7 +402,7 @@ export default function VisualizarPaciente({
             Nome completo
             </Text>
             <Text fontSize='1.6rem'>
-              Higor Giovane Monteiro Torres
+            {nome}
             </Text>
             </Box>
           </GridItem>
@@ -392,7 +417,7 @@ export default function VisualizarPaciente({
             CPF
             </Text>
             <Text fontSize='1.6rem'>
-              065.127.431-13
+            {cpf}
             </Text>
             </Box>
             </GridItem>
@@ -406,7 +431,7 @@ export default function VisualizarPaciente({
             Data de nascimento
             </Text>
             <Text fontSize='1.6rem'>
-              29/04/2005
+            {dataDeNascimento}
             </Text>
             </Box>
             </GridItem>
@@ -420,7 +445,7 @@ export default function VisualizarPaciente({
             E-mail
             </Text>
             <Text fontSize='1.6rem'>
-              higorgiovane7@gmail.com
+            {email}
             </Text>
             </Box>
           </GridItem>
@@ -436,7 +461,7 @@ export default function VisualizarPaciente({
             Telefone
             </Text>
             <Text fontSize='1.6rem'>
-              (62) 98519-4415
+            {telefoneContato}
             </Text>
             </Box>
           </GridItem>
@@ -450,7 +475,7 @@ export default function VisualizarPaciente({
             Sexo
             </Text>
             <Text fontSize='1.6rem'>
-              Feminino
+              {sexo}
             </Text>
             </Box>
           </GridItem>
@@ -464,7 +489,7 @@ export default function VisualizarPaciente({
             Estado Civil
             </Text>
             <Text fontSize='1.6rem'>
-              Solteiro
+            {estadoCivil}
             </Text>
             </Box>
           </GridItem>
@@ -478,7 +503,7 @@ export default function VisualizarPaciente({
             Religião
             </Text>
             <Text fontSize='1.6rem'>
-              Católico
+            {religiao}
             </Text>
             </Box>
           </GridItem>
@@ -506,7 +531,7 @@ export default function VisualizarPaciente({
             Profissão
             </Text>
             <Text fontSize='1.6rem'>
-              Professor
+            {profissao}
             </Text>
             </Box>
           </GridItem>
@@ -520,7 +545,7 @@ export default function VisualizarPaciente({
             Outro contato
             </Text>
             <Text fontSize='1.6rem'>
-              (62) 98456-2216
+            {outroContato}
             </Text>
             </Box>
           </GridItem>
@@ -534,7 +559,7 @@ export default function VisualizarPaciente({
             Nome do contato/responsável
             </Text>
             <Text fontSize='1.6rem'>
-              Pablo Henrique Martins
+            {nomeDoContatoResponsavel}
             </Text>
             </Box>
           </GridItem>
@@ -554,7 +579,7 @@ export default function VisualizarPaciente({
             Naturalidade
             </Text>
             <Text fontSize='1.6rem'>
-              Anápolis
+            {naturalidade}
             </Text>
             </Box>
           </GridItem>
@@ -568,7 +593,7 @@ export default function VisualizarPaciente({
             Nacionalidade
             </Text>
             <Text fontSize='1.6rem'>
-              Brasileira
+            {nacionalidade}
             </Text>
             </Box>
           </GridItem>
@@ -594,7 +619,7 @@ export default function VisualizarPaciente({
             CEP
             </Text>
             <Text fontSize='1.6rem'>
-              01234-567
+            {enderecoCep}
             </Text>
             </Box>
           </GridItem>
@@ -608,7 +633,7 @@ export default function VisualizarPaciente({
             Logradouro
             </Text>
             <Text fontSize='1.6rem'>
-              Rua das Flores
+            {enderecoLogradouro}
             </Text>
             </Box>
           </GridItem>
@@ -622,7 +647,7 @@ export default function VisualizarPaciente({
             Bairro
             </Text>
             <Text fontSize='1.6rem'>
-              Jardim Primavera
+            {enderecoBairro}
             </Text>
             </Box>
           </GridItem>
@@ -637,7 +662,7 @@ export default function VisualizarPaciente({
             Complemento
             </Text>
             <Text fontSize='1.6rem'>
-
+            {enderecoComplemento}
             </Text>
             </Box>
           </GridItem>
@@ -651,7 +676,7 @@ export default function VisualizarPaciente({
             Cidade
             </Text>
             <Text fontSize='1.6rem'>
-              Anápolis
+            {enderecoCidade}
             </Text>
             </Box>
           </GridItem>
@@ -665,7 +690,7 @@ export default function VisualizarPaciente({
             UF
             </Text>
             <Text fontSize='1.6rem'>
-              GO
+            {enderecoUF}
             </Text>
             </Box>
           </GridItem>
@@ -691,7 +716,7 @@ export default function VisualizarPaciente({
             Inicio do tratamento
             </Text>
             <Text fontSize='1.6rem'>
-              15/03/2023
+            {dataInicioTratamento}
             </Text>
             </Box>
           </GridItem>
@@ -705,7 +730,7 @@ export default function VisualizarPaciente({
             Termino do tratamento
             </Text>
             <Text fontSize='1.6rem'>
-              15/03/2024
+            {dataTerminoTratamento}
             </Text>
             </Box>
           </GridItem>
@@ -719,7 +744,7 @@ export default function VisualizarPaciente({
             Quem encaminhou?
             </Text>
             <Text fontSize='1.6rem'>
-              Roberto Fernandes
+            {quemEncaminhou}
             </Text>
             </Box>
           </GridItem>
@@ -734,12 +759,12 @@ export default function VisualizarPaciente({
             Tipo de tratamento
             </Text>
             <Text fontSize='1.6rem'>
-            Gestalt
+            {tipoDeTratamento}
             </Text>
             </Box>
           </GridItem>
           <GridItem w='100%' h='10' mt='9' >
-          <Checkbox isDisabled>Aluno UniEvangélica</Checkbox>
+          <Checkbox isDisabled={alunoUnieva ? false : true }>Aluno UniEvangélica</Checkbox>
           </GridItem>
           <GridItem w='100%' h='10' mt='9' >
           <Checkbox isDisabled checked>Funcionário da Associação Educativa Evangélica</Checkbox>

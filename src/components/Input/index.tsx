@@ -11,6 +11,7 @@ export default function Input({
   disabled,
   type,
   placeholder,
+  border,
 }: {
   label: string;
   value: any;
@@ -20,6 +21,7 @@ export default function Input({
   disabled?: boolean;
   type?: string;
   placeholder?: string;
+  border?: any;
 }) {
   return (
     <Flex flexDir="column" w="100%" my="1">
@@ -50,7 +52,7 @@ export default function Input({
           boxShadow: "none !Important",
         }}
         placeholder={placeholder ? placeholder : defaultValue}
-        border="2px solid #C760EB"
+        border={border ? border :"2px solid #C760EB"}
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setValue(e.target.value);

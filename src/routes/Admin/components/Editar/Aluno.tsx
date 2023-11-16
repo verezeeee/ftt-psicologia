@@ -2,23 +2,20 @@ import { Divider, Flex, Text } from "@chakra-ui/react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import Select from "../../../../components/Select";
+import { useState } from "react";
 
 export default function EditarAluno({
   mobile,
   closeModal,
-  nome,
-  setNome,
-  matricula,
-  setMatricula,
-  periodo,
-  setPeriodo,
-  cpf,
-  setCPF,
-  telefone,
-  setTelefone,
-  email,
-  setEmail,
+  editData,
 }) {
+  const [nome, setNome] = useState(editData.nome);
+  const [cpf, setCPF] = useState(editData.cpf);
+  const [telefone, setTelefone] = useState(editData.telefoneContato);
+  const [email, setEmail] = useState(editData.email);
+  const [matricula, setMatricula] = useState(editData.matricula)
+  const [periodo, setPeriodo] = useState(editData.periodo)
+
   return (
     <Flex flexDir="column" p="8" pt="6">
       <Flex align="center" justify="space-between" w="100%">
@@ -60,7 +57,7 @@ export default function EditarAluno({
             setValue={setPeriodo}
           />
         </Flex>
-        <Input label="Nome completo" value={nome} setValue={setNome} />
+        <Input label="Nome completo" value={nome} setValue={setNome} defaultValue={editData.nome} />
         {mobile ? (
           <Flex
             w="100%"

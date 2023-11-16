@@ -12,11 +12,13 @@ import { MdCreate } from "react-icons/md";
 
 export default function VisualizarProfessor({
   mobile,
+  userData: {
   nome,
   email,
   cpf,
   telefone,
-  turno,
+  disciplina,
+  },
   setMobile,
   user,
 }: {
@@ -28,6 +30,7 @@ export default function VisualizarProfessor({
   turno: string;
   setMobile: false;
   user: SecretarioSignUpData;
+  userData?: any;
 }) {
   const router = useRouter();
 
@@ -64,25 +67,25 @@ export default function VisualizarProfessor({
              <Text minWidth="18rem" maxWidth="18rem">
                Nome completo
              </Text>
-             <Text fontSize="1.6rem">Higor Giovane Monteiro Torres</Text>
+             <Text fontSize="1.6rem">{nome}</Text>
            </Box>
          </GridItem>
          <GridItem w="100%" h="10" mt="9">
            <Box>
              <Text>E-mail</Text>
-             <Text fontSize="1.6rem">higorgiovane7@gmail.com</Text>
+             <Text fontSize="1.6rem">{email}</Text>
            </Box>
          </GridItem>
          <GridItem w="100%" h="10" mt="9">
            <Box>
              <Text>Telefone</Text>
-             <Text fontSize="1.6rem">(62) 98519-4415</Text>
+             <Text fontSize="1.6rem">{telefone}</Text>
            </Box>
          </GridItem>
          <GridItem w="100%" h="10" mt="9" mb="4">
            <Box>
              <Text>Disciplina</Text>
-             <Text fontSize="1.6rem">Psicologia Ativa</Text>
+             <Text fontSize="1.6rem">{disciplina}</Text>
            </Box>
          </GridItem>
        </Grid>
@@ -192,7 +195,7 @@ export default function VisualizarProfessor({
             Nome completo
             </Text>
             <Text fontSize='1.6rem'>
-              Higor Giovane Monteiro Torres
+              {nome}
             </Text>
             </Box>
           </GridItem>
@@ -204,7 +207,7 @@ export default function VisualizarProfessor({
             E-mail
             </Text>
             <Text fontSize='1.6rem'>
-              higorgiovane7@gmail.com
+              {email}
             </Text>
             </Box>
           </GridItem>
@@ -215,7 +218,7 @@ export default function VisualizarProfessor({
             Telefone
             </Text>
             <Text fontSize='1.6rem'>
-              (62) 98519-4415
+              {telefone}
             </Text>
             </Box>
           </GridItem>
@@ -226,7 +229,7 @@ export default function VisualizarProfessor({
             Disciplina
             </Text>
             <Text fontSize='1.6rem'>
-              Psicologia Ativa
+              {disciplina}
             </Text>
             </Box>
           </GridItem>

@@ -316,7 +316,14 @@ export default function VisualizarAluno({
           />
           <Editar
           role="student"
-          editData={isEditing}
+          editData={{
+            nome,
+            email,
+            matricula,
+            telefoneContato,
+            professor,
+            periodo,
+          }}
           editarOpened={isEditing ? true : false}
           setEditarOpened={setIsEditing}
           />

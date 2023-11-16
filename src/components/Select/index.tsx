@@ -12,11 +12,15 @@ export default function Select({
   options,
   value,
   setValue,
+  disabled,
+  border,
 }: {
   options: string[];
   label: string;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
+  disabled: boolean;
+  border?: any;
 }) {
   return (
     <Flex flexDir="column" w="100%" my="1">
@@ -24,6 +28,7 @@ export default function Select({
         {label}
       </Text>
       <ChakraSelect
+        disabled={disabled}
         mt="2"
         value={value}
         onChange={(e) => {
@@ -45,7 +50,7 @@ export default function Select({
           outline: "none !important",
           boxShadow: "none !Important",
         }}
-        border="2px solid #C760EB"
+        border={border ? border : "2px solid #C760EB"}
       >
         {options.map((option, i) => {
           return (
