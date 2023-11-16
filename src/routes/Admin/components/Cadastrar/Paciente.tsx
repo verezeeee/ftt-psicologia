@@ -76,6 +76,7 @@ export default function CadastrarPaciente({
             label="Nome completo" 
             value={nome} 
             setValue={setNome} 
+            
             />
             <Input
               label="CPF"
@@ -83,13 +84,16 @@ export default function CadastrarPaciente({
               value={cpf}
               setValue={setCPF}
               type="tel"
+              placeholder="000.000.000-00"
             />
             <Flex w={10} />
             <Input
               label="Data de nascimento"
               value={dataDeNascimento}
               setValue={setDataDeNascimento}
-              type="date"
+              type="string"
+              mask="00/00/0000"
+              placeholder="00/00/0000"
             />
             <Input
               label="E-mail"
@@ -103,10 +107,12 @@ export default function CadastrarPaciente({
               setValue={setTelefone}
               type="tel"
               mask="(00) 00000-0000"
+              placeholder="(00) 00000-0000"
             />
             <Select
             label="Sexo"
             options={[
+              "",
               "Feminino",
               "Masculino",
               "Outros",
@@ -117,6 +123,7 @@ export default function CadastrarPaciente({
             <Select
             label="Estado Civil"
             options={[
+              "",
               "Solteiro",
               "Casado",
               "Divorciado",
@@ -135,6 +142,7 @@ export default function CadastrarPaciente({
             <Select
             label="Renda Familiar"
             options={[
+              "",
               "1 a 3 salários minimos",
               "3 a 5 salários minimos",
               "5 a 7 salários minimos",
@@ -155,6 +163,7 @@ export default function CadastrarPaciente({
                 setValue={setOutroContato}
                 type="tel"
                 mask="(00) 00000-0000"
+                placeholder="(00) 00000-0000"
               />
               <Input
                 label="Nome do contato/responsável"
@@ -185,6 +194,7 @@ export default function CadastrarPaciente({
               setValue={setCep}
               type="string"
               mask="00000-000"
+              placeholder="00000-000"
             />
             <Input
               label="Logradouro"
@@ -210,11 +220,40 @@ export default function CadastrarPaciente({
               setValue={setCidade}
               type="string"
             />
-            <Input
-              label="UF"
-              value={uf}
-              setValue={setUf}
-              type="string"
+            <Select
+            label="UF"
+            options={[
+              "",
+              "AC",
+              "AL",
+              "AP", 
+              "AM", 
+              "BA", 
+              "CE", 
+              "DF", 
+              "ES", 
+              "GO", 
+              "MA", 
+              "MT", 
+              "MS", 
+              "MG", 
+              "PA",
+              "PB", 
+              "PR", 
+              "PE", 
+              "PI", 
+              "RJ", 
+              "RN", 
+              "RS", 
+              "RO", 
+              "RR", 
+              "SC", 
+              "SP", 
+              "SE", 
+              "TO"
+            ]}
+            value={uf}
+            setValue={setUf}
             />
             <Divider mt={5}/>
             <Text color="#787878" fontSize="1.8rem" mt={4} w="100%" textAlign='center'>
@@ -224,13 +263,17 @@ export default function CadastrarPaciente({
               label="Inicio do tratamento"
               value={inicioTratamento}
               setValue={setInicioTratamento}
-              type="date"
+              type="string"
+              mask="00/00/0000"
+              placeholder="00/00/0000"
             />
             <Input
               label="Término do tratamento"
               value={terminoTratamento}
               setValue={setTerminoTratamento}
-              type="date"
+              type="string"
+              mask="00/00/0000"
+              placeholder="00/00/0000"
             />
             <Input
               label="Quem encaminhou?"
@@ -267,7 +310,7 @@ export default function CadastrarPaciente({
               value={cpf}
               setValue={setCPF}
               type="string"
-              cpf-mask="000.000.000-00"
+              placeholder="000.000.000-00"
             />
           </GridItem>
           <GridItem w='100%' h='100'>
@@ -277,6 +320,7 @@ export default function CadastrarPaciente({
               setValue={setDataDeNascimento}
               type="string"
               mask="00/00/0000"
+              placeholder="00/00/0000"
             />
           </GridItem>
           <GridItem w='100%' h='100' colSpan={2}>
@@ -294,12 +338,14 @@ export default function CadastrarPaciente({
               setValue={setTelefone}
               type="tel"
               mask="(00) 00000-0000"
+              placeholder="(00) 00000-0000"
             />
           </GridItem>
           <GridItem w='100%' h='100'>
           <Select
             label="Sexo"
             options={[
+              "",
               "Feminino",
               "Masculino",
               "Outros",
@@ -312,6 +358,7 @@ export default function CadastrarPaciente({
             <Select
               label="Estado Civil"
               options={[
+                "",
                 "Solteiro",
                 "Casado",
                 "Divorciado",
@@ -334,6 +381,7 @@ export default function CadastrarPaciente({
             <Select
               label="Renda Familiar"
               options={[
+                "",
                 "1 a 3 salários minimos",
                 "3 a 5 salários minimos",
                 "5 a 7 salários minimos",
@@ -358,6 +406,7 @@ export default function CadastrarPaciente({
                 setValue={setOutroContato}
                 type="tel"
                 mask="(00) 00000-0000"
+                placeholder="(00) 00000-0000"
               />
           </GridItem>
           <GridItem w='100%' h='100' colSpan={2}>
@@ -405,6 +454,7 @@ export default function CadastrarPaciente({
               setValue={setCep}
               type="string"
               mask="00000-000"
+              placeholder="00000-000"
             />
           </GridItem>
           <GridItem w='100%' h='100' colSpan={2}>
@@ -443,6 +493,7 @@ export default function CadastrarPaciente({
           <Select
             label="Estado Civil"
             options={[
+              "",
               "AC",
               "AL",
               "AP", 
@@ -488,7 +539,9 @@ export default function CadastrarPaciente({
               label="Inicio do tratamento"
               value={inicioTratamento}
               setValue={setInicioTratamento}
-              type="date"
+              type="string"
+              mask="00/00/0000"
+              placeholder="00/00/0000"
             />
           </GridItem>
           <GridItem w='100%' h='100'>
@@ -496,7 +549,9 @@ export default function CadastrarPaciente({
               label="Término do tratamento"
               value={terminoTratamento}
               setValue={setTerminoTratamento}
-              type="date"
+              type="string"
+              mask="00/00/0000"
+              placeholder="00/00/0000"
             />
           </GridItem>
           <GridItem w='100%' h='100' colSpan={2}>
