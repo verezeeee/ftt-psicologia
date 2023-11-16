@@ -7,7 +7,8 @@ import { useState } from "react";
 import Table from "../../../../components/Tables";
 import { useMediaQuery } from "@chakra-ui/react";
 import { SecretarioSignUpData } from "../../../../utils/types";
-
+import Editar from "../Editar";
+import { MdCreate } from "react-icons/md";
 
 export default function VisualizarProfessor({
   mobile,
@@ -50,7 +51,7 @@ export default function VisualizarProfessor({
        
        <Header activeTab={activeTab} setActiveTab={setActiveTab} />
        <Text
-         color="#787878"
+         color="#000000"
          fontSize="1.8rem"
          margin={isMobile ? "5rem 0" : 0}
        >
@@ -130,9 +131,9 @@ export default function VisualizarProfessor({
      </Flex>
     ) : (
       <Flex>
-      {isMobile ? null : (
-        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      )}
+      <Sidebar 
+      activeTab={activeTab} 
+      setActiveTab={setActiveTab} />
       <Flex 
       flexDir="column" 
       w="100%" 
@@ -146,36 +147,41 @@ export default function VisualizarProfessor({
         />
         <Flex 
         flexDir="column" 
-        p="8" 
-        pt="6"
         >
           <Flex 
-          w="95%" 
+          w="100%" 
           flexDir="row" 
           justify="space-between" 
-          align="end"
-          position='relative'
           mt='5rem'
-          p='0'>
+          >
+            <Flex 
+            display='flex'
+            flexDir='row'
+            justifyContent='space-between'
+            w='100%'       
+            >
             <Text 
-            color="#787878" 
+            color="#000000"
             fontSize="1.8rem" 
             flexDir="column"
+            p='4'
             >
               Informações sobre professor
             </Text>
-            <Flex
-            position='absolute'
-            marginLeft="calc(100% - 3%)"
-            align='end'>
-            <Button 
-            label="Editar"
-            onPress={navegarParaHome} 
-            filled
-            />
+
+            <Button
+              icon={MdCreate}
+              mx={2}
+              mt={4}
+              onPress={() => {
+              setIsEditing(true);
+              }}
+              label="Editar"
+            />  
+            </Flex>
             </Flex>
           </Flex>
-          <Divider mt="4" />
+          <Divider />
           <Grid templateColumns='repeat(2, 1fr)' gap={6} p='4' position='relative'>
           <GridItem w='100%' h='10'>
           <Box 
@@ -276,10 +282,15 @@ export default function VisualizarProfessor({
               transition: "0.3s",
             }}
             />
+            <Editar
+            role="professor"
+            editData={isEditing}
+            editarOpened={isEditing ? true : false}
+            setEditarOpened={setIsEditing}
+            />
           </Box>
         </Flex>
        </Flex>
-      </Flex>
     )}
     </>
   );

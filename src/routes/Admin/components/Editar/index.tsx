@@ -31,7 +31,7 @@ export default function Editar({
   setEditarOpened,
 }: {
   editData?: any;
-  role: "admin" | "student" | "secretary" | "professor";
+  role: "admin" | "student" | "secretary" | "professor" | "paciente";
   editarOpened: boolean;
   setEditarOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) {

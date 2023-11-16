@@ -48,7 +48,7 @@ export default function VisualizarPaciente({
           <h2>
             <AccordionButton>
               <Box as="span" flex='1' textAlign='left'>
-              <Text color="#787878" fontSize="1.8rem" flexDir="column" p='4'>
+              <Text color="#000000" fontSize="1.8rem" flexDir="column" p='4'>
              Informações do paciente
               </Text>
               </Box>
@@ -246,7 +246,7 @@ export default function VisualizarPaciente({
           <h2>
             <AccordionButton>
               <Box as="span" flex='1' textAlign='left'>
-              <Text color="#787878" fontSize="1.8rem" flexDir="column" p='4'>
+              <Text color="#000000" fontSize="1.8rem" flexDir="column" p='4'>
                Informações de tratamento
               </Text>
               </Box>

@@ -69,7 +69,7 @@ export default function CadastrarPaciente({
             align="center"
             justify="space-between"
           >
-          <Text color="#787878" fontSize="1.8rem" w='100%' textAlign='center'>
+          <Text color="#000000" fontSize="1.8rem" w='100%' textAlign='center'>
             Informações pessoais
           </Text>
             <Input 
@@ -185,7 +185,11 @@ export default function CadastrarPaciente({
               type="string"
             />
             <Divider mt={5}/>
-            <Text color="#787878" fontSize="1.8rem" mt={4} w="100%" textAlign='center'>
+            <Text color="#000000" 
+            fontSize="1.8rem" 
+            mt={4} 
+            w="100%" 
+            textAlign='center'>
               Endereço
             </Text>
             <Input
@@ -256,7 +260,7 @@ export default function CadastrarPaciente({
             setValue={setUf}
             />
             <Divider mt={5}/>
-            <Text color="#787878" fontSize="1.8rem" mt={4} w="100%" textAlign='center'>
+            <Text color="#000000" fontSize="1.8rem" mt={4} w="100%" textAlign='center'>
             Informações de tratamento
             </Text>
             <Input
@@ -292,7 +296,7 @@ export default function CadastrarPaciente({
           </Flex>
         ) : (
           <>
-          <Text color="#787878" fontSize="1.8rem" w='100%' textAlign='initial'>
+          <Text color="#000000" fontSize="1.8rem" w='100%' textAlign='initial'>
             Informações pessoais
           </Text>
           <Grid templateColumns='repeat(4, 1fr)' gap={6} p='4' >
@@ -443,7 +447,11 @@ export default function CadastrarPaciente({
           </GridItem>
          </Grid>
          <Divider mt={2}/>
-         <Text color="#787878" fontSize="1.8rem" w='100%' textAlign='initial'>
+         <Text color="#000000" 
+         fontSize="1.8rem" 
+         w='100%' 
+         textAlign='initial'
+         >
             Endereço
          </Text>
           <Grid templateColumns='repeat(4, 1fr)' gap={6} p='4' >
@@ -530,7 +538,7 @@ export default function CadastrarPaciente({
           <Divider 
           mt={2}
           />
-          <Text color="#787878" fontSize="1.8rem" w='100%' textAlign='initial'>
+          <Text color="#000000" fontSize="1.8rem" w='100%' textAlign='initial'>
           Informações de tratamento
          </Text>
          <Grid templateColumns='repeat(4, 1fr)' gap={6} p='4' >

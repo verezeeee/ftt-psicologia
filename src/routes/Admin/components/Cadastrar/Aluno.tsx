@@ -31,7 +31,7 @@ export default function CadastrarAluno({
   return (
     <Flex flexDir="column" p="8" pt="6">
       <Flex align="center" justify="space-between" w="100%">
-        <Text color="#787878" fontSize="1.8rem">
+        <Text color="#000000" fontSize="2rem">
           Cadastro de aluno
         </Text>
       </Flex>

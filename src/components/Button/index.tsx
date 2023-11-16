@@ -15,6 +15,7 @@ export default function Button({
   border,
   _hover,
   width,
+  mx,
 }: {
   onPress: () => void;
   label: string;
@@ -28,6 +29,7 @@ export default function Button({
   border?: string;
   _hover?: any;
   width?: any;
+  mx?:number;
 }) {
   return (
     <ChakraButton
@@ -46,6 +48,7 @@ export default function Button({
       onClick={onPress}
       color={color ? color : filled ? "#FFF" : "#C760EB"}
       width={width ? width : ""}
+      mx={mx ? mx : 0}
 
     >
       {icon && <Icon as={icon} fontSize="1.2rem" mr="4" />}

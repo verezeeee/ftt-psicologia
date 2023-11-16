@@ -8,6 +8,8 @@ import Table from "../../../../components/Tables";
 import { useMediaQuery } from "@chakra-ui/react";
 import { AlunoSignUpData } from "../../../../utils/types";
 import Search from "../../../../components/Search";
+import Editar from "../Editar";
+import { MdCreate } from "react-icons/md";
 
 export default function VisualizarAluno({
   mobile,
@@ -57,7 +59,7 @@ export default function VisualizarAluno({
        
        <Header activeTab={activeTab} setActiveTab={setActiveTab} />
        <Text
-         color="#787878"
+         color="#000000"
          fontSize="1.8rem"
          margin={isMobile ? "5rem 0" : 0}
        >
@@ -165,7 +167,6 @@ export default function VisualizarAluno({
       ml={mobile ? 0 : 300} 
       transition="margin-left 0.3s ease" 
       color="#787878"
-      
       >
         <Header 
         activeTab={activeTab} 
@@ -184,23 +185,25 @@ export default function VisualizarAluno({
             display='flex'
             flexDir='row'
             justifyContent='space-between'
-            w='100%'
+            w='100%'       
             >
             <Text 
-            color="#787878" 
+            color="#000000"
             fontSize="1.8rem" 
-            flexDir="column"
             p='4'
             >
               Informações sobre aluno
             </Text>
 
-            <Button 
-            label="Editar"
-            onPress={navegarParaHome} 
-            filled
-            width='7rem'
-            />
+            <Button
+              icon={MdCreate}
+              mx={2}
+              mt={4}
+              onPress={() => {
+              setIsEditing(true);
+              }}
+              label="Editar"
+            />  
             </Flex>
             </Flex>
           </Flex>
@@ -306,10 +309,17 @@ export default function VisualizarAluno({
           mt="4"
           mb="4"
           >
-            <Button 
-            onPress={navegarParaHome} 
-            label="Voltar"
-            width='7rem'/>
+          <Button 
+          onPress={navegarParaHome} 
+          label="Voltar"
+          width='7rem'
+          />
+          <Editar
+          role="student"
+          editData={isEditing}
+          editarOpened={isEditing ? true : false}
+          setEditarOpened={setIsEditing}
+          />
           </Box>
         </Flex>
       </Flex>

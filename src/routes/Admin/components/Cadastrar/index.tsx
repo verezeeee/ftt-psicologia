@@ -263,8 +263,6 @@ export default function Cadastrar({
             setCPF={setCPF}
             telefone={telefone}
             setTelefone={setTelefone}
-            disciplina={disciplina}
-            setDisciplina={setDisciplina}
             email={email}
             setEmail={setEmail}
             setEtapa={setEtapa}

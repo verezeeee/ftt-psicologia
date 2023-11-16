@@ -20,8 +20,8 @@ export default function EditarProfessor({
   return (
     <Flex flexDir="column" p="8" pt="6">
       <Flex align="center" justify="space-between" w="100%">
-        <Text color="#787878" fontSize="1.8rem">
-          Editar professor
+        <Text color="#000000" fontSize="1.8rem">
+          Editar cadastro professor
         </Text>
       </Flex>
       <Divider mt="2" />
@@ -77,10 +77,11 @@ export default function EditarProfessor({
       <Flex align="center" mt="4" justify="space-between" w="100%">
         <Button
           label="Cancelar"
-          onPress={() => {}}
+          onPress={closeModal}
           mt={0.1}
         />
-        <Button label="Cadastrar" onPress={closeModal} mt={0.1} filled />
+        
+        <Button label="Confirmar" onPress={closeModal} mt={0.1} filled />
       </Flex>
     </Flex>
   );
