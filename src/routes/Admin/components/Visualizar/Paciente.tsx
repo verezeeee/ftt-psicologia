@@ -6,6 +6,8 @@ import { useMediaQuery } from "@chakra-ui/react";
 import Sidebar from "../../../../components/Sidebar";
 import Header from "../../../../components/Header";
 import { useState } from "react";
+import Editar from "../Editar";
+import { MdCreate } from "react-icons/md";
 
 export default function VisualizarPaciente({
   nome,
@@ -32,7 +34,7 @@ export default function VisualizarPaciente({
 
   const [ isMobile] = useMediaQuery("(max-width: 768px)");
   const [activeTab, setActiveTab] = useState("tab1");
-
+  const [isEditing, setIsEditing] = useState<any>();
 
 
   return( 
@@ -182,7 +184,7 @@ export default function VisualizarPaciente({
           <h2>
             <AccordionButton>
               <Box as="span" flex='1' textAlign='left'>
-              <Text color="#787878" fontSize="1.8rem" flexDir="column" p='4'>
+              <Text color="#000000" fontSize="1.8rem" flexDir="column" p='4'>
               Endereço
               </Text>
               </Box>
@@ -304,53 +306,66 @@ export default function VisualizarPaciente({
        <Button onPress={navegarParaOutraPasta} label="Voltar"/>
      </Flex>
     ): (
-    <Flex>
-      <Sidebar 
-      activeTab={activeTab} 
-      setActiveTab={setActiveTab} />
-      <Flex 
-      flexDir="column" 
-      w="100%" 
-      ml={isMobile ? 0 : 300} 
-      transition="margin-left 0.3s ease" 
-      color="#787878"
-      px={6}
-      >
-        <Header 
+      <Flex>
+        <Sidebar 
         activeTab={activeTab} 
-        setActiveTab={setActiveTab}
-        />
+        setActiveTab={setActiveTab} />
         <Flex 
         flexDir="column" 
-        p="0" 
-        pt="6"
-        w='100%'
+        w="100%" 
+        ml={isMobile ? 0 : 300} 
+        transition="margin-left 0.3s ease" 
+        color="#787878"
         >
+          <Header 
+          activeTab={activeTab} 
+          setActiveTab={setActiveTab}
+          />
           <Flex 
-          w="100%" 
-          flexDir="row" 
-          justify="space-between" 
-          mt='5rem'
+          flexDir="column" 
           >
             <Flex 
-            display='flex'
-            flexDir='row'
-            justifyContent='space-between'
-            w='100%'
+            w="100%" 
+            flexDir="row" 
+            justify="space-between" 
+            mt='5rem'
             >
+              <Flex 
+              display='flex'
+              flexDir='row'
+              justifyContent='space-between'
+              w='100%'       
+              >
+              <Text 
+              color="#000000"
+              fontSize="2rem" 
+              flexDir="column"
+              p='4'
+              >
+                Informações sobre paciente
+              </Text>
+
+              <Button
+                icon={MdCreate}
+                mx={2}
+                mt={4}
+                onPress={() => {
+                setIsEditing(true);
+                }}
+                label="Editar"
+              />  
+              </Flex>
+              </Flex>
+            </Flex>
+            <Divider />
             <Text 
-            color="#787878" 
+            color="#000000" 
             fontSize="1.8rem" 
             flexDir="column"
             p='4'
             >
-              Informações do paciente
+              Informações pessoais
             </Text>
-
-            </Flex>
-            </Flex>
-          </Flex>
-          <Divider />
         <Grid templateColumns='repeat(4, 1fr)' gap={6} p='4'>
           <GridItem w='100%' h='10'>
           <Box 
@@ -559,7 +574,7 @@ export default function VisualizarPaciente({
           </GridItem>
         </Grid>
         <Text 
-        color="#787878" 
+        color="#000000" 
         fontSize="1.8rem" 
         flexDir="column"
         p='4'
@@ -656,7 +671,7 @@ export default function VisualizarPaciente({
           </GridItem>
         </Grid>
         <Text 
-        color="#787878" 
+        color="#000000" 
         fontSize="1.8rem" 
         flexDir="column"
         p='4'
@@ -735,6 +750,12 @@ export default function VisualizarPaciente({
           px={isMobile ? '0' : '2rem'} 
           mt="4">
             <Button onPress={navegarParaOutraPasta} label="Voltar"/>
+            <Editar
+              role="paciente"
+              editData={isEditing}
+              editarOpened={isEditing ? true : false}
+              setEditarOpened={setIsEditing}
+            />      
           </Box>
       </Flex>
       </Flex>

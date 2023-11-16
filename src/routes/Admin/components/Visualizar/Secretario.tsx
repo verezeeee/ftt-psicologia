@@ -97,58 +97,58 @@ export default function VisualizarSecretario({
         <Button onPress={navegarParaOutraPasta} label="Voltar"/>
       </Flex>
       ) : (
-        <Flex>
-      <Sidebar 
-      activeTab={activeTab} 
-      setActiveTab={setActiveTab} />
-      <Flex 
-      flexDir="column" 
-      w="100%" 
-      ml={isMobile ? 0 : 300} 
-      transition="margin-left 0.3s ease" 
-      color="#787878"
-      >
-        <Header 
+          <Flex>
+        <Sidebar 
         activeTab={activeTab} 
-        setActiveTab={setActiveTab}
-        />
+        setActiveTab={setActiveTab} />
         <Flex 
         flexDir="column" 
+        w="100%" 
+        ml={isMobile ? 0 : 300} 
+        transition="margin-left 0.3s ease" 
+        color="#787878"
         >
+          <Header 
+          activeTab={activeTab} 
+          setActiveTab={setActiveTab}
+          />
           <Flex 
-          w="100%" 
-          flexDir="row" 
-          justify="space-between" 
-          mt='5rem'
+          flexDir="column" 
           >
             <Flex 
-            display='flex'
-            flexDir='row'
-            justifyContent='space-between'
-            w='100%'       
+            w="100%" 
+            flexDir="row" 
+            justify="space-between" 
+            mt='5rem'
             >
-            <Text 
-            color="#000000"
-            fontSize="1.8rem" 
-            flexDir="column"
-            p='4'
-            >
-              Informações sobre secretário
-            </Text>
+              <Flex 
+              display='flex'
+              flexDir='row'
+              justifyContent='space-between'
+              w='100%'       
+              >
+              <Text 
+              color="#000000"
+              fontSize="1.8rem" 
+              flexDir="column"
+              p='4'
+              >
+                Informações sobre secretário
+              </Text>
 
-            <Button
-              icon={MdCreate}
-              mx={2}
-              mt={4}
-              onPress={() => {
-              setIsEditing(true);
-              }}
-              label="Editar"
-            />  
+              <Button
+                icon={MdCreate}
+                mx={2}
+                mt={4}
+                onPress={() => {
+                setIsEditing(true);
+                }}
+                label="Editar"
+              />  
+              </Flex>
+              </Flex>
             </Flex>
-            </Flex>
-          </Flex>
-          <Divider />
+            <Divider />
             <Grid templateColumns='repeat(2, 1fr)' gap={6} p='4'>
               <GridItem w='100%' h='10'>
                 <Box>
