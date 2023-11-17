@@ -8,12 +8,12 @@ import Header from "../../../../components/Header";
 import { useState } from "react";
 import Editar from "../Editar";
 import { MdCreate } from "react-icons/md";
+import { formatarTelefone } from "../../../../utils/formatarTelefone";
 
 export default function VisualizarPaciente({
   userData:{
   nome,
   cpf,
-  telefone,
   dataDeNascimento,
   email,
   telefoneContato,
@@ -42,11 +42,6 @@ export default function VisualizarPaciente({
   setMobile,
   user,
 }: {
-  nome: string;
-  email: string;
-  cpf: string;
-  telefone: string;
-  turno: string;
   setMobile: (mobile: boolean) => void;
   user: SecretarioSignUpData;
   userData?: any;
@@ -161,7 +156,7 @@ export default function VisualizarPaciente({
            Telefone
            </Text>
            <Text fontSize='1.6rem'>
-           {telefone}
+           {formatarTelefone(telefoneContato)}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -174,7 +169,7 @@ export default function VisualizarPaciente({
          </GridItem>
          <GridItem w='100%' h='100' alignItems='center' >
          <Box>
-          <Checkbox isDisabled={menorDeIdade ? false : true} >Menor de idade</Checkbox>
+          <Checkbox isDisabled  >Menor de idade</Checkbox>
           </Box>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -461,7 +456,7 @@ export default function VisualizarPaciente({
             Telefone
             </Text>
             <Text fontSize='1.6rem'>
-            {telefoneContato}
+            {formatarTelefone(telefoneContato)}
             </Text>
             </Box>
           </GridItem>

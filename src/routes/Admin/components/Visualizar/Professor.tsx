@@ -9,6 +9,7 @@ import { useMediaQuery } from "@chakra-ui/react";
 import { SecretarioSignUpData } from "../../../../utils/types";
 import Editar from "../Editar";
 import { MdCreate } from "react-icons/md";
+import { formatarTelefone } from "../../../../utils/formatarTelefone";
 
 export default function VisualizarProfessor({
   mobile,
@@ -16,7 +17,7 @@ export default function VisualizarProfessor({
   nome,
   email,
   cpf,
-  telefone,
+  telefoneContato,
   disciplina,
   },
   setMobile,
@@ -79,7 +80,7 @@ export default function VisualizarProfessor({
          <GridItem w="100%" h="10" mt="9">
            <Box>
              <Text>Telefone</Text>
-             <Text fontSize="1.6rem">{telefone}</Text>
+             <Text fontSize="1.6rem">{formatarTelefone(telefoneContato)}</Text>
            </Box>
          </GridItem>
          <GridItem w="100%" h="10" mt="9" mb="4">
@@ -218,7 +219,7 @@ export default function VisualizarProfessor({
             Telefone
             </Text>
             <Text fontSize='1.6rem'>
-              {telefone}
+            {formatarTelefone(telefoneContato)}
             </Text>
             </Box>
           </GridItem>

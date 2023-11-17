@@ -1,78 +1,62 @@
-import { Flex, Modal, Text } from "@chakra-ui/react";
-import { User, SecretarioSignUpData } from "../../../utils/types";
+import { FC, useState, useEffect, useRef } from "react";
+import { Flex, Text } from "@chakra-ui/react";
+import { SecretarioSignUpData } from "../../../utils/types";
 import { useMediaQuery } from "../../../utils/useMediaQuery";
 import Table from "../../../components/Tables";
 import Search from "../../../components/Search";
 import Filter from "../../../components/Filter";
 import Button from "../../../components/Button";
 import { IoMdPersonAdd } from "react-icons/io";
-import { useEffect, useRef, useState } from "react";
 import { removeAcentos } from "../../../utils/removeAcentos";
 import Cadastrar from "../components/Cadastrar";
 import Editar from "../components/Editar";
 import axios from "axios";
-import { set } from "react-hook-form";
-import Link from "next/link";
 
-export default function Secretarios({
-  user,
-  activeTab,
-}: {
+interface SecretariosProps {
   user: SecretarioSignUpData;
   activeTab?: string;
-}) {
-  const { mobile, tablet, desktop } = useMediaQuery();
+}
 
+const Secretarios: FC<SecretariosProps> = ({ user, activeTab }) => {
+  const { mobile } = useMediaQuery();
   const [cadastrarOpened, setCadastrarOpened] = useState<boolean>(false);
-
   const [searchTerm, setSearchTerm] = useState<string>("");
-  async function getUsers(): Promise<SecretarioSignUpData[]> {	
-    const res = await axios.get('http://localhost:8080/auth/getSecretarios')
-    const data = await res.data
-    return data
-  }
-
-  const [isEditing, setIsEditing] = useState<any>();
   const [result, setResult] = useState<SecretarioSignUpData[]>([]);
-  const [shouldFetchData, setShouldFetchData] = useState<boolean>(true);
+  const [isEditing, setIsEditing] = useState<any>();
   const finalRef = useRef(null);
   const initialRef = useRef(null);
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getUsers();
-      setResult(data);
-      setShouldFetchData(false);
-    }
-    if (shouldFetchData){
-      fetchData();
-    }
-  }, [shouldFetchData]);
-
- 
-
-  function pesquisar(searchTerm: string, users: SecretarioSignUpData[]): SecretarioSignUpData[] {
-    const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();
-
-    return users.filter((user: SecretarioSignUpData) => {
-      const lowerCaseNome = removeAcentos(user.nome.toLowerCase());
-      return (
-        lowerCaseNome.includes(lowerCaseSearchTerm) 
-      );
-    });
-  }
-
-  useEffect(() => {
-    async function fetchData() {
-      if (searchTerm.length > 0) {
-        const result = pesquisar(searchTerm, await getUsers());
-        setResult(result);
-      } else {
-        setResult(await getUsers());
+      try {
+        const res = await axios.get<SecretarioSignUpData[]>("http://localhost:8080/auth/getSecretarios");
+        setResult(res.data);
+      } catch (error) {
+        console.error("Erro ao obter os Secretários:", error);
       }
     }
+
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    function pesquisar(searchTerm: string, users: SecretarioSignUpData[]): SecretarioSignUpData[] {
+      const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();
+
+      return users.filter((user: SecretarioSignUpData) => {
+        const lowerCaseNome = removeAcentos(user.nome.toLowerCase());
+        return lowerCaseNome.includes(lowerCaseSearchTerm);
+      });
+    }
+
+    if (searchTerm.length > 0) {
+      const filteredResult = pesquisar(searchTerm, result);
+      setResult(filteredResult);
+    } else {
+      setResult(result);
+    }
   }, [searchTerm]);
+
   return (
     <Flex
       p="4"
@@ -120,7 +104,7 @@ export default function Secretarios({
       </Flex>
       <Flex mt="4" w="100%">
         <Table
-          headers={["Nome","Email", "CPF", "Turno",]}
+          headers={["Nome", "Email", "CPF", "Turno"]}
           data={result}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
@@ -139,4 +123,6 @@ export default function Secretarios({
       />
     </Flex>
   );
-}
+};
+
+export default Secretarios;
