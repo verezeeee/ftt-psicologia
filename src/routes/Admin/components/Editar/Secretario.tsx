@@ -2,25 +2,40 @@ import { Divider, Flex, Text } from "@chakra-ui/react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import Select from "../../../../components/Select";
-import { formatarTelefone } from "../../../../utils/formatarTelefone";
-import { formatarCPF } from "../../../../utils/cpf";
 import { useState } from "react";
+import axios from "axios";
 
 export default function EditarSecretario({
   mobile,
   closeModal,
   editData,
+  id,
 }) {
   const [nome, setNome] = useState(editData.nome);
   const [cpf, setCPF] = useState(editData.cpf);
-  const [telefone, setTelefone] = useState(editData.telefone);
+  const [telefone, setTelefone] = useState(editData.telefoneContato);
   const [email, setEmail] = useState(editData.email);
   const [turno, setTurno] = useState(editData.turno);
   const [edicaoAtiva, setEdicaoAtiva] = useState(true);
+  const [confirmacaoClicada, setConfirmacaoClicada] = useState(false);
 
-  const handleCancelar = () => {
-    // Desativa a edição dos campos
-    setEdicaoAtiva(false);
+  const confirmarAlteracoes = async () => {
+    try {
+      const dadosAtualizados = {
+        nome,
+        cpf,
+        telefoneContato: telefone,
+        email,
+        turno,
+      };
+
+      await axios.patch(`http://localhost:8080/auth/attSecretario`, dadosAtualizados);
+      console.log(dadosAtualizados)
+      closeModal();
+    } catch (error) {
+      console.error("Erro ao atualizar os dados:", error);
+      
+    }
   };
 
   return (
@@ -38,7 +53,7 @@ export default function EditarSecretario({
         justify="space-between"
         w="100%"
       >
-        <Input label="Nome completo" value={nome}  setValue={setNome} defaultValue={editData.nome} disabled={edicaoAtiva ? false : true} border={edicaoAtiva ? null : "0px"}/>
+        <Input label="Nome completo" value={nome}  setValue={setNome}  disabled={edicaoAtiva ? false : true} border={edicaoAtiva ? null : "0px"}/>
         {mobile ? (
           <Flex
             w="100%"
@@ -72,7 +87,6 @@ export default function EditarSecretario({
               mask="000.000.000-00"
               value={cpf}
               setValue={setCPF}
-              defaultValue={formatarCPF(String(editData.cpf))}
               border={edicaoAtiva ? null : "0px"}
             />
             <Flex w={10} />
@@ -81,7 +95,6 @@ export default function EditarSecretario({
               mask="(00) 00000-0000"
               value={telefone}
               setValue={setTelefone}
-              defaultValue={formatarTelefone(String(editData.telefoneContato))}
               disabled={edicaoAtiva ? false : true}
               border={edicaoAtiva ? null : "0px"}
             />
@@ -91,7 +104,6 @@ export default function EditarSecretario({
           label="E-mail"
           value={email}
           setValue={setEmail}
-          defaultValue={editData.email}
           disabled={edicaoAtiva ? false : true}
           border={edicaoAtiva ? null : "0px"}
         />
@@ -106,14 +118,35 @@ export default function EditarSecretario({
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
         <Button label={edicaoAtiva ? "Cancelar" : "Voltar"}  onPress={edicaoAtiva ? closeModal : () => setEdicaoAtiva(true)} mt={0.1} />
-        <Button label="Confirmar" onPress={() => { setEdicaoAtiva(false)}} mt={0.1} filled bg={edicaoAtiva ? null : "#1ABB2A"} border={edicaoAtiva ? null : "#1ABB2A"} 
-        _hover={edicaoAtiva ? null : {
-          backgroundColor: "#fff",
-          opacity: 0.9,
-          color: "#1ABB2A",
-          transition: "0.3s",
-          border: "1px solid #1ABB2A",
-        }} />
+        <Button
+      label={edicaoAtiva ? "Confirmar" : "Editar"}
+      onPress={() => {
+        if (edicaoAtiva) {
+         
+          setEdicaoAtiva(false);
+        } else {
+          // Se edicaoAtiva for false, chama a função para confirmar as alterações
+          setEdicaoAtiva(true);
+          setConfirmacaoClicada(true); // Marca que a confirmação foi clicada
+          confirmarAlteracoes();
+        }
+      }}
+      mt={0.1}
+      filled
+      bg={edicaoAtiva ? null : "#1ABB2A"}
+      border={edicaoAtiva ? null : "#1ABB2A"}
+      _hover={
+        edicaoAtiva
+          ? null
+          : {
+              backgroundColor: "#fff",
+              opacity: 0.9,
+              color: "#1ABB2A",
+              transition: "0.3s",
+              border: "1px solid #1ABB2A",
+            }
+      }
+    />
       </Flex>
     </Flex>
   );

@@ -19,7 +19,7 @@ export default function Select({
   label: string;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
-  disabled: boolean;
+  disabled?: boolean;
   border?: any;
 }) {
   return (

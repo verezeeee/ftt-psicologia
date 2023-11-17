@@ -288,7 +288,13 @@ export default function VisualizarProfessor({
             />
             <Editar
             role="professor"
-            editData={isEditing}
+            editData={{
+              nome,
+              cpf,
+              telefoneContato,
+              disciplina,
+              email,
+            }}
             editarOpened={isEditing ? true : false}
             setEditarOpened={setIsEditing}
             />

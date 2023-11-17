@@ -13,14 +13,15 @@ export default function EditarAluno({
   const [cpf, setCPF] = useState(editData.cpf);
   const [telefone, setTelefone] = useState(editData.telefoneContato);
   const [email, setEmail] = useState(editData.email);
-  const [matricula, setMatricula] = useState(editData.matricula)
-  const [periodo, setPeriodo] = useState(editData.periodo)
+  const [matricula, setMatricula] = useState(editData.matricula);
+  const [periodo, setPeriodo] = useState(editData.periodo);
+  const [edicaoAtiva, setEdicaoAtiva] = useState(true);
 
   return (
     <Flex flexDir="column" p="8" pt="6">
       <Flex align="center" justify="space-between" w="100%">
         <Text color="#000000" fontSize="1.8rem">
-          Editar cadastro aluno
+        {edicaoAtiva ? "Editar cadastro aluno" : "Confirmar alterações"}
         </Text>
       </Flex>
       <Divider mt="2" />
@@ -37,6 +38,7 @@ export default function EditarAluno({
             mask="0000000"
             value={matricula}
             setValue={setMatricula}
+            disabled={edicaoAtiva ? false : true} border={edicaoAtiva ? null : "0px"}
           />
           <Flex w={10} />
           <Select
@@ -55,9 +57,11 @@ export default function EditarAluno({
             ]}
             value={periodo}
             setValue={setPeriodo}
+            disabled={edicaoAtiva ? false : true}
+            border={edicaoAtiva ? null : "0px"}
           />
         </Flex>
-        <Input label="Nome completo" value={nome} setValue={setNome} defaultValue={editData.nome} />
+        <Input label="Nome completo" value={nome} setValue={setNome} defaultValue={editData.nome} disabled={edicaoAtiva ? false : true} border={edicaoAtiva ? null : "0px"}/>
         {mobile ? (
           <Flex
             w="100%"
@@ -70,6 +74,7 @@ export default function EditarAluno({
               mask="000.000.000-00"
               value={cpf}
               setValue={setCPF}
+              disabled
             />
             <Flex w={10} />
             <Input
@@ -86,6 +91,8 @@ export default function EditarAluno({
               mask="000.000.000-00"
               value={cpf}
               setValue={setCPF}
+              disabled
+              border={edicaoAtiva ? null : "0px"}
             />
             <Flex w={10} />
             <Input
@@ -93,10 +100,12 @@ export default function EditarAluno({
               mask="(00) 00000-0000"
               value={telefone}
               setValue={setTelefone}
+              disabled={edicaoAtiva ? false : true}
+              border={edicaoAtiva ? null : "0px"}
             />
           </Flex>
         )}
-        <Input label="E-mail" value={email} setValue={setEmail} />
+        <Input label="E-mail" value={email} setValue={setEmail} disabled={edicaoAtiva ? false : true} border={edicaoAtiva ? null : "0px"}/>
         <Select
           label="Professor"
           options={[
@@ -109,11 +118,20 @@ export default function EditarAluno({
           ]}
           value={periodo}
           setValue={setPeriodo}
+          disabled={edicaoAtiva ? false : true}
+          border={edicaoAtiva ? null : "0px"}
         />
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
-        <Button label="Cancelar" onPress={() => {}} mt={0.1} />
-        <Button label="Confirmar" onPress={closeModal} mt={0.1} filled />
+        <Button label={edicaoAtiva ? "Cancelar" : "Voltar"}  onPress={edicaoAtiva ? closeModal : () => setEdicaoAtiva(true)} mt={0.1} />
+        <Button label="Confirmar" onPress={() => { setEdicaoAtiva(false)}} mt={0.1} filled bg={edicaoAtiva ? null : "#1ABB2A"} border={edicaoAtiva ? null : "#1ABB2A"} 
+        _hover={edicaoAtiva ? null : {
+          backgroundColor: "#fff",
+          opacity: 0.9,
+          color: "#1ABB2A",
+          transition: "0.3s",
+          border: "1px solid #1ABB2A",
+        }} />
       </Flex>
     </Flex>
   );
