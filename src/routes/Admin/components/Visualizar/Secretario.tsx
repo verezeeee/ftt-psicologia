@@ -18,6 +18,7 @@ export default function VisualizarSecretario({
   cpf,
   telefoneContato,
   turno,
+  _id,
   },
   user,
 }: {
@@ -95,7 +96,7 @@ export default function VisualizarSecretario({
         <Button onPress={navegarParaOutraPasta} label="Voltar"/>
       </Flex>
       ) : (
-          <Flex>
+        <Flex>
         <Sidebar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} />
@@ -210,6 +211,7 @@ export default function VisualizarSecretario({
                 cpf,
                 telefoneContato,
                 turno,
+                _id,
               }}
               editarOpened={isEditing ? true : false}
               setEditarOpened={setIsEditing}

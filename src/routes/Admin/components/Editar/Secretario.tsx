@@ -4,12 +4,14 @@ import Button from "../../../../components/Button";
 import Select from "../../../../components/Select";
 import { useState } from "react";
 import axios from "axios";
+import Sucesso from "../Sucesso";
+import { useDisclosure } from "@chakra-ui/react";
+import Erro from "../Erro";
 
 export default function EditarSecretario({
   mobile,
   closeModal,
   editData,
-  id,
 }) {
   const [nome, setNome] = useState(editData.nome);
   const [cpf, setCPF] = useState(editData.cpf);
@@ -17,9 +19,11 @@ export default function EditarSecretario({
   const [email, setEmail] = useState(editData.email);
   const [turno, setTurno] = useState(editData.turno);
   const [edicaoAtiva, setEdicaoAtiva] = useState(true);
-  const [confirmacaoClicada, setConfirmacaoClicada] = useState(false);
+  const [id, setId] = useState(editData._id);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [erro, setErro] = useState(false); 
 
-  const confirmarAlteracoes = async () => {
+  const alterar = async () => {
     try {
       const dadosAtualizados = {
         nome,
@@ -27,14 +31,12 @@ export default function EditarSecretario({
         telefoneContato: telefone,
         email,
         turno,
-      };
-
-      await axios.patch(`http://localhost:8080/auth/attSecretario`, dadosAtualizados);
-      console.log(dadosAtualizados)
-      closeModal();
+      };  
+      await axios.patch(`http://localhost:8080/auth/attSecretario/${id}`, dadosAtualizados);
+      onOpen();
     } catch (error) {
       console.error("Erro ao atualizar os dados:", error);
-      
+      setErro(true);
     }
   };
 
@@ -121,14 +123,11 @@ export default function EditarSecretario({
         <Button
       label={edicaoAtiva ? "Confirmar" : "Editar"}
       onPress={() => {
-        if (edicaoAtiva) {
-         
+        if (edicaoAtiva) { 
           setEdicaoAtiva(false);
         } else {
-          // Se edicaoAtiva for false, chama a função para confirmar as alterações
           setEdicaoAtiva(true);
-          setConfirmacaoClicada(true); // Marca que a confirmação foi clicada
-          confirmarAlteracoes();
+          alterar();
         }
       }}
       mt={0.1}
@@ -146,7 +145,9 @@ export default function EditarSecretario({
               border: "1px solid #1ABB2A",
             }
       }
-    />
+        />
+      <Sucesso isOpen={isOpen} onClose={onClose} closeModal={closeModal}/>
+      {erro &&  <Erro isOpen={erro} onClose={() => setErro(false)} closeModal={() => setErro(false)} />}
       </Flex>
     </Flex>
   );
