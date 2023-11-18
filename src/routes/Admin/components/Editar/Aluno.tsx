@@ -3,6 +3,10 @@ import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import Select from "../../../../components/Select";
 import { useState } from "react";
+import Sucesso from "../Sucesso";
+import { useDisclosure } from "@chakra-ui/react";
+import Erro from "../Erro";
+import axios from "axios";
 
 export default function EditarAluno({
   mobile,
@@ -15,7 +19,30 @@ export default function EditarAluno({
   const [email, setEmail] = useState(editData.email);
   const [matricula, setMatricula] = useState(editData.matricula);
   const [periodo, setPeriodo] = useState(editData.periodo);
+  const [professor, setProfessor] = useState(editData.professor)
   const [edicaoAtiva, setEdicaoAtiva] = useState(true);
+  const [id, setId] = useState(editData._id);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [erro, setErro] = useState(false);
+
+  const alterar = async () => {
+    try {
+      const dadosAtualizados = {
+        nome,
+        cpf,
+        telefoneContato: telefone,
+        email,
+        matricula,
+        periodo,
+        professor,
+      };  
+      await axios.patch(`http://localhost:8080/auth/attAluno/${id}`, dadosAtualizados);
+      onOpen();
+    } catch (error) {
+      console.error("Erro ao atualizar os dados:", error);
+      setErro(true);
+    }
+  };
 
   return (
     <Flex flexDir="column" p="8" pt="6">
@@ -106,32 +133,44 @@ export default function EditarAluno({
           </Flex>
         )}
         <Input label="E-mail" value={email} setValue={setEmail} disabled={edicaoAtiva ? false : true} border={edicaoAtiva ? null : "0px"}/>
-        <Select
-          label="Professor"
-          options={[
-            "Professor 1",
-            "Professor 2",
-            "Professor 3",
-            "Professor 4",
-            "Professor 5",
-            "Professor 6",
-          ]}
-          value={periodo}
-          setValue={setPeriodo}
-          disabled={edicaoAtiva ? false : true}
-          border={edicaoAtiva ? null : "0px"}
-        />
+        <Input 
+        label="Professor" 
+        value={professor} 
+        setValue={setProfessor} 
+        disabled={edicaoAtiva ? false : true} 
+        border={edicaoAtiva ? null : "0px"}/>
+
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
         <Button label={edicaoAtiva ? "Cancelar" : "Voltar"}  onPress={edicaoAtiva ? closeModal : () => setEdicaoAtiva(true)} mt={0.1} />
-        <Button label="Confirmar" onPress={() => { setEdicaoAtiva(false)}} mt={0.1} filled bg={edicaoAtiva ? null : "#1ABB2A"} border={edicaoAtiva ? null : "#1ABB2A"} 
-        _hover={edicaoAtiva ? null : {
-          backgroundColor: "#fff",
-          opacity: 0.9,
-          color: "#1ABB2A",
-          transition: "0.3s",
-          border: "1px solid #1ABB2A",
-        }} />
+        <Button
+        label={edicaoAtiva ? "Confirmar" : "Editar"}
+        onPress={() => {
+          if (edicaoAtiva) { 
+            setEdicaoAtiva(false);
+          }else {
+            setEdicaoAtiva(true);
+            alterar();
+          }
+        }}
+        mt={0.1}
+        filled
+        bg={edicaoAtiva ? null : "#1ABB2A"}
+        border={edicaoAtiva ? null : "#1ABB2A"}
+        _hover={
+          edicaoAtiva
+            ? null
+            : {
+                backgroundColor: "#fff",
+                opacity: 0.9,
+                color: "#1ABB2A",
+                transition: "0.3s",
+                border: "1px solid #1ABB2A",
+              }
+        }
+        />
+      <Sucesso isOpen={isOpen} onClose={onClose} closeModal={closeModal}/>
+      {erro &&  <Erro isOpen={erro} onClose={() => setErro(false)} closeModal={() => setErro(false)} />}
       </Flex>
     </Flex>
   );

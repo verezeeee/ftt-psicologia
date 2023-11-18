@@ -2,6 +2,10 @@ import { Divider, Flex, Text } from "@chakra-ui/react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import { useState } from "react";
+import axios from "axios";
+import Sucesso from "../Sucesso";
+import { useDisclosure } from "@chakra-ui/react";
+import Erro from "../Erro";
 
 export default function EditarProfessor({
     mobile,
@@ -13,7 +17,26 @@ export default function EditarProfessor({
   const [telefone, setTelefone] = useState(editData.telefoneContato);
   const [email, setEmail] = useState(editData.email);
   const [disciplina, setDisciplina] = useState(editData.disciplina);
+  const [id, setId] = useState(editData._id);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [erro, setErro] = useState(false); 
   const [edicaoAtiva, setEdicaoAtiva] = useState(true);
+  const alterar = async () => {
+    try {
+      const dadosAtualizados = {
+        nome,
+        cpf,
+        telefoneContato: telefone,
+        email,
+        disciplina,
+      };  
+      await axios.patch(`http://localhost:8080/auth/attProfessor/${id}`, dadosAtualizados);
+      onOpen();
+    } catch (error) {
+      console.error("Erro ao atualizar os dados:", error);
+      setErro(true);
+    }
+  };
 
   return (
     <Flex flexDir="column" p="8" pt="6">
@@ -78,14 +101,30 @@ export default function EditarProfessor({
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
         <Button label={edicaoAtiva ? "Cancelar" : "Voltar"}  onPress={edicaoAtiva ? closeModal : () => setEdicaoAtiva(true)} mt={0.1} />
-        <Button label="Confirmar" onPress={() => { setEdicaoAtiva(false)}} mt={0.1} filled bg={edicaoAtiva ? null : "#1ABB2A"} border={edicaoAtiva ? null : "#1ABB2A"} 
-        _hover={edicaoAtiva ? null : {
-          backgroundColor: "#fff",
-          opacity: 0.9,
-          color: "#1ABB2A",
-          transition: "0.3s",
-          border: "1px solid #1ABB2A",
-        }} />
+        <Button
+      label={edicaoAtiva ? "Confirmar" : "Editar"}
+      onPress={() => {
+        if (edicaoAtiva) { 
+          setEdicaoAtiva(false);
+        } else {
+          setEdicaoAtiva(true);
+          alterar();
+        }
+      }}
+      mt={0.1}
+      filled
+      bg={edicaoAtiva ? null : "#1ABB2A"}
+      border={edicaoAtiva ? null : "#1ABB2A"}
+      _hover={edicaoAtiva ? null: {
+              backgroundColor: "#fff",
+              opacity: 0.9,
+              color: "#1ABB2A",
+              transition: "0.3s",
+              border: "1px solid #1ABB2A",}
+            }
+        />
+      <Sucesso isOpen={isOpen} onClose={onClose} closeModal={closeModal}/>
+      {erro &&  <Erro isOpen={erro} onClose={() => setErro(false)} closeModal={() => setErro(false)} />}
       </Flex> 
     </Flex>
   );

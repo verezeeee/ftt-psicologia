@@ -134,17 +134,13 @@ export default function EditarSecretario({
       filled
       bg={edicaoAtiva ? null : "#1ABB2A"}
       border={edicaoAtiva ? null : "#1ABB2A"}
-      _hover={
-        edicaoAtiva
-          ? null
-          : {
+      _hover={edicaoAtiva ? null: {
               backgroundColor: "#fff",
               opacity: 0.9,
               color: "#1ABB2A",
               transition: "0.3s",
-              border: "1px solid #1ABB2A",
+              border: "1px solid #1ABB2A",}
             }
-      }
         />
       <Sucesso isOpen={isOpen} onClose={onClose} closeModal={closeModal}/>
       {erro &&  <Erro isOpen={erro} onClose={() => setErro(false)} closeModal={() => setErro(false)} />}

@@ -19,6 +19,7 @@ export default function VisualizarProfessor({
   cpf,
   telefoneContato,
   disciplina,
+  _id,
   },
   setMobile,
   user,
@@ -294,6 +295,7 @@ export default function VisualizarProfessor({
               telefoneContato,
               disciplina,
               email,
+              _id,
             }}
             editarOpened={isEditing ? true : false}
             setEditarOpened={setIsEditing}

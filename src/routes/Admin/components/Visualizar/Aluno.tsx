@@ -21,6 +21,7 @@ export default function VisualizarAluno({
   telefoneContato,
   periodo,
   cpf,
+  _id,
   },
   setMobile,
   user,
@@ -325,6 +326,7 @@ export default function VisualizarAluno({
             professor,
             periodo,
             cpf,
+            _id,
           }}
           editarOpened={isEditing ? true : false}
           setEditarOpened={setIsEditing}
