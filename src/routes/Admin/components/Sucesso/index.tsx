@@ -5,9 +5,10 @@ interface SuccessModalProps {
   isOpen: boolean;
   onClose: () => void;
   closeModal: () => void; 
+  mensagem: string;
 }
 
-const Sucesso: React.FC<SuccessModalProps> = ({ isOpen, onClose, closeModal }) => {
+const Sucesso: React.FC<SuccessModalProps> = ({ isOpen, onClose, closeModal, mensagem}) => {
   const router = useRouter();
 
   const handleClose = () => {
@@ -25,7 +26,7 @@ const Sucesso: React.FC<SuccessModalProps> = ({ isOpen, onClose, closeModal }) =
             Sucesso!
           </Box>
           <Box textAlign="center" fontSize="lg" mt="4">
-            Cadastro atualizado com sucesso.
+            {mensagem}
           </Box>
         </ModalBody>
         <ModalFooter justifyContent="center">

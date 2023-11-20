@@ -10,6 +10,7 @@ import { SecretarioSignUpData } from "../../../../utils/types";
 import Editar from "../Editar";
 import { MdCreate } from "react-icons/md";
 import { formatarTelefone } from "../../../../utils/formatarTelefone";
+import Excluir from "../Excluir";
 
 export default function VisualizarProfessor({
   mobile,
@@ -40,11 +41,18 @@ export default function VisualizarProfessor({
     router.push('/');
   };
 
+  const abrirExcluir = () => {
+    setExcluirAberto(true)
+  };
+  const fecharExcluir = () => {
+    setExcluirAberto(false)
+  };
+
   const [isMobile] = useMediaQuery("(max-width: 768px)")
   const [activeTab, setActiveTab] = useState("tab1");
   const [isEditing, setIsEditing] = useState<any>();
   const [result, setResult] = useState<SecretarioSignUpData[]>([]);
-  
+  const [excluirAberto, setExcluirAberto] = useState<boolean>(false);
   
   return (
     <>
@@ -275,7 +283,7 @@ export default function VisualizarProfessor({
             onPress={navegarParaHome} 
             label="Voltar"/>
             <Button 
-            onPress={navegarParaHome} 
+            onPress={abrirExcluir} 
             label="Excluir"
             bg="white"
             border="2px solid #C30B0B;"
@@ -285,6 +293,15 @@ export default function VisualizarProfessor({
               opacity: 0.9,
               color: "#FFF",
               transition: "0.3s",
+            }}
+            />
+            <Excluir 
+            isOpen={excluirAberto} 
+            onClose={fecharExcluir} 
+            closeModal={fecharExcluir} 
+            excluirData={{
+              _id,
+              disciplina,
             }}
             />
             <Editar

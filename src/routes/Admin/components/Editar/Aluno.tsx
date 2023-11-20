@@ -169,7 +169,7 @@ export default function EditarAluno({
               }
         }
         />
-      <Sucesso isOpen={isOpen} onClose={onClose} closeModal={closeModal}/>
+      <Sucesso mensagem="Cadastro atualizado com sucesso." isOpen={isOpen} onClose={onClose} closeModal={closeModal}/>
       {erro &&  <Erro isOpen={erro} onClose={() => setErro(false)} closeModal={() => setErro(false)} />}
       </Flex>
     </Flex>

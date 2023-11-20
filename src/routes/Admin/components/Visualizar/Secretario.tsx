@@ -10,6 +10,7 @@ import { formatarCPF } from "../../../../utils/cpf";
 import { formatarTelefone } from "../../../../utils/formatarTelefone";
 import Editar from "../Editar";
 import { MdCreate } from "react-icons/md";
+import Excluir from "../Excluir";
 
 export default function VisualizarSecretario({
   userData: {
@@ -19,6 +20,7 @@ export default function VisualizarSecretario({
   telefoneContato,
   turno,
   _id,
+  role,
   },
   user,
 }: {
@@ -31,12 +33,21 @@ export default function VisualizarSecretario({
   userData?: any;
 }) {
   const router = useRouter();
+
   const navegarParaOutraPasta = () => {
     router.push('/');
   };
+  const abrirExcluir = () => {
+    setExcluirAberto(true)
+  };
+  const fecharExcluir = () => {
+    setExcluirAberto(false)
+  };
+
   const [ isMobile] = useMediaQuery("(max-width: 768px)");
   const [activeTab, setActiveTab] = useState("tab1");
   const [isEditing, setIsEditing] = useState<any>();
+  const [excluirAberto, setExcluirAberto] = useState<boolean>(false);
 
   return (
     <>
@@ -201,8 +212,36 @@ export default function VisualizarSecretario({
                 </Box>
               </GridItem>
             </Grid>
-            <Box width={isMobile ? '100%' : '2rem'} px={isMobile ? '0' : '2rem'} mt="4">
+            <Box 
+            width="100% " 
+            px={isMobile ? '0' : '2rem'} 
+            mt="4" 
+            display='flex'
+            flexDir='row'
+            justifyContent='space-between'>
               <Button onPress={navegarParaOutraPasta} label="Voltar" />
+              <Button 
+              onPress={abrirExcluir} 
+              label="Excluir"
+              bg="white"
+              border="2px solid #C30B0B;"
+              color="#C30B0B;"
+              _hover= {{
+                backgroundColor: "#C30B0B",
+                opacity: 0.9,
+                color: "#FFF",
+                transition: "0.3s",
+              }}
+              />
+              <Excluir 
+              isOpen={excluirAberto} 
+              onClose={fecharExcluir} 
+              closeModal={fecharExcluir} 
+              excluirData={{
+                _id,
+                turno,
+              }}
+              />
               <Editar
               role="secretary"
               editData={{

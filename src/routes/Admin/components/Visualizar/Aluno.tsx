@@ -10,6 +10,7 @@ import { AlunoSignUpData } from "../../../../utils/types";
 import Search from "../../../../components/Search";
 import Editar from "../Editar";
 import { MdCreate } from "react-icons/md";
+import Excluir from "../Excluir";
 
 export default function VisualizarAluno({
   mobile,
@@ -22,6 +23,7 @@ export default function VisualizarAluno({
   periodo,
   cpf,
   _id,
+  role,
   },
   setMobile,
   user,
@@ -43,12 +45,19 @@ export default function VisualizarAluno({
     router.push('/');
   };
 
+  const abrirExcluir = () => {
+    setExcluirAberto(true)
+  };
+  const fecharExcluir = () => {
+    setExcluirAberto(false)
+  };
+
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isMobile] = useMediaQuery("(max-width: 768px)")
   const [activeTab, setActiveTab] = useState("tab1");
   const [isEditing, setIsEditing] = useState<any>();
   const [result, setResult] = useState<AlunoSignUpData[]>([]);
-  
+  const [excluirAberto, setExcluirAberto] = useState<boolean>(false);
   
   return (
     <>
@@ -196,7 +205,6 @@ export default function VisualizarAluno({
             >
               Informações sobre aluno
             </Text>
-
             <Button
               icon={MdCreate}
               mx={2}
@@ -310,12 +318,36 @@ export default function VisualizarAluno({
           px={mobile ? '0' : '2rem'} 
           mt="4"
           mb="4"
+          display='flex'
+          flexDir='row'
+          justifyContent='space-between'
           >
           <Button 
-          onPress={navegarParaHome} 
-          label="Voltar"
-          width='7rem'
-          />
+            onPress={navegarParaHome}
+            label="Voltar"
+            />
+            <Button 
+            onPress={abrirExcluir} 
+            label="Excluir"
+            bg="white"
+            border="2px solid #C30B0B;"
+            color="#C30B0B;"
+            _hover= {{
+              backgroundColor: "#C30B0B",
+              opacity: 0.9,
+              color: "#FFF",
+              transition: "0.3s",
+            }}
+            />
+            <Excluir 
+            isOpen={excluirAberto} 
+            onClose={fecharExcluir} 
+            closeModal={fecharExcluir} 
+            excluirData={{
+              _id,
+              periodo,
+            }}
+            />
           <Editar
           role="student"
           editData={{

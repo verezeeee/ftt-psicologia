@@ -14,12 +14,7 @@ import {
   Image,
   Divider,
 } from "@chakra-ui/react";
-import Button from "../../../../components/Button";
-import Input from "../../../../components/Input";
 import { useMediaQuery } from "../../../../utils/useMediaQuery";
-import CadastrarProfessor from "./Professor";
-import CadastrarSecretario from "./Secretario";
-import CadastrarAluno from "./Aluno";
 import EditarAluno from "./Aluno";
 import EditarProfessor from "./Professor";
 import EditarSecretario from "./Secretario";
@@ -37,26 +32,8 @@ export default function Editar({
 }) {
   const { mobile } = useMediaQuery();
 
-  const [entidadeHover, setEntidadeHover] = useState<string>();
-
-  const [nome, setNome] = useState<string>("");
-  const [cpf, setCPF] = useState<string>("");
-  const [telefone, setTelefone] = useState<string>("");
-  const [disciplina, setDisciplina] = useState<string>("");
-  const [turno, setTurno] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [matricula, setMatricula] = useState<string>("");
-  const [periodo, setPeriodo] = useState<string>("");
-
   function closeModal() {
-    setEntidadeHover("");
     setEditarOpened(false);
-    setNome("");
-    setCPF("");
-    setTelefone("");
-    setDisciplina("");
-    setTurno("");
-    setEmail("");
   }
 
   return (
@@ -74,16 +51,6 @@ export default function Editar({
               editData={editData}
               mobile={mobile}
               closeModal={closeModal}
-              nome={nome}
-              setNome={setNome}
-              cpf={cpf}
-              setCPF={setCPF}
-              telefone={telefone}
-              setTelefone={setTelefone}
-              disciplina={disciplina}
-              setDisciplina={setDisciplina}
-              email={email}
-              setEmail={setEmail}
             />
           )}
           {role === "secretary" && (
@@ -95,6 +62,13 @@ export default function Editar({
           )}
           {role === "student" && (
             <EditarAluno
+              mobile={mobile}
+              closeModal={closeModal}
+              editData={editData}
+            />
+          )}
+          {role === "paciente" && (
+            <EditarPaciente
               mobile={mobile}
               closeModal={closeModal}
               editData={editData}
