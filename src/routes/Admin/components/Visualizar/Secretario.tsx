@@ -104,7 +104,57 @@ export default function VisualizarSecretario({
             </Text>
           </GridItem>
         </Grid>
+        <Box
+        display='flex'
+        flexDir='row'
+        justifyContent='space-between'
+        w='100%'>
+        <Button
+          icon={MdCreate}
+          onPress={() => {
+          setIsEditing(true);
+          }}
+          label="Editar"
+          width="50%"
+        /> 
+        <Button 
+          onPress={abrirExcluir} 
+          label="Excluir"
+          bg="white"
+          border="2px solid #C30B0B;"
+          color="#C30B0B;"
+          _hover= {{
+            backgroundColor: "#C30B0B",
+            opacity: 0.9,
+            color: "#FFF",
+            transition: "0.3s",
+          }}
+          width="50%"
+          />
+          </Box>
         <Button onPress={navegarParaOutraPasta} label="Voltar"/>
+        <Excluir 
+              isOpen={excluirAberto} 
+              onClose={fecharExcluir} 
+              closeModal={fecharExcluir} 
+              excluirData={{
+                _id,
+                turno,
+              }}
+          />
+        <Editar
+              role="secretary"
+              editData={{
+                nome,
+                email,
+                cpf,
+                telefoneContato,
+                turno,
+                _id,
+              }}
+              editarOpened={isEditing ? true : false}
+              setEditarOpened={setIsEditing}
+              />
       </Flex>
       ) : (
         <Flex>

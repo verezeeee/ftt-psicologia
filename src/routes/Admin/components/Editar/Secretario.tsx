@@ -121,26 +121,26 @@ export default function EditarSecretario({
       <Flex align="center" mt="4" justify="space-between" w="100%">
         <Button label={edicaoAtiva ? "Cancelar" : "Voltar"}  onPress={edicaoAtiva ? closeModal : () => setEdicaoAtiva(true)} mt={0.1} />
         <Button
-      label={edicaoAtiva ? "Confirmar" : "Editar"}
-      onPress={() => {
-        if (edicaoAtiva) { 
-          setEdicaoAtiva(false);
-        } else {
-          setEdicaoAtiva(true);
-          alterar();
-        }
-      }}
-      mt={0.1}
-      filled
-      bg={edicaoAtiva ? null : "#1ABB2A"}
-      border={edicaoAtiva ? null : "#1ABB2A"}
-      _hover={edicaoAtiva ? null: {
-              backgroundColor: "#fff",
-              opacity: 0.9,
-              color: "#1ABB2A",
-              transition: "0.3s",
-              border: "1px solid #1ABB2A",}
-            }
+        label={edicaoAtiva ? "Confirmar" : "Editar"}
+        onPress={() => {
+          if (edicaoAtiva) { 
+            setEdicaoAtiva(false);
+          } else {
+            setEdicaoAtiva(true);
+            alterar();
+          }
+        }}
+        mt={0.1}
+        filled
+        bg={edicaoAtiva ? null : "#1ABB2A"}
+        border={edicaoAtiva ? null : "#1ABB2A"}
+        _hover={edicaoAtiva ? null: {
+                backgroundColor: "#fff",
+                opacity: 0.9,
+                color: "#1ABB2A",
+                transition: "0.3s",
+                border: "1px solid #1ABB2A",}
+              }
         />
       <Sucesso mensagem="Cadastro atualizado com sucesso." isOpen={isOpen} onClose={onClose} closeModal={closeModal}/>
       {erro &&  <Erro isOpen={erro} onClose={() => setErro(false)} closeModal={() => setErro(false)} />}

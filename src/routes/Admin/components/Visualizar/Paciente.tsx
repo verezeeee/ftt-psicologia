@@ -9,6 +9,7 @@ import { useState } from "react";
 import Editar from "../Editar";
 import { MdCreate } from "react-icons/md";
 import { formatarTelefone } from "../../../../utils/formatarTelefone";
+import Excluir from "../Excluir";
 
 export default function VisualizarPaciente({
   userData:{
@@ -37,7 +38,8 @@ export default function VisualizarPaciente({
   quemEncaminhou,
   tipoDeTratamento,
   alunoUnieva,
-  funcionarioUnieva
+  funcionarioUnieva,
+  _id,
   },
   setMobile,
   user,
@@ -48,14 +50,20 @@ export default function VisualizarPaciente({
 }) {
   const router = useRouter();
 
-  const navegarParaOutraPasta = () => {
+  const navegarParaHome = () => {
     router.push('/');
+  };
+  const abrirExcluir = () => {
+    setExcluirAberto(true)
+  };
+  const fecharExcluir = () => {
+    setExcluirAberto(false)
   };
 
   const [ isMobile] = useMediaQuery("(max-width: 768px)");
   const [activeTab, setActiveTab] = useState("tab1");
   const [isEditing, setIsEditing] = useState<any>();
-
+  const [excluirAberto, setExcluirAberto] = useState<boolean>(false);
 
   return( 
     <>
@@ -69,7 +77,7 @@ export default function VisualizarPaciente({
         <AccordionItem>
           <h2>
             <AccordionButton>
-              <Box as="span" flex='1' textAlign='left'>
+              <Box as="div" flex='1' textAlign='left'>
               <Text color="#000000" fontSize="1.8rem" flexDir="column" p='4'>
              Informações do paciente
               </Text>
@@ -169,7 +177,7 @@ export default function VisualizarPaciente({
          </GridItem>
          <GridItem w='100%' h='100' alignItems='center' >
          <Box>
-          <Checkbox isDisabled  >Menor de idade</Checkbox>
+          <Checkbox isDisabled isChecked={menorDeIdade} >Menor de idade</Checkbox>
           </Box>
          </GridItem>
          <GridItem w='100%' h='100'>
@@ -323,7 +331,84 @@ export default function VisualizarPaciente({
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-       <Button onPress={navegarParaOutraPasta} label="Voltar"/>
+       <Flex
+         display='flex'
+         flexDir='row'
+         justifyContent='space-between'
+         w='100%'
+       >
+        <Button
+          icon={MdCreate}
+          onPress={() => {
+          setIsEditing(true);
+          }}
+          label="Editar"
+          width="50%"
+        /> 
+         <Button
+           onPress={abrirExcluir}
+           label="Excluir"
+           bg="white"
+           border="2px solid #C30B0B"
+           color="#C30B0B"
+           _hover={{
+             backgroundColor: "#C30B0B",
+             opacity: 0.9,
+             color: "#FFF",
+             transition: "0.3s",
+           }}
+           width="50%"
+         />
+       </Flex>
+       <Flex
+        width='100%'
+        flexDir='column'
+        >
+       <Button onPress={navegarParaHome} label="Voltar" />
+       </Flex>
+       <Excluir 
+              isOpen={excluirAberto} 
+              onClose={fecharExcluir} 
+              closeModal={fecharExcluir} 
+              excluirData={{
+                _id,
+                enderecoCep,
+              }}
+          />
+        <Editar
+              role="paciente"
+              editData={{
+                _id,
+                nome,
+                cpf,
+                dataDeNascimento,
+                email,
+                telefoneContato,
+                sexo,
+                estadoCivil,
+                religiao,
+                profissao,
+                outroContato,
+                nomeDoContatoResponsavel,
+                menorDeIdade,
+                naturalidade,
+                nacionalidade,
+                enderecoCep,
+                enderecoLogradouro,
+                enderecoBairro,
+                enderecoComplemento,
+                enderecoCidade,
+                enderecoUF,
+                dataInicioTratamento,
+                dataTerminoTratamento,
+                quemEncaminhou,
+                tipoDeTratamento,
+                alunoUnieva,
+                funcionarioUnieva,
+              }}
+              editarOpened={isEditing ? true : false}
+              setEditarOpened={setIsEditing}
+              />
      </Flex>
     ): (
       <Flex>
@@ -560,7 +645,7 @@ export default function VisualizarPaciente({
           </GridItem>
           <GridItem w='100%' h='10' mt='9' >
           <Box>
-          <Checkbox isDisabled>Menor de idade</Checkbox>
+          <Checkbox isDisabled isChecked={menorDeIdade}>Menor de idade</Checkbox>
           </Box>
           </GridItem>
           <GridItem w='100%' h='10' mt='9' />
@@ -759,20 +844,74 @@ export default function VisualizarPaciente({
             </Box>
           </GridItem>
           <GridItem w='100%' h='10' mt='9' >
-          <Checkbox isDisabled={alunoUnieva ? false : true }>Aluno UniEvangélica</Checkbox>
+          <Checkbox isDisabled isChecked={alunoUnieva}>Aluno UniEvangélica</Checkbox>
           </GridItem>
           <GridItem w='100%' h='10' mt='9' >
-          <Checkbox isDisabled checked>Funcionário da Associação Educativa Evangélica</Checkbox>
+          <Checkbox isDisabled isChecked={funcionarioUnieva}>Funcionário da Associação Educativa Evangélica</Checkbox>
           </GridItem>
         </Grid>
         <Box 
-          width={isMobile ? '100%' : '2rem'} 
+          width='100%'
           px={isMobile ? '0' : '2rem'} 
-          mt="4">
-            <Button onPress={navegarParaOutraPasta} label="Voltar"/>
+          my="4"
+          display='flex'
+          flexDir='row'
+          justifyContent='space-between'
+          >
+            <Button onPress={navegarParaHome} label="Voltar"/>
+            <Button 
+              onPress={abrirExcluir} 
+              label="Excluir"
+              bg="white"
+              border="2px solid #C30B0B;"
+              color="#C30B0B;"
+              _hover= {{
+                backgroundColor: "#C30B0B",
+                opacity: 0.9,
+                color: "#FFF",
+                transition: "0.3s",
+              }}
+              />
+            <Excluir 
+              isOpen={excluirAberto} 
+              onClose={fecharExcluir} 
+              closeModal={fecharExcluir} 
+              excluirData={{
+                _id,
+                enderecoCep,
+              }}
+              />
             <Editar
               role="paciente"
-              editData={isEditing}
+              editData={{
+                _id,
+                nome,
+                cpf,
+                dataDeNascimento,
+                email,
+                telefoneContato,
+                sexo,
+                estadoCivil,
+                religiao,
+                profissao,
+                outroContato,
+                nomeDoContatoResponsavel,
+                menorDeIdade,
+                naturalidade,
+                nacionalidade,
+                enderecoCep,
+                enderecoLogradouro,
+                enderecoBairro,
+                enderecoComplemento,
+                enderecoCidade,
+                enderecoUF,
+                dataInicioTratamento,
+                dataTerminoTratamento,
+                quemEncaminhou,
+                tipoDeTratamento,
+                alunoUnieva,
+                funcionarioUnieva,
+              }}
               editarOpened={isEditing ? true : false}
               setEditarOpened={setIsEditing}
             />      

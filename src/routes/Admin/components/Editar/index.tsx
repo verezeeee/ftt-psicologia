@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import {
   Flex,
   Text,
@@ -18,6 +17,7 @@ import { useMediaQuery } from "../../../../utils/useMediaQuery";
 import EditarAluno from "./Aluno";
 import EditarProfessor from "./Professor";
 import EditarSecretario from "./Secretario";
+import EditarPaciente from "./Paciente";
 
 export default function Editar({
   role,
@@ -39,7 +39,7 @@ export default function Editar({
   return (
     <>
       <Modal
-        size={mobile ? "xs" : "xl"}
+        size={role === "paciente" ? "4xl" : (mobile ? "xs" : "xl")}
         isCentered
         isOpen={editarOpened}
         onClose={closeModal}

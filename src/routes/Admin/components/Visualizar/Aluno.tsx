@@ -146,14 +146,21 @@ export default function VisualizarAluno({
          />
        </Flex>
        <Flex
-         w="100%"
-         p="4"
-         flexDir={isMobile ? "column" : "row"}
-         justifyContent={isMobile ? "center" : "space-between"}
+         display='flex'
+         flexDir='row'
+         justifyContent='space-between'
+         w='100%'
        >
-         <Button onPress={navegarParaHome} label="Voltar" />
+        <Button
+          icon={MdCreate}
+          onPress={() => {
+          setIsEditing(true);
+          }}
+          label="Editar"
+          width="50%"
+        /> 
          <Button
-           onPress={navegarParaHome}
+           onPress={abrirExcluir}
            label="Excluir"
            bg="white"
            border="2px solid #C30B0B"
@@ -164,8 +171,39 @@ export default function VisualizarAluno({
              color: "#FFF",
              transition: "0.3s",
            }}
+           width="50%"
          />
        </Flex>
+        <Flex
+        width='100%'
+        flexDir='column'
+        >
+       <Button onPress={navegarParaHome} label="Voltar" />
+       </Flex>
+       <Excluir 
+              isOpen={excluirAberto} 
+              onClose={fecharExcluir} 
+              closeModal={fecharExcluir} 
+              excluirData={{
+                _id,
+                periodo,
+              }}
+          />
+        <Editar
+              role="student"
+              editData={{
+                nome,
+                email,
+                matricula,
+                telefoneContato,
+                professor,
+                periodo,
+                cpf,
+                _id,
+              }}
+              editarOpened={isEditing ? true : false}
+              setEditarOpened={setIsEditing}
+              />
      </Flex>
     ) : (
       <Flex>
