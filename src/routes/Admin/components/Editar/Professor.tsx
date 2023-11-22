@@ -1,4 +1,4 @@
-import { Divider, Flex, Text } from "@chakra-ui/react";
+import { Divider, Flex, Text, useToast } from "@chakra-ui/react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import { useState } from "react";
@@ -6,6 +6,8 @@ import axios from "axios";
 import Sucesso from "../Sucesso";
 import { useDisclosure } from "@chakra-ui/react";
 import Erro from "../Erro";
+import { validarEmail } from "../../../../utils/email";
+import { validarCPF } from "../../../../utils/cpf";
 
 export default function EditarProfessor({
     mobile,
@@ -21,19 +23,62 @@ export default function EditarProfessor({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [erro, setErro] = useState(false); 
   const [edicaoAtiva, setEdicaoAtiva] = useState(true);
+  const toast = useToast();
+
+  const validarDados = () => {
+    if (
+      nome === editData.nome &&
+      cpf === editData.cpf &&
+      telefone === editData.telefoneContato &&
+      email === editData.email &&
+      disciplina === editData.disciplina 
+    ) {
+
+     toast({
+      status: "error",
+      description: "Nenhum dado foi alterado",
+      duration: 1500,
+     })
+      return false;
+    }
+  
+    if (!validarCPF(cpf)) {
+      toast({
+        status: "error",
+        description: "CPF inválido",
+        duration: 1500,
+       })
+      return false;
+    }
+  
+    if (!validarEmail(email)) {
+      toast({
+        status: "error",
+        description: "Email inválido",
+        duration: 1500,
+       })
+      return false;
+    }
+  
+    return true;
+  };
+  
   const alterar = async () => {
     try {
+      if (!validarDados()) {
+        return;
+      }
+  
       const dadosAtualizados = {
         nome,
         cpf,
         telefoneContato: telefone,
         email,
-        disciplina,
-      };  
+      };
+  
       await axios.patch(`http://localhost:8080/auth/attProfessor/${id}`, dadosAtualizados);
       onOpen();
     } catch (error) {
-      console.error("Erro ao atualizar os dados:", error);
       setErro(true);
     }
   };

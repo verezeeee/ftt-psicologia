@@ -54,6 +54,7 @@ export default function CadastrarAluno({
           <Select
             label="Periodo"
             options={[
+              "",
               "1º Periodo",
               "2º Periodo",
               "3º Periodo",

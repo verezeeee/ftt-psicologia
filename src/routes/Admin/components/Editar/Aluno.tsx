@@ -1,4 +1,4 @@
-import { Divider, Flex, Text } from "@chakra-ui/react";
+import { Divider, Flex, Text, useToast } from "@chakra-ui/react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import Select from "../../../../components/Select";
@@ -7,6 +7,8 @@ import Sucesso from "../Sucesso";
 import { useDisclosure } from "@chakra-ui/react";
 import Erro from "../Erro";
 import axios from "axios";
+import { validarCPF } from "../../../../utils/cpf";
+import { validarEmail } from "../../../../utils/email";
 
 export default function EditarAluno({
   mobile,
@@ -24,9 +26,54 @@ export default function EditarAluno({
   const [id, setId] = useState(editData._id);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [erro, setErro] = useState(false);
+  const toast = useToast();
 
+  const validarDados = () => {
+    if (
+      nome === editData.nome &&
+      cpf === editData.cpf &&
+      telefone === editData.telefoneContato &&
+      email === editData.email &&
+      matricula === editData.matricula &&
+      periodo === editData.periodo &&
+      professor === editData.professor 
+    ) {
+
+     toast({
+      status: "error",
+      description: "Nenhum dado foi alterado",
+      duration: 1500,
+     })
+      return false;
+    }
+  
+    if (!validarCPF(cpf)) {
+      toast({
+        status: "error",
+        description: "CPF inválido",
+        duration: 1500,
+       })
+      return false;
+    }
+  
+    if (!validarEmail(email)) {
+      toast({
+        status: "error",
+        description: "Email inválido",
+        duration: 1500,
+       })
+      return false;
+    }
+  
+    return true;
+  };
+  
   const alterar = async () => {
     try {
+      if (!validarDados()) {
+        return;
+      }
+  
       const dadosAtualizados = {
         nome,
         cpf,
@@ -35,14 +82,15 @@ export default function EditarAluno({
         matricula,
         periodo,
         professor,
-      };  
+      };
+  
       await axios.patch(`http://localhost:8080/auth/attAluno/${id}`, dadosAtualizados);
       onOpen();
     } catch (error) {
-      console.error("Erro ao atualizar os dados:", error);
       setErro(true);
     }
   };
+
 
   return (
     <Flex flexDir="column" p="8" pt="6">

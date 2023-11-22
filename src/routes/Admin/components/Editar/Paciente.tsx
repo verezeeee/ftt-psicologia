@@ -20,7 +20,6 @@ export default function EditarPaciente({
   const [cpf, setCPF] = useState(editData.cpf);
   const [telefone, setTelefone] = useState(editData.telefoneContato);
   const [email, setEmail] = useState(editData.email);
-  const toast = useToast();
   const [alunoUnieva, setAlunoUnieva] = useState(editData.alunoUnieva);
   const [funcionarioUnieva, setFuncionarioUnieva] = useState(editData.funcionarioUnieva);
   const [menorDeIdade, setMenorDeIdade] = useState(editData.menorDeIdade);
@@ -48,9 +47,73 @@ export default function EditarPaciente({
   const [id, setId] = useState(editData._id);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [erro, setErro] = useState(false); 
+  const toast = useToast();
 
+  const validarDados = () => {
+    if (
+      nome === editData.nome &&
+      cpf === editData.cpf &&
+      telefone === editData.telefoneContato &&
+      email === editData.email &&
+      alunoUnieva === editData.alunoUnieva &&
+      funcionarioUnieva === editData.funcionarioUnieva &&
+      menorDeIdade === editData.menorDeIdade &&
+      dataDeNascimento === editData.dataDeNascimento &&
+      sexo === editData.sexo &&
+      estadoCivil === editData.estadoCivil &&
+      religiao === editData.religiao &&
+      rendaFamiliar === editData.rendaFamiliar &&
+      profissao === editData.profissao &&
+      outroContato === editData.outroContato &&
+      nomeDoContatoResponsavel === editData.nomeDoContatoResponsavel &&
+      naturalidade === editData.naturalidade &&
+      nacionalidade === editData.nacionalidade &&
+      cep === editData.enderecoCep &&
+      logradouro === editData.enderecoLogradouro &&
+      bairro === editData.enderecoBairro &&
+      complemento === editData.enderecoComplemento &&
+      cidade === editData.enderecoCidade &&
+      uf === editData.enderecoUF &&
+      inicioTratamento === editData.dataInicioTratamento &&
+      terminoTratamento === editData.dataTerminoTratamento &&
+      encaminhador === editData.quemEncaminhou &&
+      tipoDeTratamento === editData.tipoDeTratamento
+    ) {
+
+     toast({
+      status: "error",
+      description: "Nenhum dado foi alterado",
+      duration: 1500,
+     })
+      return false;
+    }
+  
+    if (!validarCPF(cpf)) {
+      toast({
+        status: "error",
+        description: "CPF inválido",
+        duration: 1500,
+       })
+      return false;
+    }
+  
+    if (!validarEmail(email)) {
+      toast({
+        status: "error",
+        description: "Email inválido",
+        duration: 1500,
+       })
+      return false;
+    }
+  
+    return true;
+  };
+  
   const alterar = async () => {
     try {
+      if(!validarDados()){
+        return;
+      }
       const dadosAtualizados = {
         nome,
         cpf,
@@ -83,7 +146,6 @@ export default function EditarPaciente({
       await axios.patch(`http://localhost:8080/auth/attPaciente/${id}`, dadosAtualizados);
       onOpen();
     } catch (error) {
-      console.error("Erro ao atualizar os dados:", error);
       setErro(true);
     }
   };

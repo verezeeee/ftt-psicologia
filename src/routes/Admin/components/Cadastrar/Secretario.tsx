@@ -94,7 +94,7 @@ export default function CadastrarSecretario({
         <Input label="E-mail" value={email} setValue={setEmail} />
         <Select
           label="Turno"
-          options={["Matutino", "Vespertino", "Noturno"]}
+          options={["","Matutino", "Vespertino", "Noturno"]}
           value={turno}
           setValue={setTurno}
         />
