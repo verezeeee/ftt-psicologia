@@ -1,7 +1,7 @@
 import { Divider, Flex, Text, Box, Grid, GridItem, Checkbox, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react";
 import Button from "../../../../components/Button";
 import { useRouter } from 'next/router';
-import { SecretarioSignUpData } from "../../../../utils/types";
+import { PacienteSignUpData } from "../../../../utils/types";
 import { useMediaQuery } from "@chakra-ui/react";
 import Sidebar from "../../../../components/Sidebar";
 import Header from "../../../../components/Header";
@@ -21,6 +21,7 @@ export default function VisualizarPaciente({
   sexo,
   estadoCivil,
   religiao,
+  rendaFamiliar,
   profissao,
   outroContato,
   nomeDoContatoResponsavel,
@@ -45,7 +46,7 @@ export default function VisualizarPaciente({
   user,
 }: {
   setMobile: (mobile: boolean) => void;
-  user: SecretarioSignUpData;
+  user: PacienteSignUpData;
   userData?: any;
 }) {
   const router = useRouter();
@@ -172,7 +173,7 @@ export default function VisualizarPaciente({
            Renda familiar
            </Text>
            <Text fontSize='1.6rem'>
-            ausente
+            {rendaFamiliar}
            </Text>
          </GridItem>
          <GridItem w='100%' h='100' alignItems='center' >
@@ -597,7 +598,7 @@ export default function VisualizarPaciente({
             Renda familiar
             </Text>
             <Text fontSize='1.6rem'>
-              1 a 3 salários minimos
+              {rendaFamiliar}
             </Text>
             </Box>
           </GridItem>

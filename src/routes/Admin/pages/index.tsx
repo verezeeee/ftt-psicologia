@@ -5,7 +5,6 @@ import { useAuth, withAuth } from "../../../contexts/AuthContext";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
 import { Secretarios, Alunos, Professores, Pacientes } from "./screens";
-
 import { useMediaQuery } from "../../../utils/useMediaQuery";
 import Table from "../../../components/Tables";
 import Head from "next/head";
