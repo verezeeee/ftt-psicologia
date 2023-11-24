@@ -23,8 +23,6 @@ const Secretarios: FC<SecretariosProps> = ({ user, activeTab }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [result, setResult] = useState<SecretarioSignUpData[]>([]);
   const [isEditing, setIsEditing] = useState<any>();
-  const finalRef = useRef(null);
-  const initialRef = useRef(null);
 
   useEffect(() => {
     async function fetchData() {

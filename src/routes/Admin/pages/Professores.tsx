@@ -1,81 +1,72 @@
-import { Flex, Modal, Text } from "@chakra-ui/react";
-import { User, ProfessorSignUpData } from "../../../utils/types";
-import { useMediaQuery } from "../../../utils/useMediaQuery";
+import { Flex, Text } from "@chakra-ui/react";
+import { IoMdPersonAdd } from "react-icons/io";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import Table from "../../../components/Tables";
 import Search from "../../../components/Search";
 import Filter from "../../../components/Filter";
 import Button from "../../../components/Button";
-import { IoMdPersonAdd } from "react-icons/io";
-import { useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "../../../utils/useMediaQuery";
 import { removeAcentos } from "../../../utils/removeAcentos";
 import Cadastrar from "../components/Cadastrar";
 import Editar from "../components/Editar";
-import axios from "axios";
+import { ProfessorSignUpData } from "../../../utils/types";
 
-export default function Alunos({
+export default function Professores({
   user,
   activeTab,
 }: {
   user: ProfessorSignUpData;
   activeTab?: string;
 }) {
-  const { mobile, tablet, desktop } = useMediaQuery();
+  const { mobile } = useMediaQuery();
 
   const [cadastrarOpened, setCadastrarOpened] = useState<boolean>(false);
-
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [data, setData] = useState<ProfessorSignUpData[]>([
-    
-  ]);
+  const [data, setData] = useState<ProfessorSignUpData[]>([]);
 
   const [isEditing, setIsEditing] = useState<any>();
-  const [result, setResult] = useState<ProfessorSignUpData[]>();
-  const [shouldFetchData, setShouldFetchData] = useState<boolean>(true);
-  
-  async function getUsers(): Promise<ProfessorSignUpData[]> {	
-    const res = await axios.get('http://localhost:8080/auth/getProfessores')
-    const data = await res.data
-    return data
-  }
-
+  const [result, setResult] = useState<ProfessorSignUpData[]>([]);
+  const shouldFetchData = useRef<boolean>(true);
   const finalRef = useRef(null);
   const initialRef = useRef(null);
 
+  async function getUsers(): Promise<ProfessorSignUpData[]> {
+    try {
+      const res = await axios.get<ProfessorSignUpData[]>("http://localhost:8080/auth/getProfessores");
+      const data = res.data;
+      return data;
+    } catch (error) {
+      console.error("Erro ao obter os Professores:", error);
+      return [];
+    }
+  }
+
   useEffect(() => {
     async function fetchData() {
-      const data = await getUsers();
-      setResult(data);
-      setShouldFetchData(false);
-    }
-    if (shouldFetchData) {
-      fetchData();
-    }
-  }, [shouldFetchData]);
+      if (shouldFetchData.current) {
+        const data = await getUsers();
+        setResult(data);
+        shouldFetchData.current = false;
+      }
 
+      if (searchTerm.length > 0) {
+        const filteredResult = pesquisar(searchTerm, result);
+        setResult(filteredResult);
+      }
+    }
+
+    fetchData();
+  }, [shouldFetchData, searchTerm]);
 
   function pesquisar(searchTerm: string, data: ProfessorSignUpData[]): ProfessorSignUpData[] {
     const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();
 
     return data.filter((user) => {
       const lowerCaseNome = removeAcentos(user.nome.toLowerCase());
-
-      return (
-        lowerCaseNome.includes(lowerCaseSearchTerm)
-      );
+      return lowerCaseNome.includes(lowerCaseSearchTerm);
     });
   }
-
-  useEffect(() => {
-    async function fetchData() {
-      if (searchTerm.length > 0) {
-        const result = pesquisar(searchTerm, await getUsers());
-        setResult(result);
-      } else {
-        setResult(await getUsers());
-      }
-    }
-    fetchData();
-  }, [searchTerm]);
 
   return (
     <Flex

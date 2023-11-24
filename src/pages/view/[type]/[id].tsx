@@ -12,29 +12,45 @@ export default function VisualizarUsuário() {
     const [paciente, setPaciente] = useState("")
 
     useEffect(() => {
-    if(!router.isReady) return
-    axios.get(`http://localhost:8080/auth/getSecretarioById/${router.query.id}`).then((response) => {
-        setSecretario(response.data)
-    })
-     axios.get(`http://localhost:8080/auth/getAlunoById/${router.query.id}`).then((response) => {
-        setAluno(response.data)
-    })
-    .catch((error) => {
-        console.error("Erro ao obter o Aluno:", error);
-      });
-    axios.get(`http://localhost:8080/auth/getProfessorById/${router.query.id}`).then((response) => {
-        setProfessor(response.data) 
-    })
-    .catch((error) => {
-        console.error("Erro ao obter o Professor:", error);
-      });
-      axios.get(`http://localhost:8080/auth/getPacienteById/${router.query.id}`).then((response) => {
-        setPaciente(response.data)
-      })
-       .catch((error) => {
-        console.error("Erro ao obter o Professor:", error);
-      });
-    
+        if (router.isReady) {
+        
+            if (type === 'secretario') {
+                axios.get(`http://localhost:8080/auth/getSecretarioById/${router.query.id}`)
+                    .then((response) => {
+                        setSecretario(response.data);
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao obter o Secretario:", error);
+                    });
+            } else if (type === 'aluno') {
+                axios.get(`http://localhost:8080/auth/getAlunoById/${router.query.id}`)
+                    .then((response) => {
+                        setAluno(response.data);
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao obter o Aluno:", error);
+                    });
+            } else if (type === 'professor') {
+                axios.get(`http://localhost:8080/auth/getProfessorById/${router.query.id}`)
+                    .then((response) => {
+                        setProfessor(response.data);
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao obter o Professor:", error);
+                    });
+            } else if (type === 'paciente') {
+                axios.get(`http://localhost:8080/auth/getPacienteById/${router.query.id}`)
+                    .then((response) => {
+                        setPaciente(response.data);
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao obter o Paciente:", error);
+                    });
+            } else {
+                console.error("Tipo de requisição não reconhecido:", type);
+            }
+        }
+
     }, [router.isReady, type, id])
     if(type === "secretario"){
         return(

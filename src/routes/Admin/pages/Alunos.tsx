@@ -1,16 +1,17 @@
-import { Flex, Modal, TableProps, Text } from "@chakra-ui/react";
-import { User, AlunoSignUpData } from "../../../utils/types";
-import { useMediaQuery } from "../../../utils/useMediaQuery";
-import Table from "../../../components/Tables";
-import Search from "../../../components/Search";
-import Filter from "../../../components/Filter";
-import Button from "../../../components/Button";
+import { Flex, Text } from "@chakra-ui/react";
 import { IoMdPersonAdd } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import Table from "../../../components/Tables";
+import Search from "../../../components/Search";
+import Button from "../../../components/Button";
+import { useMediaQuery } from "../../../utils/useMediaQuery";
 import { removeAcentos } from "../../../utils/removeAcentos";
 import Cadastrar from "../components/Cadastrar";
 import Editar from "../components/Editar";
-import axios from "axios";
+import { AlunoSignUpData } from "../../../utils/types";
+import Filter from "../../../components/Filter";
+
 
 export default function Alunos({
   user,
@@ -19,59 +20,54 @@ export default function Alunos({
   user: AlunoSignUpData;
   activeTab?: string;
 }) {
-  const { mobile, tablet, desktop } = useMediaQuery();
+  const { mobile } = useMediaQuery();
 
   const [cadastrarOpened, setCadastrarOpened] = useState<boolean>(false);
-
   const [searchTerm, setSearchTerm] = useState<string>("");
-  async function getUsers(): Promise<AlunoSignUpData[]> {	
-    const res = await axios.get('http://localhost:8080/auth/getAlunos')
-    const data = await res.data
-    return data
-  }
-  
-
+  const [result, setResult] = useState<AlunoSignUpData[]>([]);
   const [isEditing, setIsEditing] = useState<any>();
-  const [result, setResult] = useState<AlunoSignUpData[]>();
-  const [shouldFetchData, setShouldFetchData] = useState<boolean>(true);
+
+  const shouldFetchData = useRef<boolean>(true);
   const finalRef = useRef(null);
   const initialRef = useRef(null);
 
+  async function getUsers(): Promise<AlunoSignUpData[]> {
+    try {
+      const res = await axios.get<AlunoSignUpData[]>("http://localhost:8080/auth/getAlunos");
+      const data = res.data;
+      return data;
+    } catch (error) {
+      console.error("Erro ao obter os Alunos:", error);
+      return [];
+    }
+  }
+
   useEffect(() => {
     async function fetchData() {
-      const data = await getUsers();
-      setResult(data);
-      setShouldFetchData(false);
-    }
-    if (shouldFetchData) {
-      fetchData();
-    } 
-  }, [shouldFetchData]);
+      if (shouldFetchData.current) {
+        const data = await getUsers();
+        setResult(data);
+        shouldFetchData.current = false;
+      }
 
-  
+      if (searchTerm.length > 0) {
+        const filteredResult = pesquisar(searchTerm, result);
+        setResult(filteredResult);
+      }
+    }
+
+    fetchData();
+  }, [shouldFetchData, searchTerm]);
 
   function pesquisar(searchTerm: string, users: AlunoSignUpData[]): AlunoSignUpData[] {
     const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();
 
     return users.filter((user: AlunoSignUpData) => {
       const lowerCaseNome = removeAcentos(user.nome.toLowerCase());
-      return (
-        lowerCaseNome.includes(lowerCaseSearchTerm)
-      );
+      return lowerCaseNome.includes(lowerCaseSearchTerm);
     });
   }
 
-  useEffect(() => {
-    async function fetchData() {
-      if (searchTerm.length > 0) {
-        const result = pesquisar(searchTerm, await getUsers());
-        setResult(result);
-      } else {
-        setResult(await getUsers());
-      }
-    }
-    fetchData();
-  }, [searchTerm]);
   return (
     <Flex
       p="4"
@@ -119,11 +115,11 @@ export default function Alunos({
       </Flex>
       <Flex mt="4" w="100%">
         <Table
-          headers={["Nome", "Email", "CPF", "Período",]}
+          headers={["Nome", "Email", "CPF", "Período"]}
           data={result}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
-          type="aluno"    
+          type="aluno"
         />
       </Flex>
       <Cadastrar
@@ -139,4 +135,3 @@ export default function Alunos({
     </Flex>
   );
 }
-  
