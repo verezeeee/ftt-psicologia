@@ -39,12 +39,23 @@ export default function Drawer({
   const { user, signOut } = useAuth();
 
   const { mobile } = useMediaQuery();
+  
+  const router = useRouter();
 
   React.useEffect(() => {
     if (!mobile) {
       setSidebarOpened(false);
     }
   }, [mobile]);
+
+  const handleItemClick = (newTab) => {
+    if (newTab !== activeTab) {
+      router.push("/");
+    } else {
+      setActiveTab(newTab);
+      setSidebarOpened(false);
+    }
+  };
 
   return (
     <ChakraDrawer
@@ -77,6 +88,7 @@ export default function Drawer({
                 setSidebarOpened={setSidebarOpened}
                 href="Secretários"
                 icon={IoMdPerson}
+                onClick={() => handleItemClick("Secretários")}
               />
               <Item
                 user={user}
@@ -86,6 +98,7 @@ export default function Drawer({
                 setSidebarOpened={setSidebarOpened}
                 href="Alunos"
                 icon={IoMdPeople}
+                onClick={() => handleItemClick("Alunos")}
               />
               <Item
                 user={user}
@@ -95,6 +108,7 @@ export default function Drawer({
                 setSidebarOpened={setSidebarOpened}
                 href="Professores"
                 icon={IoMdPerson}
+                onClick={() => handleItemClick("Professores")}
               />
               <Item
                 user={user}
@@ -104,6 +118,7 @@ export default function Drawer({
                 setSidebarOpened={setSidebarOpened}
                 href="Pacientes"
                 icon={IoMdPerson}
+                onClick={() => handleItemClick("Pacientes")}
               />
             </Flex>
             <Flex flexDir="column" p="4">

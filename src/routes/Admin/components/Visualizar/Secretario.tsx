@@ -3,8 +3,6 @@ import Button from "../../../../components/Button";
 import { useRouter } from 'next/router';
 import { SecretarioSignUpData } from "../../../../utils/types";
 import { useMediaQuery } from "@chakra-ui/react";
-import Sidebar from "../../../../components/Sidebar";
-import Header from "../../../../components/Header";
 import { useState } from "react";
 import { formatarCPF } from "../../../../utils/cpf";
 import { formatarTelefone } from "../../../../utils/formatarTelefone";
@@ -53,7 +51,6 @@ export default function VisualizarSecretario({
     <>
       {isMobile ? (
         <Flex flexDir="column" w="100%" ml={isMobile ? 0 : 300} transition="margin-left 0.3s ease" color="#787878">
-        <Header activeTab={activeTab} setActiveTab={setActiveTab}/>
         <Flex flexDir="column" p="0" pt="6" w='100%'>
           <Flex w="100%" flexDir="row" justify="space-between" mt='5rem'>
             <Text color="#000000" fontSize="1.8rem" flexDir="column" p='4'>
@@ -158,9 +155,6 @@ export default function VisualizarSecretario({
       </Flex>
       ) : (
         <Flex>
-        <Sidebar 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab} />
         <Flex 
         flexDir="column" 
         w="100%" 
@@ -168,10 +162,6 @@ export default function VisualizarSecretario({
         transition="margin-left 0.3s ease" 
         color="#787878"
         >
-          <Header 
-          activeTab={activeTab} 
-          setActiveTab={setActiveTab}
-          />
           <Flex 
           flexDir="column" 
           >

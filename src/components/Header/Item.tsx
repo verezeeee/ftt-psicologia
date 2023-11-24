@@ -1,6 +1,7 @@
 import { Avatar, Flex, Icon, Text } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 import { User } from "../../utils/types";
+import { useRouter } from "next/router";
 
 export default function Item({
   user,
@@ -19,12 +20,20 @@ export default function Item({
   sidebarOpened: boolean;
   setSidebarOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const router = useRouter();
+
+  const handleItemClick = () => {
+    setActiveTab(href);
+    setSidebarOpened(false);
+
+    if (href === "Home") {
+      router.push("/");
+    }
+  };
+
   return (
     <Flex
-      onClick={() => {
-        setActiveTab(href);
-        setSidebarOpened(false);
-      }}
+      onClick={handleItemClick}
       cursor="pointer"
       _hover={{
         backgroundColor: "#D9D9D9",
@@ -46,7 +55,6 @@ export default function Item({
       ) : (
         <Flex align="center" px="4">
           <Icon as={icon} fontSize="1.2em" color="#C760EB" />
-
           <Text ml="3" color="#333" fontSize="1rem">
             {href}
           </Text>

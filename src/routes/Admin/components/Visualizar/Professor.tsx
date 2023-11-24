@@ -1,12 +1,10 @@
 import { Divider, Flex, Text, Box, Grid, GridItem} from "@chakra-ui/react";
 import Button from "../../../../components/Button";
 import { useRouter } from 'next/router';
-import Header from "../../../../components/Header";
-import Sidebar from "../../../../components/Sidebar";
 import { useState } from "react";
 import Table from "../../../../components/Tables";
 import { useMediaQuery } from "@chakra-ui/react";
-import { SecretarioSignUpData } from "../../../../utils/types";
+import { ProfessorSignUpData, SecretarioSignUpData } from "../../../../utils/types";
 import Editar from "../Editar";
 import { MdCreate } from "react-icons/md";
 import { formatarTelefone } from "../../../../utils/formatarTelefone";
@@ -32,7 +30,7 @@ export default function VisualizarProfessor({
   telefone: string;
   turno: string;
   setMobile: false;
-  user: SecretarioSignUpData;
+  user: ProfessorSignUpData;
   userData?: any;
 }) {
   const router = useRouter();
@@ -54,6 +52,7 @@ export default function VisualizarProfessor({
   const [result, setResult] = useState<SecretarioSignUpData[]>([]);
   const [excluirAberto, setExcluirAberto] = useState<boolean>(false);
   
+
   return (
     <>
     {isMobile ? (
@@ -61,8 +60,6 @@ export default function VisualizarProfessor({
        flexDir="column"
        alignItems={isMobile ? "center" : null} 
      >
-       
-       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
        <Text
          color="#000000"
          fontSize="1.8rem"
@@ -180,9 +177,6 @@ export default function VisualizarProfessor({
      </Flex>
     ) : (
       <Flex>
-      <Sidebar 
-      activeTab={activeTab} 
-      setActiveTab={setActiveTab} />
       <Flex 
       flexDir="column" 
       w="100%" 
@@ -190,10 +184,6 @@ export default function VisualizarProfessor({
       transition="margin-left 0.3s ease" 
       color="#787878"
       >
-        <Header 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab}
-        />
         <Flex 
         flexDir="column" 
         >

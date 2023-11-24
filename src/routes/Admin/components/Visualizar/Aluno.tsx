@@ -1,8 +1,6 @@
 import { Divider, Flex, Text, Box, Grid, GridItem, Spacer} from "@chakra-ui/react";
 import Button from "../../../../components/Button";
 import { useRouter } from 'next/router';
-import Header from "../../../../components/Header";
-import Sidebar from "../../../../components/Sidebar";
 import { useState } from "react";
 import Table from "../../../../components/Tables";
 import { useMediaQuery } from "@chakra-ui/react";
@@ -67,8 +65,6 @@ export default function VisualizarAluno({
        alignItems={isMobile ? "center" : null} 
       
      >
-       
-       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
        <Text
          color="#000000"
          fontSize="1.8rem"
@@ -207,9 +203,6 @@ export default function VisualizarAluno({
      </Flex>
     ) : (
       <Flex>
-      <Sidebar 
-      activeTab={activeTab} 
-      setActiveTab={setActiveTab} />
       <Flex 
       flexDir="column" 
       w="100%" 
@@ -217,10 +210,6 @@ export default function VisualizarAluno({
       transition="margin-left 0.3s ease" 
       color="#787878"
       >
-        <Header 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab}
-        />
         <Flex 
         flexDir="column" 
         >

@@ -14,7 +14,7 @@ import React, { useState } from "react";
 import Button from "../Button";
 import { useAuth } from "../../contexts/AuthContext";
 import { useMediaQuery } from "../../utils/useMediaQuery";
-
+import { useRouter } from "next/router";
 import { BiMenu, BiMenuAltRight } from "react-icons/bi";
 import Drawer from "./Drawer";
 
@@ -27,9 +27,19 @@ export default function Header({
 }) {
   const { signOut } = useAuth();
   const { mobile, tablet, desktop } = useMediaQuery();
+  const router = useRouter();
 
   const [sidebarOpened, setSidebarOpened] = useState(false);
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      router.push("/");
+    } catch (error) {
+      console.error("Erro ao fazer logout:", error);
+    }
+  };
 
+  
   return (
     <Flex
       justify="space-between"
@@ -58,7 +68,7 @@ export default function Header({
           }}
         />
       </Flex>
-      {!mobile && <Button mt={0.1} px={6} bg="transparent" label="Sair" onPress={signOut} />}
+      {!mobile && <Button mt={0.1} px={6} bg="transparent" label="Sair" onPress={handleSignOut} />}
       {mobile && (
         <Icon
           mt="3"
