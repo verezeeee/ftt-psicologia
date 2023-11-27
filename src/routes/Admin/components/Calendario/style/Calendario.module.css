@@ -1,0 +1,9 @@
+.calendar_container{
+    color: black;
+    width: 70%;
+    height: 50%;
+    margin: auto;
+    margin-right: 10%;
+    margin-top: 10%;
+    position:relative;
+}

@@ -88,7 +88,6 @@ export default function Drawer({
                 setSidebarOpened={setSidebarOpened}
                 href="Secretários"
                 icon={IoMdPerson}
-                onClick={() => handleItemClick("Secretários")}
               />
               <Item
                 user={user}
@@ -98,7 +97,6 @@ export default function Drawer({
                 setSidebarOpened={setSidebarOpened}
                 href="Alunos"
                 icon={IoMdPeople}
-                onClick={() => handleItemClick("Alunos")}
               />
               <Item
                 user={user}
@@ -108,7 +106,6 @@ export default function Drawer({
                 setSidebarOpened={setSidebarOpened}
                 href="Professores"
                 icon={IoMdPerson}
-                onClick={() => handleItemClick("Professores")}
               />
               <Item
                 user={user}
@@ -118,7 +115,6 @@ export default function Drawer({
                 setSidebarOpened={setSidebarOpened}
                 href="Pacientes"
                 icon={IoMdPerson}
-                onClick={() => handleItemClick("Pacientes")}
               />
             </Flex>
             <Flex flexDir="column" p="4">

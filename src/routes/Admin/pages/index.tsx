@@ -1,13 +1,10 @@
 import React, { useEffect } from "react";
-
 import { Flex, Text } from "@chakra-ui/react";
 import { useAuth, withAuth } from "../../../contexts/AuthContext";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
-import { Secretarios, Alunos, Professores, Pacientes } from "./screens";
+import { Secretarios, Alunos, Professores, Pacientes, Agenda} from "./screens";
 import { useMediaQuery } from "../../../utils/useMediaQuery";
-import Table from "../../../components/Tables";
-import Head from "next/head";
 
 function Dashboard() {
   const { user } = useAuth();
@@ -22,7 +19,7 @@ function Dashboard() {
 
       <Flex flexDir="column" w="100%">
         <Header activeTab={activeTab} setActiveTab={setActiveTab} />
-
+        {activeTab === "Agenda" && <Agenda user={user} activeTab={activeTab}/> }
         {activeTab === "Secretários" && (
           <Secretarios user={user} activeTab={activeTab} />
         )}

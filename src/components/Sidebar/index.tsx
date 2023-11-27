@@ -1,9 +1,12 @@
-import { Avatar, Flex, Icon, Text } from "@chakra-ui/react";
+import { Avatar, Flex, Icon, Text, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react";
 import React from "react";
 import { IoMdPerson, IoMdPeople } from "react-icons/io";
+import { FaRegCalendar } from "react-icons/fa";
+import { SlNote } from "react-icons/sl";
 import { useAuth } from "../../contexts/AuthContext";
 import Greeting from "./Greeting";
 import Item from "./Item";
+import { RiContactsBookLine } from "react-icons/ri";
 
 export default function Sidebar({
   activeTab = "",
@@ -31,6 +34,28 @@ export default function Sidebar({
           <Greeting user={user} />
           <Flex h="4" />
           <Item
+          href="Agenda"
+          icon={FaRegCalendar}
+          user={user}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          />
+          <Accordion defaultIndex={[0]} allowMultiple>
+          <AccordionItem>
+            <AccordionButton>
+              <Flex
+              flexDir='row'
+              w='100%'
+              >
+              <Icon as={RiContactsBookLine} fontSize="1.2em" color="#C760EB"  /> 
+              <Text ml="3" color="#333" fontSize="1rem"> 
+              Cadastro 
+              </Text>
+              </Flex>
+              <AccordionIcon/>
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+          <Item
             user={user}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
@@ -57,6 +82,16 @@ export default function Sidebar({
             setActiveTab={setActiveTab}
             href="Pacientes"
             icon={IoMdPerson}
+          />
+          </AccordionPanel>
+          </AccordionItem>
+          </Accordion>
+          <Item
+          href="Relatórios"
+          icon={SlNote}
+          user={user}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
           />
         </Flex>
       )}
