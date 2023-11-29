@@ -17,8 +17,8 @@ export default function Item({
   setActiveTab: React.Dispatch<React.SetStateAction<string>>;
   href: string;
   icon: IconType;
-  sidebarOpened: boolean;
-  setSidebarOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  sidebarOpened?: boolean;
+  setSidebarOpened?: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const router = useRouter();
 

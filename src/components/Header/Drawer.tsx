@@ -10,6 +10,11 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
 } from "@chakra-ui/react";
 import { User } from "../../utils/types";
 import Item from "./Item";
@@ -24,6 +29,10 @@ import {
 import { useRouter } from "next/router";
 import { useMediaQuery } from "../../utils/useMediaQuery";
 import Button from "../Button";
+import { RiContactsBookLine } from "react-icons/ri";
+import { FaRegCalendar } from "react-icons/fa";
+import { SlNote } from "react-icons/sl";
+
 
 export default function Drawer({
   sidebarOpened,
@@ -81,6 +90,29 @@ export default function Drawer({
             <Flex flexDir="column">
               <Flex h="4" />
               <Item
+              href="Agenda"
+              icon={FaRegCalendar}
+              user={user}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              />
+              <Accordion defaultIndex={[0]} allowMultiple>
+              <AccordionItem>
+                <AccordionButton>
+                  <Icon as={RiContactsBookLine} fontSize="1.2em" color="#C760EB"  /> 
+                  <Flex
+                  flexDir='row'
+                  w='100%'
+                  justify='space-between'
+                  >
+                  <Text ml="3" color="#333" fontSize="1rem"> 
+                  Cadastro 
+                  </Text>
+                  <AccordionIcon mt={0.5}/>
+                  </Flex>
+                </AccordionButton>
+                <AccordionPanel pb={4}>
+              <Item
                 user={user}
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
@@ -115,6 +147,16 @@ export default function Drawer({
                 setSidebarOpened={setSidebarOpened}
                 href="Pacientes"
                 icon={IoMdPerson}
+              />
+              </AccordionPanel>
+              </AccordionItem>
+              </Accordion>
+              <Item
+              href="Relatórios"
+              icon={SlNote}
+              user={user}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
               />
             </Flex>
             <Flex flexDir="column" p="4">

@@ -43,16 +43,17 @@ export default function Sidebar({
           <Accordion defaultIndex={[0]} allowMultiple>
           <AccordionItem>
             <AccordionButton>
+              <Icon as={RiContactsBookLine} fontSize="1.2em" color="#C760EB"  /> 
               <Flex
               flexDir='row'
               w='100%'
+              justify='space-between'
               >
-              <Icon as={RiContactsBookLine} fontSize="1.2em" color="#C760EB"  /> 
               <Text ml="3" color="#333" fontSize="1rem"> 
               Cadastro 
               </Text>
+              <AccordionIcon mt={0.5}/>
               </Flex>
-              <AccordionIcon/>
             </AccordionButton>
             <AccordionPanel pb={4}>
           <Item
