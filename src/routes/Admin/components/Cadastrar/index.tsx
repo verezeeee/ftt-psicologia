@@ -250,7 +250,6 @@ export default function Cadastrar({
               setPeriodo={setPeriodo}
               email={email}
               setEmail={setEmail}
-              setEtapa={setEtapa}
             />
           )}
           {etapa === "Paciente" && (
@@ -265,7 +264,6 @@ export default function Cadastrar({
             setTelefone={setTelefone}
             email={email}
             setEmail={setEmail}
-            setEtapa={setEtapa}
           />
           )}
         </ModalContent>

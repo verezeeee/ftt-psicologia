@@ -22,7 +22,6 @@ export default function CadastrarAluno({
   setTelefone,
   email,
   setEmail,
-  setEtapa,
   professor,
   setProfessor,
 }) {

@@ -1,10 +1,7 @@
-import Header from "../../../components/Header"
-import Sidebar from "../../../components/Sidebar"
-import Calendario from "../components/Calendario"
+import Calendario from "../components/Calendario/index"
+import React from "react"
 
 export default function Agenda(
-    activeTab,
-    setActiveTab,
 ) {
   return (
     <>

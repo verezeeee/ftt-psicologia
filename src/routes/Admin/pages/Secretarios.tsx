@@ -89,7 +89,7 @@ const Secretarios: FC<SecretariosProps> = ({ user, activeTab }) => {
             px={6}
             mt={0.1}
             onPress={() => {
-              setCadastrarOpened(true);
+            setCadastrarOpened(true);
             }}
             label="Novo cadastro"
           />
