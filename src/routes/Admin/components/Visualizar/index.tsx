@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 
 function Dashboard({ type, userData }) {
   const { mobile } = useMediaQuery();
-  const [activeTab, setActiveTab] = useState(""); 
+  const [activeTab, setActiveTab] = useState("");
   const router = useRouter();
 
   const navegarParaHome = () => {
@@ -26,7 +26,7 @@ function Dashboard({ type, userData }) {
       setActiveTab("Pacientes");
     }
   }, [type]);
-  
+
 
   const handleTabChange = (newTab) => {
     if (newTab !== activeTab) {

@@ -7,12 +7,15 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import esLocale from '@fullcalendar/core/locales/es';
 import ptBrLocale from '@fullcalendar/core/locales/pt-br';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button } from '@chakra-ui/react';
-
+import { MdQueryBuilder } from "react-icons/md";
+import ButtonNativo from '../../../../components/Button';
+import CadastrarConsulta from './Cadastro_Consulta';
 import styles from './style/Calendario.module.css';
 
 export default function CalendarPage() {
   const calendarEl = useRef(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [cadastrarConsultaOpened, setCadastrarConsultaOpened] = useState(false);
 
   useEffect(() => {
     const locales = [esLocale, ptBrLocale];
@@ -54,25 +57,23 @@ export default function CalendarPage() {
 
   return (
     <div className={styles.calendar_container}>
-      <Modal isOpen={selectedEvent !== null} onClose={() => setSelectedEvent(null)}>
+      <ButtonNativo
+        icon={MdQueryBuilder}
+        px={6}
+        mt={0.1}
+        onPress={() => {
+          setCadastrarConsultaOpened(true);
+        }}
+        label="Nova consulta"
+      />
+      <Modal isOpen={cadastrarConsultaOpened} onClose={() => setCadastrarConsultaOpened(false)} size="2xl">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{selectedEvent?.title}</ModalHeader>
+          <ModalHeader fontSize="2rem">Cadastrar Consulta</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <p>Data: {selectedEvent?.start.toISOString()}</p>
-            {/* Aqui será o corpo do modal, adicionar aqui um possível editar ou arquivar,
-                lógica de se estiver arquivado, demonstrar o motivo, já aconteceu ou cancelado,
-                essas coisas. Além disso, adicionar uma sessão de controle, quem é o Aluno orquestrador 
-                das sessões, paciente que está sendo consultado, professor regente do aluno, data da sessão, horário,
-                e um link para os relatórios desse paciente(se possível o relatório exato dessa consulta). */}
+            <CadastrarConsulta />
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={() => setSelectedEvent(null)}>
-              Fechar
-            </Button>
-            {/* Adicione botões ou ações adicionais conforme necessário */}
-          </ModalFooter>
         </ModalContent>
       </Modal>
       <div ref={calendarEl}></div>

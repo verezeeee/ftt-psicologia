@@ -36,44 +36,44 @@ export default function EditarAluno({
       email === editData.email &&
       matricula === editData.matricula &&
       periodo === editData.periodo &&
-      professor === editData.professor 
+      professor === editData.professor
     ) {
 
-     toast({
-      status: "error",
-      description: "Nenhum dado foi alterado",
-      duration: 1500,
-     })
+      toast({
+        status: "error",
+        description: "Nenhum dado foi alterado",
+        duration: 1500,
+      })
       return false;
     }
-  
+
     if (!validarCPF(cpf)) {
       toast({
         status: "error",
         description: "CPF inválido",
         duration: 1500,
-       })
+      })
       return false;
     }
-  
+
     if (!validarEmail(email)) {
       toast({
         status: "error",
         description: "Email inválido",
         duration: 1500,
-       })
+      })
       return false;
     }
-  
+
     return true;
   };
-  
+
   const alterar = async () => {
     try {
       if (!validarDados()) {
         return;
       }
-  
+
       const dadosAtualizados = {
         nome,
         cpf,
@@ -83,7 +83,7 @@ export default function EditarAluno({
         periodo,
         professor,
       };
-  
+
       await axios.patch(`http://localhost:8080/auth/attAluno/${id}`, dadosAtualizados);
       onOpen();
     } catch (error) {
@@ -96,7 +96,7 @@ export default function EditarAluno({
     <Flex flexDir="column" p="8" pt="6">
       <Flex align="center" justify="space-between" w="100%">
         <Text color="#000000" fontSize="1.8rem">
-        {edicaoAtiva ? "Editar cadastro aluno" : "Confirmar alterações"}
+          {edicaoAtiva ? "Editar cadastro aluno" : "Confirmar alterações"}
         </Text>
       </Flex>
       <Divider mt="2" />
@@ -136,7 +136,7 @@ export default function EditarAluno({
             border={edicaoAtiva ? null : "0px"}
           />
         </Flex>
-        <Input label="Nome completo" value={nome} setValue={setNome} defaultValue={editData.nome} disabled={edicaoAtiva ? false : true} border={edicaoAtiva ? null : "0px"}/>
+        <Input label="Nome completo" value={nome} setValue={setNome} defaultValue={editData.nome} disabled={edicaoAtiva ? false : true} border={edicaoAtiva ? null : "0px"} />
         {mobile ? (
           <Flex
             w="100%"
@@ -180,45 +180,45 @@ export default function EditarAluno({
             />
           </Flex>
         )}
-        <Input label="E-mail" value={email} setValue={setEmail} disabled={edicaoAtiva ? false : true} border={edicaoAtiva ? null : "0px"}/>
-        <Input 
-        label="Professor" 
-        value={professor} 
-        setValue={setProfessor} 
-        disabled={edicaoAtiva ? false : true} 
-        border={edicaoAtiva ? null : "0px"}/>
+        <Input label="E-mail" value={email} setValue={setEmail} disabled={edicaoAtiva ? false : true} border={edicaoAtiva ? null : "0px"} />
+        <Input
+          label="Professor"
+          value={professor}
+          setValue={setProfessor}
+          disabled={edicaoAtiva ? false : true}
+          border={edicaoAtiva ? null : "0px"} />
 
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
-        <Button label={edicaoAtiva ? "Cancelar" : "Voltar"}  onPress={edicaoAtiva ? closeModal : () => setEdicaoAtiva(true)} mt={0.1} />
+        <Button label={edicaoAtiva ? "Cancelar" : "Voltar"} onPress={edicaoAtiva ? closeModal : () => setEdicaoAtiva(true)} mt={0.1} />
         <Button
-        label={edicaoAtiva ? "Confirmar" : "Editar"}
-        onPress={() => {
-          if (edicaoAtiva) { 
-            setEdicaoAtiva(false);
-          }else {
-            setEdicaoAtiva(true);
-            alterar();
-          }
-        }}
-        mt={0.1}
-        filled
-        bg={edicaoAtiva ? null : "#1ABB2A"}
-        border={edicaoAtiva ? null : "#1ABB2A"}
-        _hover={
-          edicaoAtiva
-            ? null
-            : {
+          label={edicaoAtiva ? "Confirmar" : "Editar"}
+          onPress={() => {
+            if (edicaoAtiva) {
+              setEdicaoAtiva(false);
+            } else {
+              setEdicaoAtiva(true);
+              alterar();
+            }
+          }}
+          mt={0.1}
+          filled
+          bg={edicaoAtiva ? null : "#1ABB2A"}
+          border={edicaoAtiva ? null : "#1ABB2A"}
+          _hover={
+            edicaoAtiva
+              ? null
+              : {
                 backgroundColor: "#fff",
                 opacity: 0.9,
                 color: "#1ABB2A",
                 transition: "0.3s",
                 border: "1px solid #1ABB2A",
               }
-        }
+          }
         />
-      <Sucesso mensagem="Cadastro atualizado com sucesso." isOpen={isOpen} onClose={onClose} closeModal={closeModal}/>
-      {erro &&  <Erro isOpen={erro} onClose={() => setErro(false)} closeModal={() => setErro(false)} />}
+        <Sucesso mensagem="Cadastro atualizado com sucesso." isOpen={isOpen} onClose={onClose} closeModal={closeModal} />
+        {erro && <Erro isOpen={erro} onClose={() => setErro(false)} closeModal={() => setErro(false)} />}
       </Flex>
     </Flex>
   );

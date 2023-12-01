@@ -23,7 +23,7 @@ export default function EditarSecretario({
   const [edicaoAtiva, setEdicaoAtiva] = useState(true);
   const [id, setId] = useState(editData._id);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [erro, setErro] = useState(false); 
+  const [erro, setErro] = useState(false);
   const toast = useToast();
 
   const validarDados = () => {
@@ -35,41 +35,41 @@ export default function EditarSecretario({
       turno === editData.turno
     ) {
 
-     toast({
-      status: "error",
-      description: "Nenhum dado foi alterado",
-      duration: 1500,
-     })
+      toast({
+        status: "error",
+        description: "Nenhum dado foi alterado",
+        duration: 1500,
+      })
       return false;
     }
-  
+
     if (!validarCPF(cpf)) {
       toast({
         status: "error",
         description: "CPF inválido",
         duration: 1500,
-       })
+      })
       return false;
     }
-  
+
     if (!validarEmail(email)) {
       toast({
         status: "error",
         description: "Email inválido",
         duration: 1500,
-       })
+      })
       return false;
     }
-  
+
     return true;
   };
-  
+
   const alterar = async () => {
     try {
       if (!validarDados()) {
         return;
       }
-  
+
       const dadosAtualizados = {
         nome,
         cpf,
@@ -77,7 +77,7 @@ export default function EditarSecretario({
         email,
         turno,
       };
-  
+
       await axios.patch(`http://localhost:8080/auth/attSecretario/${id}`, dadosAtualizados);
       onOpen();
     } catch (error) {
@@ -89,7 +89,7 @@ export default function EditarSecretario({
     <Flex flexDir="column" p="8" pt="6">
       <Flex align="center" justify="space-between" w="100%">
         <Text color="#000000" fontSize="1.8rem">
-           {edicaoAtiva ? "Editar cadastro secretário" : "Confirmar alterações"}
+          {edicaoAtiva ? "Editar cadastro secretário" : "Confirmar alterações"}
         </Text>
       </Flex>
       <Divider mt="2" />
@@ -100,7 +100,7 @@ export default function EditarSecretario({
         justify="space-between"
         w="100%"
       >
-        <Input label="Nome completo" value={nome}  setValue={setNome}  disabled={edicaoAtiva ? false : true} border={edicaoAtiva ? null : "0px"}/>
+        <Input label="Nome completo" value={nome} setValue={setNome} disabled={edicaoAtiva ? false : true} border={edicaoAtiva ? null : "0px"} />
         {mobile ? (
           <Flex
             w="100%"
@@ -164,31 +164,32 @@ export default function EditarSecretario({
         />
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
-        <Button label={edicaoAtiva ? "Cancelar" : "Voltar"}  onPress={edicaoAtiva ? closeModal : () => setEdicaoAtiva(true)} mt={0.1} />
+        <Button label={edicaoAtiva ? "Cancelar" : "Voltar"} onPress={edicaoAtiva ? closeModal : () => setEdicaoAtiva(true)} mt={0.1} />
         <Button
-        label={edicaoAtiva ? "Confirmar" : "Editar"}
-        onPress={() => {
-          if (edicaoAtiva) { 
-            setEdicaoAtiva(false);
-          } else {
-            setEdicaoAtiva(true);
-            alterar();
+          label={edicaoAtiva ? "Confirmar" : "Editar"}
+          onPress={() => {
+            if (edicaoAtiva) {
+              setEdicaoAtiva(false);
+            } else {
+              setEdicaoAtiva(true);
+              alterar();
+            }
+          }}
+          mt={0.1}
+          filled
+          bg={edicaoAtiva ? null : "#1ABB2A"}
+          border={edicaoAtiva ? null : "#1ABB2A"}
+          _hover={edicaoAtiva ? null : {
+            backgroundColor: "#fff",
+            opacity: 0.9,
+            color: "#1ABB2A",
+            transition: "0.3s",
+            border: "1px solid #1ABB2A",
           }
-        }}
-        mt={0.1}
-        filled
-        bg={edicaoAtiva ? null : "#1ABB2A"}
-        border={edicaoAtiva ? null : "#1ABB2A"}
-        _hover={edicaoAtiva ? null: {
-                backgroundColor: "#fff",
-                opacity: 0.9,
-                color: "#1ABB2A",
-                transition: "0.3s",
-                border: "1px solid #1ABB2A",}
-              }
+          }
         />
-      <Sucesso mensagem="Cadastro atualizado com sucesso." isOpen={isOpen} onClose={onClose} closeModal={closeModal}/>
-      {erro &&  <Erro isOpen={erro} onClose={() => setErro(false)} closeModal={() => setErro(false)} />}
+        <Sucesso mensagem="Cadastro atualizado com sucesso." isOpen={isOpen} onClose={onClose} closeModal={closeModal} />
+        {erro && <Erro isOpen={erro} onClose={() => setErro(false)} closeModal={() => setErro(false)} />}
       </Flex>
     </Flex>
   );

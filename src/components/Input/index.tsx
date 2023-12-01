@@ -12,6 +12,7 @@ export default function Input({
   type,
   placeholder,
   border,
+  height,
 }: {
   label: string;
   value: any;
@@ -22,6 +23,7 @@ export default function Input({
   type?: string;
   placeholder?: string;
   border?: any;
+  height?: string;
 }) {
   return (
     <Flex flexDir="column" w="100%" my="1">
@@ -35,6 +37,7 @@ export default function Input({
         borderRadius={12}
         type={type}
         mt="2"
+        height={height ? height : null}
         w="100%"
         _hover={{
           border: "2px solid #C760EB",
@@ -52,7 +55,7 @@ export default function Input({
           boxShadow: "none !Important",
         }}
         placeholder={placeholder ? placeholder : defaultValue}
-        border={border ? border :"2px solid #C760EB"}
+        border={border ? border : "2px solid #C760EB"}
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setValue(e.target.value);

@@ -9,12 +9,12 @@ interface ErroModalProps {
 }
 
 const Erro: React.FC<ErroModalProps> = ({ isOpen, onClose, closeModal }) => {
-  const router = useRouter();  
+  const router = useRouter();
 
   const handleFechar = () => {
     onClose();
     closeModal();
-    
+
     router.push('/');
   };
 

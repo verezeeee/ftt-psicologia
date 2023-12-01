@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 interface SuccessModalProps {
   isOpen: boolean;
   onClose: () => void;
-  closeModal: () => void; 
+  closeModal: () => void;
   mensagem: string;
 }
 
-const Sucesso: React.FC<SuccessModalProps> = ({ isOpen, onClose, closeModal, mensagem}) => {
+const Sucesso: React.FC<SuccessModalProps> = ({ isOpen, onClose, closeModal, mensagem }) => {
   const router = useRouter();
 
   const handleClose = () => {
