@@ -16,7 +16,7 @@ export default function VisualizarAluno({
     nome,
     email,
     matricula,
-    professor,
+    professorNome: professor,
     telefoneContato,
     periodo,
     cpf,

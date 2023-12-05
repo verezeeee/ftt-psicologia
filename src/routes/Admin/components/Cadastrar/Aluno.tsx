@@ -6,6 +6,7 @@ import { validarCPF } from "../../../../utils/cpf";
 import { validarEmail } from "../../../../utils/email";
 import { cadastrarAluno } from "./services";
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function CadastrarAluno({
   mobile,
@@ -25,7 +26,22 @@ export default function CadastrarAluno({
   professor,
   setProfessor,
 }) {
+  const [professoresOptions, setProfessoresOptions] = useState([]);
+  
   const toast = useToast();
+
+  useEffect(() => {
+    const getProfessores = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/auth/getProfessoresSelect');
+        setProfessoresOptions(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getProfessores();
+  }, []);
 
   return (
     <Flex flexDir="column" p="8" pt="6">
@@ -109,10 +125,18 @@ export default function CadastrarAluno({
           </Flex>
         )}
         <Input label="E-mail" value={email} setValue={setEmail} />
-        <Input
+        <Select
           label="Professor"
+          options={[
+            { label: "", value: "" },
+            ...professoresOptions.map((professor) => ({
+              label: professor.nome,
+              value: professor,
+            })),
+          ]}
           value={professor}
           setValue={setProfessor}
+
         />
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
@@ -120,7 +144,6 @@ export default function CadastrarAluno({
         <Button
           label="Cadastrar"
           onPress={async () => {
-            console.log(cpf)
             if (!matricula) {
               toast({
                 status: "error",
@@ -212,6 +235,8 @@ export default function CadastrarAluno({
               //     description: "Secretário cadastrado com sucesso",
               //     duration: 500,
               //   });
+              console.log("Professor ID:", professor);  
+              console.log("Professor Nome:", professor);
               axios.post('http://localhost:8080/auth/registroAluno', {
                 matricula,
                 periodo,
@@ -219,7 +244,8 @@ export default function CadastrarAluno({
                 cpf,
                 telefoneContato: telefone,
                 email,
-                professor,
+                professorID: professor._id,
+                professorNome: professor.nome,
                 role: "student",
               }).then((response) => {
                 console.log(response);

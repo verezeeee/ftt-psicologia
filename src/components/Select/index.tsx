@@ -15,7 +15,7 @@ export default function Select({
   disabled,
   border,
 }: {
-  options: string[];
+  options: any;
   label: string;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
@@ -52,13 +52,18 @@ export default function Select({
         }}
         border={border ? border : "2px solid #C760EB"}
       >
-        {options.map((option, i) => {
-          return (
-            <option key={i} value={option}>
-              {option}
-            </option>
-          );
-        })}
+        {Array.isArray(options) &&
+          options.map((option, i) => {
+            const optionLabel = typeof option === "object" ? option.label : option;
+            const optionValue = typeof option === "object" ? option.value : option;
+
+            return (
+              <option key={i} value={optionValue}>
+                {optionLabel}
+              </option>
+            );
+          })
+        }
       </ChakraSelect>
     </Flex>
   );
