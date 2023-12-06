@@ -40,12 +40,11 @@ export type AlunoSignUpData = {
   email: string;
   matricula: string;
   telefoneContato: string;
-  professor: string;
+  professorID: string;
+  professorNome: string;
+  professorDisciplina: string;
   cpf: string;
   role: "student";
-  turno: "noturno" | "vespertino" | "matutino";
-  periodoCursado: string;
-  idOrientador: string;
   periodo: string;
 };
 

@@ -27,7 +27,6 @@ export default function CadastrarAluno({
   setProfessor,
 }) {
   const [professoresOptions, setProfessoresOptions] = useState([]);
-  
   const toast = useToast();
 
   useEffect(() => {
@@ -42,6 +41,157 @@ export default function CadastrarAluno({
 
     getProfessores();
   }, []);
+
+  const handleClickCadastrar = async () => {
+    if (!professor) {
+      toast({
+        status: "error",
+        description: "Selecione um professor",
+        duration: 500,
+      });
+      return;
+    }
+
+    const regex = /id:(\S+) nomeProfessor:(.*?) disciplina:(.*)/;
+    const match = professor.match(regex);
+
+    if (!match) {
+      toast({
+        status: "error",
+        description: "Formato do professor inválido",
+        duration: 500,
+      });
+      return;
+    }
+
+    const [, id, nomeProfessor, disciplina] = match;
+
+    if (!matricula) {
+      toast({
+        status: "error",
+        description: "Insira a matrícula do aluno",
+        duration: 500,
+      });
+      return;
+    }
+
+    if (!periodo) {
+      toast({
+        status: "error",
+        description: "Insira o período do aluno",
+        duration: 500,
+      });
+      return;
+    }
+
+    if (!nome) {
+      toast({
+        status: "error",
+        description: "Insira o nome do Aluno",
+        duration: 500,
+      });
+      return;
+    }
+
+    if (!nome.split(" ")[1]) {
+      toast({
+        status: "error",
+        description: "Insira o sobrenome do Aluno",
+        duration: 500,
+      });
+      return;
+    }
+
+    if (!cpf) {
+      toast({
+        status: "error",
+        description: "Insira o CPF do Aluno",
+        duration: 500,
+      });
+      return;
+    }
+
+    if (!validarCPF(cpf)) {
+      toast({
+        status: "error",
+        description: "Insira um CPF válido",
+        duration: 500,
+      });
+      return;
+    }
+
+    if (!telefone) {
+      toast({
+        status: "error",
+        description: "Insira o telefone do Aluno",
+        duration: 500,
+      });
+      return;
+    }
+
+    if (telefone.length !== 15) {
+      toast({
+        status: "error",
+        description: "Insira um telefone válido",
+        duration: 500,
+      });
+      return;
+    }
+
+    if (!email) {
+      toast({
+        status: "error",
+        description: "Insira o e-mail do Aluno",
+        duration: 500,
+      });
+      return;
+    }
+
+    if (!validarEmail(email)) {
+      toast({
+        status: "error",
+        description: "Insira um e-mail válido",
+        duration: 500,
+      });
+      return;
+    }
+
+    if (!professor) {
+      toast({
+        status: "error",
+        description: "Insira o professor do aluno",
+        duration: 500,
+      });
+      return;
+    } else {
+      const response = await cadastrarAluno ({
+        matricula,
+        periodo,
+        nome,
+        cpf,
+        telefoneContato: telefone,
+        email,
+        professorID: id,
+        professorNome: nome,
+        professorDisciplina: disciplina,
+        role: "student",
+      });
+      if (response.error) {
+        toast({
+          status: "error",
+          description: response.error,
+          duration: 500,
+        });
+      } else {
+        toast({
+          status: "success",
+          description: "Aluno cadastrado com sucesso",
+          duration: 500,
+        });
+        closeModal();
+      }
+    }
+  };  
 
   return (
     <Flex flexDir="column" p="8" pt="6">
@@ -131,7 +281,7 @@ export default function CadastrarAluno({
             { label: "", value: "" },
             ...professoresOptions.map((professor) => ({
               label: professor.nome,
-              value: professor,
+              value: "id:" + professor._id + " nomeProfessor:" + professor.nome + " disciplina:" + professor.disciplina,
             })),
           ]}
           value={professor}
@@ -143,128 +293,7 @@ export default function CadastrarAluno({
         <Button label="Cancelar" onPress={closeModal} mt={0.1} />
         <Button
           label="Cadastrar"
-          onPress={async () => {
-            if (!matricula) {
-              toast({
-                status: "error",
-                description: "Insira a matrícula do aluno",
-                duration: 500,
-              });
-            } else if (!periodo) {
-              toast({
-                status: "error",
-                description: "Insira o período do aluno",
-                duration: 500,
-              });
-            } else if (!nome) {
-              toast({
-                status: "error",
-                description: "Insira o nome do Aluno",
-                duration: 500,
-              });
-            } else if (!nome.split(" ")[1]) {
-              toast({
-                status: "error",
-                description: "Insira o sobrenome do Aluno",
-                duration: 500,
-              });
-            } else if (!cpf) {
-              toast({
-                status: "error",
-                description: "Insira o CPF do Aluno",
-                duration: 500,
-              });
-            } else if (!validarCPF(cpf)) {
-              toast({
-                status: "error",
-                description: "Insira um CPF válido",
-                duration: 500,
-              });
-            } else if (!telefone) {
-              toast({
-                status: "error",
-                description: "Insira o telefone do Aluno",
-                duration: 500,
-              });
-            } else if (telefone.length !== 15) {
-              toast({
-                status: "error",
-                description: "Insira um telefone válido",
-                duration: 500,
-              });
-            } else if (!email) {
-              toast({
-                status: "error",
-                description: "Insira o e-mail do Aluno",
-                duration: 500,
-              });
-            } else if (!validarEmail(email)) {
-              toast({
-                status: "error",
-                description: "Insira um e-mail válido",
-                duration: 500,
-              });
-            } else if (!professor) {
-              toast({
-                status: "error",
-                description: "Insira o professor do aluno",
-                duration: 500,
-              });
-            } else {
-              // const res = await cadastrarAluno({
-              //   nome,
-              //   cpf,
-              //   periodo,
-              //   email,
-              //   matricula,
-              //   professor,
-              //   telefoneContato: telefone,
-              //   idOrientador: professor,
-              //   periodoCursado: periodo,
-              //   role: "student",
-              // });
-              // if (res.error) {
-              //   toast({
-              //     status: "error",
-              //     description: res.error,
-              //     duration: 500,
-              //   });
-              // } else {
-              //   toast({
-              //     status: "success",
-              //     description: "Secretário cadastrado com sucesso",
-              //     duration: 500,
-              //   });
-              console.log("Professor ID:", professor);  
-              console.log("Professor Nome:", professor);
-              axios.post('http://localhost:8080/auth/registroAluno', {
-                matricula,
-                periodo,
-                nome,
-                cpf,
-                telefoneContato: telefone,
-                email,
-                professorID: professor._id,
-                professorNome: professor.nome,
-                role: "student",
-              }).then((response) => {
-                console.log(response);
-                toast({
-                  status: "success",
-                  description: "Aluno cadastrado com sucesso",
-                  duration: 500,
-                })
-              }, (error) => {
-                console.log(error);
-                toast({
-                  status: "error",
-                  description: error.message,
-                  duration: 500,
-                })
-              });
-              closeModal();
-            }
-          }}
+          onPress={handleClickCadastrar}
           mt={0.1}
           filled
         />

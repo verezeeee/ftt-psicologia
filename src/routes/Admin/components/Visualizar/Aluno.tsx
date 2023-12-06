@@ -17,6 +17,7 @@ export default function VisualizarAluno({
     email,
     matricula,
     professorNome: professor,
+    professorDisciplina: disciplina,
     telefoneContato,
     periodo,
     cpf,
@@ -91,7 +92,7 @@ export default function VisualizarAluno({
             <GridItem w="100%" h="10" mt="9" >
               <Box>
                 <Text>Disciplina</Text>
-                <Text fontSize="1.6rem">Psicologia Ativa</Text>
+                <Text fontSize="1.6rem">{disciplina}</Text>
               </Box>
             </GridItem>
             <GridItem w="100%" h="10" mt="9" mb="4">
@@ -295,7 +296,7 @@ export default function VisualizarAluno({
                 <Box>
                   <Text>Disciplina</Text>
                   <Text fontSize="1.6rem">
-                    não é recebido do banco
+                    {disciplina}
                   </Text>
                 </Box>
               </GridItem>
