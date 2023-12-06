@@ -172,7 +172,7 @@ export default function CadastrarAluno({
         telefoneContato: telefone,
         email,
         professorID: id,
-        professorNome: nome,
+        professorNome: nomeProfessor,
         professorDisciplina: disciplina,
         role: "student",
       });

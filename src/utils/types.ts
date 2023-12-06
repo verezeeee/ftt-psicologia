@@ -76,7 +76,8 @@ export type PacienteSignUpData = {
   // Informação de tratamento:
   dataInicioTratamento: string,
   dataTerminoTratamento: string,
-  quemEncaminhou: string,
+  quemEncaminhouID: string,
+  quemEncaminhouNome: string,
   tipoDeTratamento: string,
   alunoUnieva: boolean,
   funcionarioUnieva: boolean,

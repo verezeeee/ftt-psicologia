@@ -5,7 +5,7 @@ import { cadastrarPaciente } from "./services";
 import { validarCPF } from "../../../../utils/cpf";
 import { validarEmail } from "../../../../utils/email";
 import Select from "../../../../components/Select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function CadastrarPaciente({
@@ -19,6 +19,8 @@ export default function CadastrarPaciente({
   setTelefone,
   email,
   setEmail,
+  aluno,
+  setAluno,
 }) {
   const toast = useToast();
   const [alunoUnieva, setAlunoUnieva] = useState(false);
@@ -44,7 +46,148 @@ export default function CadastrarPaciente({
   const [terminoTratamento, setTerminoTratamento]= useState("");
   const [encaminhador, setEncaminhador]= useState("");
   const [tipoDeTratamento, setTipoTratamento]= useState("");
+  const [alunosOptions, setAlunosOptions] = useState([]);
   
+
+  useEffect(() => {
+    const getAlunos = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/auth/getAlunosSelect');
+        setAlunosOptions(response.data);
+      } catch (error) {
+        toast({
+          status: "error",
+          description: "Erro ao buscar alunos",
+          duration: 1000,
+        })
+      }
+    };
+
+    getAlunos();
+  }, []);
+
+  const handleClickCadastrar = async () => {
+    if (!aluno) {
+      toast({
+        status: "error",
+        description: "Selecione um Aluno",
+        duration: 500,
+      });
+      return;
+    }
+
+    const regex = /id: (\d+) nomeAluno: (.+)/;
+    const match = aluno.match(regex);
+
+    if (!match) {
+      toast({
+        status: "error",
+        description: "Formato do aluno inválido",
+        duration: 500,
+      });
+      return;
+    }
+
+    const [, id, nomeAluno,] = match;
+
+    if (!nome) {
+      toast({
+        status: "error",
+        description: "Insira o nome do paciente",
+        duration: 500,
+      });
+    } else if (!nome.split(" ")[1]) {
+      toast({
+        status: "error",
+        description: "Insira o sobrenome do paciente",
+        duration: 500,
+      });
+    } else if (!cpf) {
+      toast({
+        status: "error",
+        description: "Insira o CPF do paciente",
+        duration: 500,
+      });
+    } else if (!validarCPF(cpf)) {
+      toast({
+        status: "error",
+        description: "Insira um CPF válido",
+        duration: 500,
+      });
+    } else if (!telefone) {
+      toast({
+        status: "error",
+        description: "Insira o telefone do paciente",
+        duration: 500,
+      });
+    } else if (telefone.length !== 15) {
+      toast({
+        status: "error",
+        description: "Insira um telefone válido",
+        duration: 500,
+      });
+    } else if (!email) {
+      toast({
+        status: "error",
+        description: "Insira o e-mail do paciente",
+        duration: 500,
+      });
+    } else if (!validarEmail(email)) {
+      toast({
+        status: "error",
+        description: "Insira um e-mail válido",
+        duration: 500,
+      });
+    } else {
+      const res = await cadastrarPaciente({
+        nome,
+        cpf,
+        dataDeNascimento,
+        email,
+        telefoneContato: telefone,
+        sexo,
+        estadoCivil,
+        religiao,
+        rendaFamiliar,
+        profissao,
+        outroContato,
+        nomeDoContatoResponsavel,
+        menorDeIdade,
+        naturalidade,
+        nacionalidade,
+        // Endereço:
+        enderecoCep: cep,
+        enderecoLogradouro: logradouro,
+        enderecoBairro: bairro,
+        enderecoComplemento: complemento,
+        enderecoCidade: cidade,
+        enderecoUF: uf,
+        // Informação de tratamento:
+        dataInicioTratamento: inicioTratamento,
+        dataTerminoTratamento: terminoTratamento,
+        quemEncaminhouID: id,
+        quemEncaminhouNome: nomeAluno,
+        tipoDeTratamento,
+        alunoUnieva,
+        funcionarioUnieva,
+        role: "paciente"
+      });
+      if (res.error) {
+        toast({
+          status: "error",
+          description: res.error,
+          duration: 500,
+        });
+      } else {
+        toast({
+          status: "success",
+          description: "Secretário cadastrado com sucesso",
+          duration: 500,
+        });
+        closeModal();
+      }
+    }
+  }
   return (
     <>
     <Flex flexDir="column" p="8" pt="6">
@@ -279,11 +422,18 @@ export default function CadastrarPaciente({
               mask="00/00/0000"
               placeholder="00/00/0000"
             />
-            <Input
-              label="Quem encaminhou?"
+            <Select
+              label="Aluno encaminhador: "
+              options={[
+                { label: "", value: "" },
+                ...alunosOptions.map((aluno) => ({
+                  label:  aluno.nome,
+                  value: "id:" + aluno._id + " nomeAluno:" + aluno.nome ,
+                })),
+              ]}
               value={encaminhador}
               setValue={setEncaminhador}
-              type="string"
+
             />
             <Input
               label="Tipo de tratamento"
@@ -563,11 +713,18 @@ export default function CadastrarPaciente({
             />
           </GridItem>
           <GridItem w='100%' h='100' colSpan={2}>
-            <Input
-              label="Quem encaminhou?"
+            <Select
+              label="Aluno encaminhador: "
+              options={[
+                { label: "", value: "" },
+                ...alunosOptions.map((aluno) => ({
+                  label:  aluno.nome,
+                  value: "id:" + aluno._id + " nomeAluno:" + aluno.nome ,
+                })),
+              ]}
               value={encaminhador}
               setValue={setEncaminhador}
-              type="string"
+
             />
           </GridItem>
           <GridItem w='100%' h='100' colSpan={3}>
@@ -610,104 +767,7 @@ export default function CadastrarPaciente({
         <Button label="Cancelar" onPress={closeModal} mt={0.1} />
         <Button
           label="Cadastrar"
-          onPress={async () => {
-            if (!nome) {
-              toast({
-                status: "error",
-                description: "Insira o nome do paciente",
-                duration: 500,
-              });
-            } else if (!nome.split(" ")[1]) {
-              toast({
-                status: "error",
-                description: "Insira o sobrenome do paciente",
-                duration: 500,
-              });
-            } else if (!cpf) {
-              toast({
-                status: "error",
-                description: "Insira o CPF do paciente",
-                duration: 500,
-              });
-            } else if (!validarCPF(cpf)) {
-              toast({
-                status: "error",
-                description: "Insira um CPF válido",
-                duration: 500,
-              });
-            } else if (!telefone) {
-              toast({
-                status: "error",
-                description: "Insira o telefone do paciente",
-                duration: 500,
-              });
-            } else if (telefone.length !== 15) {
-              toast({
-                status: "error",
-                description: "Insira um telefone válido",
-                duration: 500,
-              });
-            } else if (!email) {
-              toast({
-                status: "error",
-                description: "Insira o e-mail do paciente",
-                duration: 500,
-              });
-            } else if (!validarEmail(email)) {
-              toast({
-                status: "error",
-                description: "Insira um e-mail válido",
-                duration: 500,
-              });
-            } else {
-              const res = await cadastrarPaciente({
-                nome,
-                cpf,
-                dataDeNascimento,
-                email,
-                telefoneContato: telefone,
-                sexo,
-                estadoCivil,
-                religiao,
-                rendaFamiliar,
-                profissao,
-                outroContato,
-                nomeDoContatoResponsavel,
-                menorDeIdade,
-                naturalidade,
-                nacionalidade,
-                // Endereço:
-                enderecoCep: cep,
-                enderecoLogradouro: logradouro,
-                enderecoBairro: bairro,
-                enderecoComplemento: complemento,
-                enderecoCidade: cidade,
-                enderecoUF: uf,
-                // Informação de tratamento:
-                dataInicioTratamento: inicioTratamento,
-                dataTerminoTratamento: terminoTratamento,
-                quemEncaminhou: encaminhador,
-                tipoDeTratamento,
-                alunoUnieva,
-                funcionarioUnieva,
-                role: "paciente"
-              });
-              if (res.error) {
-                toast({
-                  status: "error",
-                  description: res.error,
-                  duration: 500,
-                });
-              } else {
-                toast({
-                  status: "success",
-                  description: "Secretário cadastrado com sucesso",
-                  duration: 500,
-                });
-                closeModal();
-              }
-            }
-          }}
+          onPress={handleClickCadastrar}
           mt={0.1}
           filled
         />
