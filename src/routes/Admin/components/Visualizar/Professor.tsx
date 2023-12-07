@@ -1,16 +1,17 @@
 import { Divider, Flex, Text, Box, Grid, GridItem } from "@chakra-ui/react";
 import Button from "../../../../components/Button";
 import { useRouter } from 'next/router';
-import { useState, useEffect, useRef} from "react";
+import { useState, useEffect, useRef } from "react";
 import Table from "../../../../components/Tables";
 import { useMediaQuery } from "@chakra-ui/react";
-import { ProfessorSignUpData, SecretarioSignUpData } from "../../../../utils/types";
+import { AlunoSignUpData, ProfessorSignUpData } from "../../../../utils/types";
 import Editar from "../Editar";
 import { MdCreate } from "react-icons/md";
 import { formatarTelefone } from "../../../../utils/formatarTelefone";
 import Excluir from "../Excluir";
 import axios from "axios";
 import { removeAcentos } from "../../../../utils/removeAcentos";
+import Search from "../../../../components/Search";
 
 export default function VisualizarProfessor({
   mobile,
@@ -49,16 +50,15 @@ export default function VisualizarProfessor({
   };
 
   const [isMobile] = useMediaQuery("(max-width: 768px)")
-  const [activeTab, setActiveTab] = useState("tab1");
   const [isEditing, setIsEditing] = useState<any>();
-  const [result, setResult] = useState<ProfessorSignUpData[]>([]);
+  const [result, setResult] = useState<AlunoSignUpData[]>([]);
   const [excluirAberto, setExcluirAberto] = useState<boolean>(false);
   const shouldFetchData = useRef<boolean>(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  async function getUsers(): Promise<ProfessorSignUpData[]> {
+  async function getUsers(): Promise<AlunoSignUpData[]> {
     try {
-      const res = await axios.get<ProfessorSignUpData[]>(`http://localhost:8080/auth/getAlunosByIdProfessor/${router.query.id}`);
+      const res = await axios.get<AlunoSignUpData[]>(`http://localhost:8080/auth/getAlunosByIdProfessor/${router.query.id}`);
       const data = res.data;
       return data;
     } catch (error) {
@@ -84,7 +84,7 @@ export default function VisualizarProfessor({
     fetchData();
   }, [shouldFetchData, searchTerm]);
 
-  function pesquisar(searchTerm: string, data: ProfessorSignUpData[]): ProfessorSignUpData[] {
+  function pesquisar(searchTerm: string, data: AlunoSignUpData[]): AlunoSignUpData[] {
     const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();
 
     return data.filter((user) => {
@@ -151,11 +151,11 @@ export default function VisualizarProfessor({
               Alunos
             </Text>
             <Table
-              headers={["Nome", "CPF", "Telefone"]}
+              headers={["Nome", "Email", "CPF", "Período"]}
               data={result}
               isEditing={isEditing}
               setIsEditing={setIsEditing}
-              type="professor"
+              type="aluno"
             />
           </Flex>
           <Flex
@@ -315,25 +315,32 @@ export default function VisualizarProfessor({
             <Flex
               w="100%"
               p='4'
-
               style={{
                 backgroundColor: "#fff",
                 display: "flex",
                 flexDirection: "column",
                 border: "1px black"
               }}>
-              <Text
-                fontSize="1.5rem"
-                paddingLeft='1rem'
+              <Box
+                display='flex'
+                flexDir='row'
+                justifyContent='space-between'
+                marginRight='2rem'
               >
-                Alunos
-              </Text>
+                <Text
+                  fontSize="1.5rem"
+                  paddingLeft='1rem'
+                >
+                  Alunos
+                </Text>
+                <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+              </Box>
               <Table
-                headers={["Nome", "CPF", "Telefone"]}
+                headers={["Nome", "Email", "CPF", "Período"]}
                 data={result}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
-                type="professor"
+                type="aluno"
               />
             </Flex>
             <Box

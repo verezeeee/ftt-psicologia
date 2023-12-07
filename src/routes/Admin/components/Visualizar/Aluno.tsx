@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect, useRef } from "react";
 import Table from "../../../../components/Tables";
 import { useMediaQuery } from "@chakra-ui/react";
-import { AlunoSignUpData, PacienteSignUpData } from "../../../../utils/types";
+import { AlunoSignUpData } from "../../../../utils/types";
 import Search from "../../../../components/Search";
 import Editar from "../Editar";
 import { MdCreate } from "react-icons/md";
@@ -55,7 +55,6 @@ export default function VisualizarAluno({
 
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isMobile] = useMediaQuery("(max-width: 768px)")
-  const [activeTab, setActiveTab] = useState("tab1");
   const [isEditing, setIsEditing] = useState<any>();
   const [result, setResult] = useState<AlunoSignUpData[]>([]);
   const [excluirAberto, setExcluirAberto] = useState<boolean>(false);

@@ -1,6 +1,6 @@
 import { Table as TableNextUI } from "@nextui-org/react";
 import { useMediaQuery } from "../../utils/useMediaQuery";
-import { AlunoSignUpData, ProfessorSignUpData, SecretarioSignUpData } from "../../utils/types";
+import { AlunoSignUpData, ProfessorSignUpData, SecretarioSignUpData, PacienteSignUpData } from "../../utils/types";
 import React from "react";
 import { useEffect, useState } from "react";
 import { Icon } from "@chakra-ui/react";
@@ -22,7 +22,7 @@ export default function Table({
   type
 }: {
   headers: string[];
-  data: AlunoSignUpData[] | ProfessorSignUpData[] | SecretarioSignUpData[];
+  data: AlunoSignUpData[] | ProfessorSignUpData[] | SecretarioSignUpData[] | PacienteSignUpData[]; 
   isEditing: any;
   setIsEditing: any;
   type: "aluno" | "secretario" | "professor" | "paciente"
