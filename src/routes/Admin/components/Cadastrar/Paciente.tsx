@@ -1,4 +1,4 @@
-import { AbsoluteCenter, Divider, Flex, Text, useToast, Spacer, Checkbox, Grid, GridItem, Box } from "@chakra-ui/react";
+import { Divider, Flex, Text, useToast, Spacer, Checkbox, Grid, GridItem } from "@chakra-ui/react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import { cadastrarPaciente } from "./services";
@@ -19,8 +19,6 @@ export default function CadastrarPaciente({
   setTelefone,
   email,
   setEmail,
-  aluno,
-  setAluno,
 }) {
   const toast = useToast();
   const [alunoUnieva, setAlunoUnieva] = useState(false);
@@ -47,6 +45,7 @@ export default function CadastrarPaciente({
   const [encaminhador, setEncaminhador]= useState("");
   const [tipoDeTratamento, setTipoTratamento]= useState("");
   const [alunosOptions, setAlunosOptions] = useState([]);
+  const [aluno] = useState("");
   
 
   useEffect(() => {
@@ -433,7 +432,6 @@ export default function CadastrarPaciente({
               ]}
               value={encaminhador}
               setValue={setEncaminhador}
-
             />
             <Input
               label="Tipo de tratamento"

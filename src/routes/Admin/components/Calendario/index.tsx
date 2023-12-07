@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -10,12 +11,42 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, Modal
 import { MdQueryBuilder } from "react-icons/md";
 import ButtonNativo from '../../../../components/Button';
 import CadastrarConsulta from './Cadastro_Consulta';
+import CalendarioEventos from './CalendarioEventos';
 import styles from './style/Calendario.module.css';
 
 export default function CalendarPage() {
   const calendarEl = useRef(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [cadastrarConsultaOpened, setCadastrarConsultaOpened] = useState(false);
+  const [calendarioEventosOpened, setCalendarioEventosOpened] = useState(false);
+  const [events, setEvents] = useState([]);
+
+  function closeModal() {
+    setCadastrarConsultaOpened(false);
+    setCalendarioEventosOpened(false);
+  }
+
+  const reloadEvents = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/auth/getConsulta');
+      setEvents(response.data);
+    } catch (error) {
+      console.error('Erro ao buscar consultas:', error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchConsultas = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/auth/getConsulta');
+        setEvents(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar consultas:', error);
+      }
+    };
+
+    fetchConsultas();
+  }, []);
 
   useEffect(() => {
     const locales = [esLocale, ptBrLocale];
@@ -38,13 +69,22 @@ export default function CalendarPage() {
         { id: 'b', title: 'Auditorium B', eventColor: 'purple' },
         { id: 'c', title: 'Auditorium C', eventColor: 'orange' },
       ],
-      initialEvents: [
-        { title: 'TESTE 123', start: new Date(), resourceId: 'b' },
-      ],
+      events: events.map((event) => ({
+        title: event.title,
+        start: event.start,
+        end: event.end,
+        resourceId: event.resourceId,
+      })),
       locales,
       locale: initialLocale,
       eventClick: (info) => {
         setSelectedEvent(info.event);
+
+        if (info.event.title) {
+          setCalendarioEventosOpened(true);
+        } else {
+          setCadastrarConsultaOpened(true);
+        }
       },
     });
 
@@ -53,7 +93,7 @@ export default function CalendarPage() {
     return () => {
       calendar.destroy();
     };
-  }, []);
+  }, [events]);
 
   return (
     <div className={styles.calendar_container}>
@@ -66,16 +106,28 @@ export default function CalendarPage() {
         }}
         label="Nova consulta"
       />
-      <Modal isOpen={cadastrarConsultaOpened} onClose={() => setCadastrarConsultaOpened(false)} size="2xl">
+      <Modal isOpen={cadastrarConsultaOpened} onClose={closeModal} size="2xl">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader fontSize="2rem">Cadastrar Consulta</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <CadastrarConsulta />
+            <CadastrarConsulta closeModal={() => { closeModal(); reloadEvents(); }} />
           </ModalBody>
         </ModalContent>
       </Modal>
+
+      <Modal isOpen={calendarioEventosOpened} onClose={closeModal} size="2xl">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader fontSize="2rem">Detalhes da Consulta</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <CalendarioEventos event={selectedEvent} closeModal={closeModal} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
       <div ref={calendarEl}></div>
     </div>
   );

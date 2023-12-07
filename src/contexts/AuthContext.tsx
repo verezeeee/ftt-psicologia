@@ -47,7 +47,7 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
   }: ISignInRequest): Promise<ISignInResponse> {
     if (cpf === "admin" && password === "admin") {
       setUser({
-        id: "0",
+        id: "6570d6badd3560ad28cdb7a3",
         email: "admin@mail.com",
         nome: "Admin",
         role: "admin",

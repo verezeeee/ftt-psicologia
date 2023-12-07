@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect, useRef } from "react";
 import Table from "../../../../components/Tables";
 import { useMediaQuery } from "@chakra-ui/react";
-import { AlunoSignUpData } from "../../../../utils/types";
+import { AlunoSignUpData, PacienteSignUpData } from "../../../../utils/types";
 import Search from "../../../../components/Search";
 import Editar from "../Editar";
 import { MdCreate } from "react-icons/md";
@@ -56,13 +56,13 @@ export default function VisualizarAluno({
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isMobile] = useMediaQuery("(max-width: 768px)")
   const [isEditing, setIsEditing] = useState<any>();
-  const [result, setResult] = useState<AlunoSignUpData[]>([]);
+  const [result, setResult] = useState<PacienteSignUpData[]>([]);
   const [excluirAberto, setExcluirAberto] = useState<boolean>(false);
   const shouldFetchData = useRef<boolean>(true);
 
-  async function getUsers(): Promise<AlunoSignUpData[]> {
+  async function getUsers(): Promise<PacienteSignUpData[]> {
     try {
-      const res = await axios.get<AlunoSignUpData[]>(`http://localhost:8080/auth/getPacientesByIdAluno/${router.query.id}`);
+      const res = await axios.get<PacienteSignUpData[]>(`http://localhost:8080/auth/getPacientesByIdAluno/${router.query.id}`);
       const data = res.data;
       return data;
     } catch (error) {
@@ -88,7 +88,7 @@ export default function VisualizarAluno({
     fetchData();
   }, [shouldFetchData, searchTerm]);
 
-  function pesquisar(searchTerm: string, data: AlunoSignUpData[]): AlunoSignUpData[] {
+  function pesquisar(searchTerm: string, data: PacienteSignUpData[]): PacienteSignUpData[] {
     const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();
 
     return data.filter((user) => {
