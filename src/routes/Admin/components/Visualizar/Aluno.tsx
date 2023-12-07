@@ -1,14 +1,16 @@
 import { Divider, Flex, Text, Box, Grid, GridItem, Spacer } from "@chakra-ui/react";
 import Button from "../../../../components/Button";
 import { useRouter } from 'next/router';
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Table from "../../../../components/Tables";
 import { useMediaQuery } from "@chakra-ui/react";
-import { AlunoSignUpData } from "../../../../utils/types";
+import { AlunoSignUpData, PacienteSignUpData } from "../../../../utils/types";
 import Search from "../../../../components/Search";
 import Editar from "../Editar";
 import { MdCreate } from "react-icons/md";
 import Excluir from "../Excluir";
+import axios from "axios";
+import { removeAcentos } from "../../../../utils/removeAcentos";
 
 export default function VisualizarAluno({
   mobile,
@@ -57,6 +59,44 @@ export default function VisualizarAluno({
   const [isEditing, setIsEditing] = useState<any>();
   const [result, setResult] = useState<AlunoSignUpData[]>([]);
   const [excluirAberto, setExcluirAberto] = useState<boolean>(false);
+  const shouldFetchData = useRef<boolean>(true);
+
+  async function getUsers(): Promise<AlunoSignUpData[]> {
+    try {
+      const res = await axios.get<AlunoSignUpData[]>(`http://localhost:8080/auth/getPacientesByIdAluno/${router.query.id}`);
+      const data = res.data;
+      return data;
+    } catch (error) {
+      console.error("Erro ao obter os Pacientes:", error);
+      return [];
+    }
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      if (shouldFetchData.current) {
+        const data = await getUsers();
+        setResult(data);
+        shouldFetchData.current = false;
+      }
+
+      if (searchTerm.length > 0) {
+        const filteredResult = pesquisar(searchTerm, result);
+        setResult(filteredResult);
+      }
+    }
+
+    fetchData();
+  }, [shouldFetchData, searchTerm]);
+
+  function pesquisar(searchTerm: string, data: AlunoSignUpData[]): AlunoSignUpData[] {
+    const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();
+
+    return data.filter((user) => {
+      const lowerCaseNome = removeAcentos(user.nome.toLowerCase());
+      return lowerCaseNome.includes(lowerCaseSearchTerm);
+    });
+  }
 
   return (
     <>
@@ -135,11 +175,11 @@ export default function VisualizarAluno({
               Relatórios
             </Text>
             <Table
-              headers={["Id", "Data", "Paciente", "Aluno", "Tratamento"]}
+              headers={["Nome", "CPF", "Tratamento"]}
               data={result}
               isEditing={isEditing}
               setIsEditing={setIsEditing}
-              type="secretario"
+              type="paciente"
             />
           </Flex>
           <Flex
@@ -334,11 +374,11 @@ export default function VisualizarAluno({
                 <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
               </Box>
               <Table
-                headers={["Id", "Data", "Paciente", "Tratamento",]}
+                headers={["Nome", "CPF", "Tratamento",]}
                 data={result}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
-                type="secretario"
+                type="paciente"
               />
             </Flex>
             <Box

@@ -1,7 +1,7 @@
 import { Divider, Flex, Text, Box, Grid, GridItem } from "@chakra-ui/react";
 import Button from "../../../../components/Button";
 import { useRouter } from 'next/router';
-import { useState } from "react";
+import { useState, useEffect, useRef} from "react";
 import Table from "../../../../components/Tables";
 import { useMediaQuery } from "@chakra-ui/react";
 import { ProfessorSignUpData, SecretarioSignUpData } from "../../../../utils/types";
@@ -9,6 +9,8 @@ import Editar from "../Editar";
 import { MdCreate } from "react-icons/md";
 import { formatarTelefone } from "../../../../utils/formatarTelefone";
 import Excluir from "../Excluir";
+import axios from "axios";
+import { removeAcentos } from "../../../../utils/removeAcentos";
 
 export default function VisualizarProfessor({
   mobile,
@@ -49,8 +51,47 @@ export default function VisualizarProfessor({
   const [isMobile] = useMediaQuery("(max-width: 768px)")
   const [activeTab, setActiveTab] = useState("tab1");
   const [isEditing, setIsEditing] = useState<any>();
-  const [result, setResult] = useState<SecretarioSignUpData[]>([]);
+  const [result, setResult] = useState<ProfessorSignUpData[]>([]);
   const [excluirAberto, setExcluirAberto] = useState<boolean>(false);
+  const shouldFetchData = useRef<boolean>(true);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  async function getUsers(): Promise<ProfessorSignUpData[]> {
+    try {
+      const res = await axios.get<ProfessorSignUpData[]>(`http://localhost:8080/auth/getAlunosByIdProfessor/${router.query.id}`);
+      const data = res.data;
+      return data;
+    } catch (error) {
+      console.error("Erro ao obter os Alunos:", error);
+      return [];
+    }
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      if (shouldFetchData.current) {
+        const data = await getUsers();
+        setResult(data);
+        shouldFetchData.current = false;
+      }
+
+      if (searchTerm.length > 0) {
+        const filteredResult = pesquisar(searchTerm, result);
+        setResult(filteredResult);
+      }
+    }
+
+    fetchData();
+  }, [shouldFetchData, searchTerm]);
+
+  function pesquisar(searchTerm: string, data: ProfessorSignUpData[]): ProfessorSignUpData[] {
+    const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();
+
+    return data.filter((user) => {
+      const lowerCaseNome = removeAcentos(user.nome.toLowerCase());
+      return lowerCaseNome.includes(lowerCaseSearchTerm);
+    });
+  }
 
 
   return (
@@ -110,11 +151,11 @@ export default function VisualizarProfessor({
               Alunos
             </Text>
             <Table
-              headers={["Id", "Nome", "CPF", "Período"]}
+              headers={["Nome", "CPF", "Telefone"]}
               data={result}
               isEditing={isEditing}
               setIsEditing={setIsEditing}
-              type="secretario"
+              type="professor"
             />
           </Flex>
           <Flex
@@ -288,11 +329,11 @@ export default function VisualizarProfessor({
                 Alunos
               </Text>
               <Table
-                headers={["Id", "Nome", "CPF", "Período",]}
+                headers={["Nome", "CPF", "Telefone"]}
                 data={result}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
-                type="secretario"
+                type="professor"
               />
             </Flex>
             <Box
