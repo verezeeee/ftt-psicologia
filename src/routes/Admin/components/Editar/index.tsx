@@ -18,6 +18,7 @@ import EditarAluno from "./Aluno";
 import EditarProfessor from "./Professor";
 import EditarSecretario from "./Secretario";
 import EditarPaciente from "./Paciente";
+import EditarConsulta from "./Consulta";
 
 export default function Editar({
   role,
@@ -26,7 +27,7 @@ export default function Editar({
   setEditarOpened,
 }: {
   editData?: any;
-  role: "admin" | "student" | "secretary" | "professor" | "paciente";
+  role: "admin" | "student" | "secretary" | "professor" | "paciente" | "consulta";
   editarOpened: boolean;
   setEditarOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -69,6 +70,13 @@ export default function Editar({
           )}
           {role === "paciente" && (
             <EditarPaciente
+              mobile={mobile}
+              closeModal={closeModal}
+              editData={editData}
+            />
+          )}
+          {role === "consulta" && (
+            <EditarConsulta
               mobile={mobile}
               closeModal={closeModal}
               editData={editData}

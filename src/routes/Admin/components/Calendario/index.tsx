@@ -73,7 +73,12 @@ export default function CalendarPage() {
         title: event.title,
         start: event.start,
         end: event.end,
-        resourceId: event.resourceId,
+        local: event.resourceId,
+        id: event._id,
+        nomePaciente: event.pacienteNome,
+        frequencia: event.frequencia,
+        observacao: event.observacao,
+        tipoConsulta: event.tipoDeConsulta,
       })),
       locales,
       locale: initialLocale,
@@ -120,10 +125,10 @@ export default function CalendarPage() {
       <Modal isOpen={calendarioEventosOpened} onClose={closeModal} size="2xl">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader fontSize="2rem">Detalhes da Consulta</ModalHeader>
+          <ModalHeader fontSize="2rem">Consulta</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <CalendarioEventos event={selectedEvent} closeModal={closeModal} />
+            <CalendarioEventos event={selectedEvent} closeModal={closeModal}  reloadEvents={reloadEvents}/>
           </ModalBody>
         </ModalContent>
       </Modal>

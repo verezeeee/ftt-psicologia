@@ -11,10 +11,11 @@ interface SuccessModalProps {
   onClose: () => void;
   closeModal: () => void;
   excluirData: any;
+  reloadEvents: () => void;
 }
 
 
-const Excluir: React.FC<SuccessModalProps> = ({ isOpen, onClose, closeModal, excluirData }) => {
+const Excluir: React.FC<SuccessModalProps> = ({ isOpen, onClose, closeModal, excluirData, reloadEvents }) => {
   const router = useRouter();
   const [exclusaoConfirmada, setExclusaoConfirmada] = useState(false);
   const [id, setId] = useState(excluirData?._id || '');
@@ -23,7 +24,7 @@ const Excluir: React.FC<SuccessModalProps> = ({ isOpen, onClose, closeModal, exc
 
   const handleExcluir = async () => {
     try {
-      const { turno, disciplina, endereco, periodo } = excluirData;
+      const { turno, disciplina, endereco, periodo, consultaID} = excluirData;
 
       let type = "";
       if (turno) {
@@ -34,12 +35,15 @@ const Excluir: React.FC<SuccessModalProps> = ({ isOpen, onClose, closeModal, exc
         type = "Paciente";
       } else if (periodo) {
         type = "Aluno";
-      } else {
+      } else if(consultaID) {
+        type = "Consulta";
+      }else {
         type = "default";
       }
 
       await axios.delete(`http://localhost:8080/auth/delete${type}/${id}`);
       setExclusaoConfirmada(true);
+      reloadEvents();
     } catch (error) {
       console.error("Erro ao excluir o usuário:", error);
       setErro(true);

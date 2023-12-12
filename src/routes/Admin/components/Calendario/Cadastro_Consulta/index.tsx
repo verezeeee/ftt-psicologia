@@ -3,7 +3,6 @@ import Input from "../../../../../components/Input";
 import Button from "../../../../../components/Button";
 import Select from "../../../../../components/Select";
 import { useState, useEffect } from "react";
-import { FcSms } from "react-icons/fc";
 import axios from "axios";
 import { useAuth } from "../../../../../contexts/AuthContext";
 import { useRouter } from "next/router";
@@ -24,7 +23,8 @@ export default function CadastrarConsulta({
     const [observacoes, setObservacoes] = useState("");
     const [statusDaConsulta] = useState("EM CADASTRO");
     const [pacientesOptions, setPacientesOptions] = useState([]);
-    const [paciente, setPaciente] = useState("");
+    const [pacienteEncaminhador, setPacienteEncaminhador] = useState("");
+    const [paciente] = useState("");
     const toast = useToast();
     const router = useRouter()
     
@@ -36,17 +36,17 @@ export default function CadastrarConsulta({
     const userId = user.id;
 
     const optionsLocal = [
-        { title: 'H201', resourceId: 'a',  },
-        { title: 'H202', resourceId: 'b', },
-        { title: 'FTT', resourceId: 'c',  },
-        { title: 'E204', resourceId: 'd', },
+        { title: 'H201', resourceId: 'a',  eventColor: 'red'},
+        { title: 'H202', resourceId: 'b',  eventColor: 'purple'},
+        { title: 'FTT', resourceId: 'c',  eventColor: 'blue'},
+        { title: 'E204', resourceId: 'd', eventColor: 'black'},
         { title: 'OUTROS', resourceId: 'e', },
       ];
       
       useEffect(() => {
         const getPacientes = async () => {
           try {
-            const response = await axios.get(`http://localhost:8080/auth/getPacientesByIdAluno/${userId}`);
+            const response = await axios.get(`http://localhost:8080/auth/getPacientesSelect`);
             setPacientesOptions(response.data);
           } catch (error) {
             toast({
@@ -61,7 +61,7 @@ export default function CadastrarConsulta({
       }, [])
 
     const salvarConsulta = async () => {
-        if (!paciente) {
+        if (!pacienteEncaminhador) {
             toast({
               status: "error",
               description: "Selecione um Paciente",
@@ -69,10 +69,9 @@ export default function CadastrarConsulta({
             });
             return;
           }
-      
-          const regex = /id: (\d+) nomeAluno: (.+)/;
-          const match = paciente.match(regex);
-      
+          const regex = /id:(\w+) nomePaciente:(.+)/;
+          const match = pacienteEncaminhador.match(regex);
+          
           if (!match) {
             toast({
               status: "error",
@@ -82,7 +81,7 @@ export default function CadastrarConsulta({
             return;
           }
 
-          const [, id, nomePaciente,] = match;
+          const [, id, nomePaciente] = match;
 
         if (!nomePaciente || !dataDaConsulta) {
             toast({
@@ -140,7 +139,7 @@ export default function CadastrarConsulta({
                 </Text>
             </Flex>
             <Divider mt="2" />
-                        <Select
+            <Select
               label="Paciente: "
               options={[
                 { label: "", value: "" },
@@ -149,8 +148,8 @@ export default function CadastrarConsulta({
                   value: "id:" + paciente._id + " nomePaciente:" + paciente.nome ,
                 })),
               ]}
-              value={paciente}
-              setValue={setPaciente}
+              value={pacienteEncaminhador}
+              setValue={setPacienteEncaminhador}
             />
             <Flex align="center" w="100%">
                 <Text color="#000000" fontSize="1.8rem">
@@ -204,7 +203,7 @@ export default function CadastrarConsulta({
                 <Text color="#000000" textAlign='center' fontSize="1.5rem" bg='gray.200' border='2px solid none' m={4} >
                     Atualmente esse é o estado dessa consulta:
                     <Text color='yellow.500' fontWeight='bold'>
-                       {statusDaConsulta} {/* Futuramente criar a lógica de controle de estado aqui dentro*/}
+                       {statusDaConsulta}
                     </Text>
                 </Text>
             </Flex>
