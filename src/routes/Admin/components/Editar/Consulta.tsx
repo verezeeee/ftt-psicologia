@@ -6,6 +6,7 @@ import axios from "axios";
 import Sucesso from "../Sucesso";
 import { useDisclosure } from "@chakra-ui/react";
 import Erro from "../Erro";
+import Select from "../../../../components/Select";
 
 export default function EditarConsulta({
   mobile,
@@ -16,10 +17,8 @@ export default function EditarConsulta({
   closeModalCalendario,
 }) {
   const [titulo, setTitulo] = useState(editData.title || "");
-  const [inicio, setInicio] = useState(editData.start || "");
   const [fim, setFim] = useState(editData.end || "");
   const [local, setLocal] = useState(editData.extendedProps?.local || "");
-  const [nomePaciente, setNomePaciente] = useState(editData.extendedProps?.nomePaciente || "");
   const [frequencia, setFrequencia] = useState(editData.extendedProps?.frequencia || "");
   const [observacao, setObservacao] = useState(editData.extendedProps?.observacao || "");
   const [tipoConsulta, setTipoConsulta] = useState(editData.extendedProps?.tipoConsulta || "");
@@ -85,12 +84,30 @@ export default function EditarConsulta({
         w="100%"
       >
         <Input label="Título" value={titulo} setValue={setTitulo} disabled={!edicaoAtiva} />
-        <Input label="Local" value={local} setValue={setLocal} disabled={!edicaoAtiva} />
-        <Input label="Tipo da consulta:" value={tipoConsulta} setValue={setTipoConsulta} disabled={!edicaoAtiva} />
-        <Input label="Observação: " value={observacao} setValue={setObservacao} disabled={!edicaoAtiva} />
+        <Select
+          label="Local"
+          options={['', "FTT", "H201", "H401", "OUTRA"]}
+          value={local}
+          setValue={setLocal}
+          disabled={!edicaoAtiva}
+        />
+        <Select
+          label="Tipo de Consulta"
+          options={["", "Individual", "Casal", "Familiar"]}
+          value={tipoConsulta}
+          setValue={setTipoConsulta}
+          disabled={!edicaoAtiva}
+        />
+        <Input
+          label="Observação:"
+          value={observacao}
+          setValue={setObservacao}
+          disabled={!edicaoAtiva}
+          isTextarea={true}
+        />
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
-      <Button
+        <Button
           label={edicaoAtiva ? "Cancelar" : "Voltar"}
           onPress={() => {
             if (edicaoAtiva) {

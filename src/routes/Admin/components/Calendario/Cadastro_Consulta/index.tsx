@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 
 export default function CadastrarConsulta({
     closeModal,
-}:{
+}: {
     closeModal: () => void;
 }) {
     const [nomePaciente, setNomePaciente] = useState("");
@@ -18,70 +18,76 @@ export default function CadastrarConsulta({
     const [horarioInicio, setHorarioInicio] = useState("");
     const [horarioFinal, setHorarioFim] = useState("");
     const [local, setLocal] = useState("");
-    const [recorrencia, setRecorrencia] = useState("");
+    const [recorrencia, setRecorrencia] = useState({
+        frequency: "",
+        interval: 1,
+    });
     const [tipoDeTratamento, setTipoDeTratamento] = useState("");
     const [observacoes, setObservacoes] = useState("");
     const [statusDaConsulta] = useState("EM CADASTRO");
     const [pacientesOptions, setPacientesOptions] = useState([]);
     const [pacienteEncaminhador, setPacienteEncaminhador] = useState("");
-    const [paciente] = useState("");
+    const [consultaRecorrenteID] = useState("");
     const toast = useToast();
     const router = useRouter()
-    
+
     const handleChange = (value) => {
-        setRecorrencia(value);
+        setRecorrencia((prevRecorrencia) => ({
+            ...prevRecorrencia,
+            frequency: value,
+        }));
     };
 
     const { user } = useAuth();
     const userId = user.id;
 
-    const optionsLocal = [
-        { title: 'H201', resourceId: 'a',  eventColor: 'red'},
-        { title: 'H202', resourceId: 'b',  eventColor: 'purple'},
-        { title: 'FTT', resourceId: 'c',  eventColor: 'blue'},
-        { title: 'E204', resourceId: 'd', eventColor: 'black'},
-        { title: 'OUTROS', resourceId: 'e', },
-      ];
-      
-      useEffect(() => {
+    var mongoObjectId = function () {
+        var timestamp = (new Date().getTime() / 1000 | 0).toString(16);
+        return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, function () {
+            return (Math.random() * 16 | 0).toString(16);
+        }).toLowerCase();
+    };
+
+
+    useEffect(() => {
         const getPacientes = async () => {
-          try {
-            const response = await axios.get(`http://localhost:8080/auth/getPacientesSelect`);
-            setPacientesOptions(response.data);
-          } catch (error) {
-            toast({
-              status: "error",
-              description: "Erro ao buscar Pacientes",
-              duration: 1000,
-            })
-          }
+            try {
+                const response = await axios.get(`http://localhost:8080/auth/getPacientesSelect`);
+                setPacientesOptions(response.data);
+            } catch (error) {
+                toast({
+                    status: "error",
+                    description: "Erro ao buscar Pacientes",
+                    duration: 1000,
+                })
+            }
         };
-    
+
         getPacientes();
-      }, [])
+    }, [])
 
     const salvarConsulta = async () => {
         if (!pacienteEncaminhador) {
             toast({
-              status: "error",
-              description: "Selecione um Paciente",
-              duration: 500,
+                status: "error",
+                description: "Selecione um Paciente",
+                duration: 500,
             });
             return;
-          }
-          const regex = /id:(\w+) nomePaciente:(.+)/;
-          const match = pacienteEncaminhador.match(regex);
-          
-          if (!match) {
-            toast({
-              status: "error",
-              description: "Formato do paciente inválido",
-              duration: 500,
-            });
-            return;
-          }
+        }
+        const regex = /id:(\w+) nomePaciente:(.+)/;
+        const match = pacienteEncaminhador.match(regex);
 
-          const [, id, nomePaciente] = match;
+        if (!match) {
+            toast({
+                status: "error",
+                description: "Formato do paciente inválido",
+                duration: 500,
+            });
+            return;
+        }
+
+        const [, id, nomePaciente] = match;
 
         if (!nomePaciente || !dataDaConsulta) {
             toast({
@@ -93,34 +99,58 @@ export default function CadastrarConsulta({
             try {
                 const start = new Date(`${dataDaConsulta}T${horarioInicio}`);
                 const end = new Date(`${dataDaConsulta}T${horarioFinal}`);
+                let occurrences = [];
 
-                const res = await axios.post('http://localhost:8080/auth/registrarConsulta', {
-                    alunoID: user.id,
-                    title: tipoDeTratamento,
-                    start: start.toISOString(),
-                    end: end.toISOString(),
-                    resourceId: local,
-                    frequencia: recorrencia,
-                    tipoDeConsulta,
-                    pacienteNome: nomePaciente,
-                    pacienteID: id,
-                    observacao: observacoes,
-                    statusDaConsulta: "AGENDADA",
-                });
-                if (res.status === 200) {
-                    toast({
-                      status: "success",
-                      description: "Consulta salva com sucesso",
-                      duration: 1000,
-                    });
-                    closeModal();
-            } else {
-                toast({
-                    status: "error",
-                    description: "Erro ao salvar a consulta",
-                    duration: 1000,
-                  });
+                if (recorrencia.frequency === "Sessão única") {
+                    occurrences.push({ start, end });
+                    console.log("Cheguei aqui no push")
+                } else if (recorrencia.frequency === "Semanal" || recorrencia.frequency === "Mensal") {
+                    const occurrenceStart = new Date(start);
+                    const occurrenceEnd = new Date(end);
+                    for (let i = 0; i < 4; i++) {
+                        occurrences.push({ start: new Date(occurrenceStart), end: new Date(occurrenceEnd) });
+
+                        if (recorrencia.frequency === "Semanal") {
+                            occurrenceStart.setDate(occurrenceStart.getDate() + 7);
+                            occurrenceEnd.setDate(occurrenceEnd.getDate() + 7);
+                        } else if (recorrencia.frequency === "Mensal") {
+                            occurrenceStart.setMonth(occurrenceStart.getMonth() + 1);
+                            occurrenceEnd.setMonth(occurrenceEnd.getMonth() + 1);
+                        }
+                    }
                 }
+                const consultaRecorrenteID = mongoObjectId();
+                console.log("Cheguei aqui no for")
+                for (const occurrence of occurrences) {
+                    const res = await axios.post('http://localhost:8080/auth/registrarConsulta', {
+                        alunoID: user.id,
+                        title: tipoDeTratamento,
+                        start: occurrence.start.toISOString(),
+                        end: occurrence.end.toISOString(),
+                        resourceId: local,
+                        recorrencia: {
+                            frequency: recorrencia.frequency,
+                            interval: recorrencia.interval,
+                        },
+                        tipoDeConsulta,
+                        consultaRecorrenteID,
+                        pacienteNome: nomePaciente,
+                        pacienteID: id,
+                        observacao: observacoes,
+                        statusDaConsulta: "AGENDADA",
+                    });
+
+                    if (res.status !== 200) {
+                        throw new Error("Erro ao salvar a consulta");
+                    }
+                }
+
+                toast({
+                    status: "success",
+                    description: "Consultas salvas com sucesso",
+                    duration: 1000,
+                });
+                closeModal();
             } catch (error) {
                 toast({
                     status: "error",
@@ -128,7 +158,7 @@ export default function CadastrarConsulta({
                     duration: 1000,
                 });
             }
-        }
+        };
     };
 
     return (
@@ -140,16 +170,16 @@ export default function CadastrarConsulta({
             </Flex>
             <Divider mt="2" />
             <Select
-              label="Paciente: "
-              options={[
-                { label: "", value: "" },
-                ...pacientesOptions.map((paciente) => ({
-                  label:  paciente.nome,
-                  value: "id:" + paciente._id + " nomePaciente:" + paciente.nome ,
-                })),
-              ]}
-              value={pacienteEncaminhador}
-              setValue={setPacienteEncaminhador}
+                label="Paciente: "
+                options={[
+                    { label: "", value: "" },
+                    ...pacientesOptions.map((paciente) => ({
+                        label: paciente.nome,
+                        value: "id:" + paciente._id + " nomePaciente:" + paciente.nome,
+                    })),
+                ]}
+                value={pacienteEncaminhador}
+                setValue={setPacienteEncaminhador}
             />
             <Flex align="center" w="100%">
                 <Text color="#000000" fontSize="1.8rem">
@@ -168,19 +198,25 @@ export default function CadastrarConsulta({
                 </Flex>
                 <Select
                     label="Local"
-                    options={['', ...optionsLocal.map(option => option.title)]}
+                    options={['', "FTT", "H201", "H401", "OUTRA"]}
                     value={local}
                     setValue={setLocal}
                 />
                 <Input label="Data da Consulta" type="date" value={dataDaConsulta} setValue={setDataDaConsulta} />
                 <Flex w="100%" align="center" justify="space-evenly" my={4}>
-                    <RadioGroup onChange={handleChange} value={recorrencia}>
-                        <Stack spacing={14} direction='row'>
-                            <Radio value="Sessão única">Sessão única</Radio>
-                            <Radio value="Semanal">Semanal</Radio>
-                            <Radio value="Mensal">Mensal</Radio>
-                        </Stack>
-                    </RadioGroup>
+                    <Select
+                        label="Intervalo"
+                        options={["", "Sessão única", "Semanal", "Mensal"].map(String)}
+                        value={recorrencia.frequency}
+                        setValue={(value) =>
+                            setRecorrencia((prevRecorrencia) => ({
+                                ...prevRecorrencia,
+                                frequency: value as string,
+                                interval: value === "Semanal" ? 7 : value === "Mensal" ? 30 : 1,
+                            }))
+                        }
+                    />
+
                 </Flex>
                 <Select
                     label="Tipo de Consulta"
@@ -189,10 +225,10 @@ export default function CadastrarConsulta({
                     setValue={setTipoDeConsulta}
                 />
                 <Input
-                    label="Observações"
+                    label="Observação:"
                     value={observacoes}
                     setValue={setObservacoes}
-                    height="8rem"
+                    isTextarea={true}
                 />
                 <Flex align="center" w="100%">
                     <Text color="#000000" fontSize="1.8rem">
@@ -203,7 +239,7 @@ export default function CadastrarConsulta({
                 <Text color="black" textAlign='center' fontSize="1.5rem" bg='white' border='2px solid #C760EB' borderRadius={8} m={4}>
                     Atualmente esse é o estado dessa consulta:
                     <Text color='gray' fontWeight='bold' fontSize='2xl'>
-                       Em cadastro
+                        Em cadastro
                     </Text>
                 </Text>
             </Flex>
@@ -211,7 +247,7 @@ export default function CadastrarConsulta({
                 <Button label="Cancelar" onPress={closeModal} mt={0.1} />
                 <Button
                     label="Salvar Consulta"
-                    onPress= {salvarConsulta}
+                    onPress={salvarConsulta}
                     mt={0.1}
                     filled
                 />

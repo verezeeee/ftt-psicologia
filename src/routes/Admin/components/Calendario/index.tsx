@@ -56,7 +56,7 @@ export default function CalendarPage() {
     let calendar = new Calendar(calendarEl.current, {
       plugins: [resourceTimelinePlugin, dayGridPlugin, interactionPlugin, timeGridPlugin],
       headerToolbar: {
-        left: 'prev',
+        left: 'prev today',
         center: 'title',
         right: isMobile ? 'next' : 'dayGridWeek dayGridMonth next',
       },
