@@ -24,7 +24,6 @@ export default function Item({
 
   const handleItemClick = () => {
     setActiveTab(href);
-    setSidebarOpened(false);
 
     if (href === "Home") {
       router.push("/");

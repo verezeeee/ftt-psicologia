@@ -7,7 +7,7 @@ import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import esLocale from '@fullcalendar/core/locales/es';
 import ptBrLocale from '@fullcalendar/core/locales/pt-br';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Flex } from '@chakra-ui/react';
 import { MdQueryBuilder } from "react-icons/md";
 import ButtonNativo from '../../../../components/Button';
 import CadastrarConsulta from './Cadastro_Consulta';
@@ -20,6 +20,7 @@ export default function CalendarPage() {
   const [cadastrarConsultaOpened, setCadastrarConsultaOpened] = useState(false);
   const [calendarioEventosOpened, setCalendarioEventosOpened] = useState(false);
   const [events, setEvents] = useState([]);
+  const isMobile = window.innerWidth <= 768;
 
   function closeModal() {
     setCadastrarConsultaOpened(false);
@@ -55,14 +56,15 @@ export default function CalendarPage() {
     let calendar = new Calendar(calendarEl.current, {
       plugins: [resourceTimelinePlugin, dayGridPlugin, interactionPlugin, timeGridPlugin],
       headerToolbar: {
-        left: 'prev today',
+        left: 'prev',
         center: 'title',
-        right: 'dayGridMonth next',
+        right: isMobile ? 'next' : 'dayGridWeek dayGridMonth next',
       },
-      initialView: 'dayGridMonth',
+      footerToolbar: {
+        center: 'today'
+      },
+      initialView: isMobile ? 'dayGridDay' : 'dayGridMonth',
       nowIndicator: true,
-      editable: true,
-      selectable: true,
       selectMirror: true,
       resources: [
         { id: 'a', title: 'Auditorium A' },
@@ -101,16 +103,31 @@ export default function CalendarPage() {
   }, [events]);
 
   return (
-    <div className={styles.calendar_container}>
-      <ButtonNativo
-        icon={MdQueryBuilder}
-        px={6}
-        mt={0.1}
-        onPress={() => {
-          setCadastrarConsultaOpened(true);
-        }}
-        label="Nova consulta"
-      />
+    <div className={isMobile ? styles.calendar_container2 : styles.calendar_container}>
+      {isMobile && (
+        <Flex flexDirection='column'>
+          <ButtonNativo
+            icon={MdQueryBuilder}
+            px={6}
+            mt={0.1}
+            onPress={() => {
+              setCadastrarConsultaOpened(true);
+            }}
+            label="Nova consulta"
+          />
+        </Flex>
+      )}
+      {!isMobile && (
+          <ButtonNativo
+            icon={MdQueryBuilder}
+            px={6}
+            mt={0.1}
+            onPress={() => {
+              setCadastrarConsultaOpened(true);
+            }}
+            label="Nova consulta"
+          />
+      )}
       <Modal isOpen={cadastrarConsultaOpened} onClose={closeModal} size="2xl">
         <ModalOverlay />
         <ModalContent>
@@ -128,7 +145,7 @@ export default function CalendarPage() {
           <ModalHeader fontSize="2rem">Consulta</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <CalendarioEventos event={selectedEvent} closeModal={closeModal}  reloadEvents={reloadEvents}/>
+            <CalendarioEventos event={selectedEvent} closeModal={closeModal} reloadEvents={reloadEvents} />
           </ModalBody>
         </ModalContent>
       </Modal>

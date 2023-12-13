@@ -200,10 +200,10 @@ export default function CadastrarConsulta({
                     </Text>
                 </Flex>
                 <Divider mt="2" />
-                <Text color="#000000" textAlign='center' fontSize="1.5rem" bg='gray.200' border='2px solid none' m={4} >
+                <Text color="black" textAlign='center' fontSize="1.5rem" bg='white' border='2px solid #C760EB' borderRadius={8} m={4}>
                     Atualmente esse é o estado dessa consulta:
-                    <Text color='yellow.500' fontWeight='bold'>
-                       {statusDaConsulta}
+                    <Text color='gray' fontWeight='bold' fontSize='2xl'>
+                       Em cadastro
                     </Text>
                 </Text>
             </Flex>

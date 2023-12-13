@@ -33,6 +33,9 @@ const CalendarioEventos: React.FC<CalendarioEventosProps> = ({ event, closeModal
   const [isEditarModalOpen, setIsEditarModalOpen] = useState(false);  
   const [editarData, setEditarData] = useState(event);
 
+  const currentDate = new Date();
+  const isConsultaRealizada = currentDate > new Date(start);
+
   const handleEditarConsulta = () => {
     setEditarData(event); 
     setIsEditarModalOpen(true);
@@ -64,6 +67,12 @@ const CalendarioEventos: React.FC<CalendarioEventosProps> = ({ event, closeModal
               <Text><strong>Local da consulta:</strong> {local}</Text>
               <Text><strong>O tipo dessa consulta é:</strong> {tipoConsulta}</Text>
               <Text><strong>Observações:</strong> {observacao}</Text>
+              <Text color="black" textAlign='center' fontSize="1.5rem" bg='white' border='2px solid #C760EB' borderRadius={8} m={4} >
+                    Atualmente esse é o estado dessa consulta:
+                    <Text color= {isConsultaRealizada ? 'red' : 'green'} fontWeight='bold' fontSize='2xl'>
+                      {isConsultaRealizada ? 'Consulta Realizada' : 'Agendada'}
+                    </Text>
+              </Text>
             </Flex>
             <Flex align="center" mt="4" justify="space-between" w="100%">
               <Button onClick={handleEditarConsulta} colorScheme="green">
