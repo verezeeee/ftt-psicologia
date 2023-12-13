@@ -11,6 +11,9 @@ export default function EditarConsulta({
   mobile,
   closeModal,
   editData,
+  reloadEvents,
+  setEditarOpened,
+  closeModalCalendario,
 }) {
   const [titulo, setTitulo] = useState(editData.title || "");
   const [inicio, setInicio] = useState(editData.start || "");
@@ -27,13 +30,10 @@ export default function EditarConsulta({
   const toast = useToast();
 
   const validarDados = () => {
+    console.log(editData)
     if (
       titulo === editData.title &&
-      inicio === editData.start &&
-      fim === editData.end &&
       local === editData.extendedProps?.local &&
-      nomePaciente === editData.extendedProps?.nomePaciente &&
-      frequencia === editData.extendedProps?.frequencia &&
       observacao === editData.extendedProps?.observacao &&
       tipoConsulta === editData.extendedProps?.tipoConsulta
     ) {
@@ -56,15 +56,13 @@ export default function EditarConsulta({
 
       const dadosAtualizados = {
         title: titulo,
-        start: inicio,
-        end: fim,
-        local,
-        frequencia,
+        resourceId: local,
         observacao,
-        tipoConsulta,
+        tipoDeConsulta: tipoConsulta,
       };
 
       await axios.patch(`http://localhost:8080/auth/attConsulta/${id}`, dadosAtualizados);
+      reloadEvents();
       onOpen();
     } catch (error) {
       setErro(true);
@@ -92,7 +90,18 @@ export default function EditarConsulta({
         <Input label="Observação: " value={observacao} setValue={setObservacao} disabled={!edicaoAtiva} />
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
-        <Button label={edicaoAtiva ? "Cancelar" : "Voltar"} onPress={edicaoAtiva ? closeModal : () => setEdicaoAtiva(true)} mt={0.1} />
+      <Button
+          label={edicaoAtiva ? "Cancelar" : "Voltar"}
+          onPress={() => {
+            if (edicaoAtiva) {
+              setEdicaoAtiva(false);
+              setEditarOpened(false);
+            } else {
+              setEdicaoAtiva(true);
+            }
+          }}
+          mt={0.1}
+        />
         <Button
           label={edicaoAtiva ? "Confirmar" : "Editar"}
           onPress={() => {
@@ -116,7 +125,7 @@ export default function EditarConsulta({
           }
           }
         />
-        <Sucesso mensagem="Consulta atualizada com sucesso." isOpen={isOpen} onClose={onClose} closeModal={closeModal} />
+        <Sucesso mensagem="Consulta atualizada com sucesso." isOpen={isOpen} onClose={closeModalCalendario} closeModal={closeModalCalendario} />
         {erro && <Erro isOpen={erro} onClose={() => setErro(false)} closeModal={() => setErro(false)} />}
       </Flex>
     </Flex>

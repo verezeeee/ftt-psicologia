@@ -31,7 +31,7 @@ const CalendarioEventos: React.FC<CalendarioEventosProps> = ({ event, closeModal
   const [showExtendedDetails, setShowExtendedDetails] = useState(false);
   const [isExcluirModalOpen, setIsExcluirModalOpen] = useState(false);
   const [isEditarModalOpen, setIsEditarModalOpen] = useState(false);  
-  const [editarData, setEditarData] = useState(null);
+  const [editarData, setEditarData] = useState(event);
 
   const handleEditarConsulta = () => {
     setEditarData(event); 
@@ -86,11 +86,13 @@ const CalendarioEventos: React.FC<CalendarioEventosProps> = ({ event, closeModal
         editData={editarData}
         editarOpened={isEditarModalOpen}
         setEditarOpened={setIsEditarModalOpen}
+        reloadEvents={reloadEvents}
+        closeModalCalendario={closeModal}
       />
       <Excluir
         isOpen={isExcluirModalOpen}  
         onClose={() => setIsExcluirModalOpen(false) }
-        closeModal={closeModal}
+        closeModal={() => setIsExcluirModalOpen(false) }
         excluirData={{consultaID: id , _id: id}}
         reloadEvents={reloadEvents}
       />

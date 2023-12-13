@@ -25,11 +25,15 @@ export default function Editar({
   editData,
   editarOpened,
   setEditarOpened,
+  reloadEvents,
+  closeModalCalendario,
 }: {
   editData?: any;
   role: "admin" | "student" | "secretary" | "professor" | "paciente" | "consulta";
   editarOpened: boolean;
   setEditarOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  reloadEvents: () => void;
+  closeModalCalendario: () => void;
 }) {
   const { mobile } = useMediaQuery();
 
@@ -80,6 +84,9 @@ export default function Editar({
               mobile={mobile}
               closeModal={closeModal}
               editData={editData}
+              reloadEvents={reloadEvents}
+              setEditarOpened={setEditarOpened}
+              closeModalCalendario={closeModalCalendario}
             />
           )}
         </ModalContent>
