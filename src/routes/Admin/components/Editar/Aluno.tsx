@@ -2,7 +2,7 @@ import { Divider, Flex, Text, useToast } from "@chakra-ui/react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import Select from "../../../../components/Select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sucesso from "../Sucesso";
 import { useDisclosure } from "@chakra-ui/react";
 import Erro from "../Erro";
@@ -27,6 +27,7 @@ export default function EditarAluno({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [erro, setErro] = useState(false);
   const toast = useToast();
+  const [professoresOptions, setProfessoresOptions] = useState([]);
 
   const validarDados = () => {
     if (
@@ -73,6 +74,28 @@ export default function EditarAluno({
       if (!validarDados()) {
         return;
       }
+      if (!professor) {
+        toast({
+          status: "error",
+          description: "Selecione um professor",
+          duration: 500,
+        });
+        return;
+      }
+  
+      const regex = /id:(\S+) nomeProfessor:(.*?) disciplina:(.*)/;
+      const match = professor.match(regex);
+  
+      if (!match) {
+        toast({
+          status: "error",
+          description: "Formato do professor inválido",
+          duration: 500,
+        });
+        return;
+      }
+  
+      const [, idProfessor, nomeProfessor, disciplina] = match;
 
       const dadosAtualizados = {
         nome,
@@ -81,7 +104,9 @@ export default function EditarAluno({
         email,
         matricula,
         periodo,
-        professor,
+        professorNome: nomeProfessor,
+        professorID: idProfessor,
+        professorDisciplina: disciplina,
       };
 
       await axios.patch(`http://localhost:8080/auth/attAluno/${id}`, dadosAtualizados);
@@ -91,6 +116,18 @@ export default function EditarAluno({
     }
   };
 
+  useEffect(() => {
+    const getProfessores = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/auth/getProfessoresSelect');
+        setProfessoresOptions(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getProfessores();
+  }, []);
 
   return (
     <Flex flexDir="column" p="8" pt="6">
@@ -181,13 +218,20 @@ export default function EditarAluno({
           </Flex>
         )}
         <Input label="E-mail" value={email} setValue={setEmail} disabled={edicaoAtiva ? false : true} border={edicaoAtiva ? null : "0px"} />
-        <Input
+        <Select
           label="Professor"
+          options={[
+            { label: "", value: "" },
+            ...professoresOptions.map((professor) => ({
+              label: professor.nome,
+              value: "id:" + professor._id + " nomeProfessor:" + professor.nome + " disciplina:" + professor.disciplina,
+            })),
+          ]}
           value={professor}
           setValue={setProfessor}
-          disabled={edicaoAtiva ? false : true}
-          border={edicaoAtiva ? null : "0px"} />
-
+          disabled={!edicaoAtiva}
+          border={!edicaoAtiva}
+        />
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
         <Button label={edicaoAtiva ? "Cancelar" : "Voltar"} onPress={edicaoAtiva ? closeModal : () => setEdicaoAtiva(true)} mt={0.1} />

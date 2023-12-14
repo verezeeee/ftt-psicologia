@@ -286,7 +286,6 @@ export default function CadastrarAluno({
           ]}
           value={professor}
           setValue={setProfessor}
-
         />
       </Flex>
       <Flex align="center" mt="4" justify="space-between" w="100%">
