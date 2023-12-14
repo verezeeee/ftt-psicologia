@@ -23,13 +23,10 @@ export default function Professores({
 
   const [cadastrarOpened, setCadastrarOpened] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [data, setData] = useState<ProfessorSignUpData[]>([]);
-
-  const [isEditing, setIsEditing] = useState<any>();
+  const [originalData, setOriginalData] = useState<ProfessorSignUpData[]>([]);
   const [result, setResult] = useState<ProfessorSignUpData[]>([]);
+  const [isEditing, setIsEditing] = useState<any>();
   const shouldFetchData = useRef<boolean>(true);
-  const finalRef = useRef(null);
-  const initialRef = useRef(null);
 
   async function getUsers(): Promise<ProfessorSignUpData[]> {
     try {
@@ -46,18 +43,21 @@ export default function Professores({
     async function fetchData() {
       if (shouldFetchData.current) {
         const data = await getUsers();
+        setOriginalData(data);
         setResult(data);
         shouldFetchData.current = false;
       }
 
       if (searchTerm.length > 0) {
-        const filteredResult = pesquisar(searchTerm, result);
+        const filteredResult = pesquisar(searchTerm, originalData);
         setResult(filteredResult);
+      } else {
+        setResult(originalData);
       }
     }
 
     fetchData();
-  }, [shouldFetchData, searchTerm]);
+  }, [shouldFetchData, searchTerm, originalData]);
 
   function pesquisar(searchTerm: string, data: ProfessorSignUpData[]): ProfessorSignUpData[] {
     const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();

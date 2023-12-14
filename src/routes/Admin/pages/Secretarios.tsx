@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useRef } from "react";
+import { FC, useState, useEffect } from "react";
 import { Flex, Text } from "@chakra-ui/react";
 import { SecretarioSignUpData } from "../../../utils/types";
 import { useMediaQuery } from "../../../utils/useMediaQuery";
@@ -21,6 +21,7 @@ const Secretarios: FC<SecretariosProps> = ({ user, activeTab }) => {
   const { mobile } = useMediaQuery();
   const [cadastrarOpened, setCadastrarOpened] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [originalResult, setOriginalResult] = useState<SecretarioSignUpData[]>([]);
   const [result, setResult] = useState<SecretarioSignUpData[]>([]);
   const [isEditing, setIsEditing] = useState<any>();
 
@@ -28,6 +29,7 @@ const Secretarios: FC<SecretariosProps> = ({ user, activeTab }) => {
     async function fetchData() {
       try {
         const res = await axios.get<SecretarioSignUpData[]>("http://localhost:8080/auth/getSecretarios");
+        setOriginalResult(res.data);
         setResult(res.data);
       } catch (error) {
         console.error("Erro ao obter os Secretários:", error);
@@ -48,12 +50,13 @@ const Secretarios: FC<SecretariosProps> = ({ user, activeTab }) => {
     }
 
     if (searchTerm.length > 0) {
-      const filteredResult = pesquisar(searchTerm, result);
+      const filteredResult = pesquisar(searchTerm, originalResult);
       setResult(filteredResult);
     } else {
-      setResult(result);
+      setResult(originalResult);
     }
-  }, [searchTerm]);
+  }, [searchTerm, originalResult]);
+
 
   return (
     <Flex

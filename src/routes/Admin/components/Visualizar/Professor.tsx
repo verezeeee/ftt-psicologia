@@ -43,18 +43,19 @@ export default function VisualizarProfessor({
   };
 
   const abrirExcluir = () => {
-    setExcluirAberto(true)
+    setExcluirAberto(true);
   };
   const fecharExcluir = () => {
-    setExcluirAberto(false)
+    setExcluirAberto(false);
   };
 
-  const [isMobile] = useMediaQuery("(max-width: 768px)")
+  const [isMobile] = useMediaQuery("(max-width: 768px)");
   const [isEditing, setIsEditing] = useState<any>();
   const [result, setResult] = useState<AlunoSignUpData[]>([]);
   const [excluirAberto, setExcluirAberto] = useState<boolean>(false);
   const shouldFetchData = useRef<boolean>(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [originalData, setOriginalData] = useState<AlunoSignUpData[]>([]);
 
   async function getUsers(): Promise<AlunoSignUpData[]> {
     try {
@@ -71,6 +72,7 @@ export default function VisualizarProfessor({
     async function fetchData() {
       if (shouldFetchData.current) {
         const data = await getUsers();
+        setOriginalData(data);
         setResult(data);
         shouldFetchData.current = false;
       }
@@ -92,6 +94,15 @@ export default function VisualizarProfessor({
       return lowerCaseNome.includes(lowerCaseSearchTerm);
     });
   }
+
+  useEffect(() => {
+    if (searchTerm.length > 0) {
+      const filteredResult = pesquisar(searchTerm, originalData);
+      setResult(filteredResult);
+    } else {
+      setResult(originalData);
+    }
+  }, [searchTerm, originalData]);
 
 
   return (

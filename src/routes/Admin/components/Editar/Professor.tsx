@@ -73,6 +73,7 @@ export default function EditarProfessor({
         nome,
         cpf,
         telefoneContato: telefone,
+        disciplina,
         email,
       };
 

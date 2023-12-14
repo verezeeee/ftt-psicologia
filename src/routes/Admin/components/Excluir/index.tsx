@@ -11,7 +11,7 @@ interface SuccessModalProps {
   onClose: () => void;
   closeModal: () => void;
   excluirData: any;
-  reloadEvents: () => void;
+  reloadEvents?: () => void;
 }
 
 

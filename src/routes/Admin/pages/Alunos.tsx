@@ -12,7 +12,6 @@ import Editar from "../components/Editar";
 import { AlunoSignUpData } from "../../../utils/types";
 import Filter from "../../../components/Filter";
 
-
 export default function Alunos({
   user,
   activeTab,
@@ -24,12 +23,10 @@ export default function Alunos({
 
   const [cadastrarOpened, setCadastrarOpened] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [originalData, setOriginalData] = useState<AlunoSignUpData[]>([]);
   const [result, setResult] = useState<AlunoSignUpData[]>([]);
   const [isEditing, setIsEditing] = useState<any>();
-
   const shouldFetchData = useRef<boolean>(true);
-  const finalRef = useRef(null);
-  const initialRef = useRef(null);
 
   async function getUsers(): Promise<AlunoSignUpData[]> {
     try {
@@ -46,18 +43,14 @@ export default function Alunos({
     async function fetchData() {
       if (shouldFetchData.current) {
         const data = await getUsers();
+        setOriginalData(data);
         setResult(data);
         shouldFetchData.current = false;
-      }
-
-      if (searchTerm.length > 0) {
-        const filteredResult = pesquisar(searchTerm, result);
-        setResult(filteredResult);
       }
     }
 
     fetchData();
-  }, [shouldFetchData, searchTerm]);
+  }, [shouldFetchData]);
 
   function pesquisar(searchTerm: string, users: AlunoSignUpData[]): AlunoSignUpData[] {
     const lowerCaseSearchTerm = removeAcentos(searchTerm.toLowerCase()).trim();
@@ -68,6 +61,14 @@ export default function Alunos({
     });
   }
 
+  useEffect(() => {
+    if (searchTerm.length > 0) {
+      const filteredResult = pesquisar(searchTerm, originalData);
+      setResult(filteredResult);
+    } else {
+      setResult(originalData);
+    }
+  }, [searchTerm, originalData]);
   return (
     <Flex
       p="4"

@@ -23,13 +23,10 @@ export default function Pacientes({
 
   const [cadastrarOpened, setCadastrarOpened] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [data, setData] = useState<ProfessorSignUpData[]>([]);
-
-  const [isEditing, setIsEditing] = useState<any>();
+  const [originalData, setOriginalData] = useState<ProfessorSignUpData[]>([]);
   const [result, setResult] = useState<ProfessorSignUpData[]>([]);
+  const [isEditing, setIsEditing] = useState<any>();
   const shouldFetchData = useRef<boolean>(true);
-  const finalRef = useRef(null);
-  const initialRef = useRef(null);
 
   async function getUsers(): Promise<ProfessorSignUpData[]> {
     try {
@@ -46,7 +43,7 @@ export default function Pacientes({
     async function fetchData() {
       if (shouldFetchData.current) {
         const data = await getUsers();
-        setData(data);
+        setOriginalData(data);
         setResult(data);
         shouldFetchData.current = false;
       }
@@ -66,13 +63,12 @@ export default function Pacientes({
 
   useEffect(() => {
     if (searchTerm.length > 0) {
-      const filteredResult = pesquisar(searchTerm, data);
+      const filteredResult = pesquisar(searchTerm, originalData);
       setResult(filteredResult);
     } else {
-      setResult(data);
+      setResult(originalData);
     }
-  }, [searchTerm, data]);
-
+  }, [searchTerm, originalData]);
   return (
     <Flex
       p="4"
