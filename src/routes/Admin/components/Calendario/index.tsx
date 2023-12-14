@@ -27,6 +27,16 @@ export default function CalendarPage() {
     setCalendarioEventosOpened(false);
   }
 
+  const headerToolbarOptions = {
+    left: isMobile ? 'prev' : 'prev today',
+    center: 'title',
+    right: isMobile ? 'next' : 'dayGridWeek dayGridMonth next',
+  };
+
+  const footerToolbarOptions = {
+    center: isMobile ? 'today' : '',
+  };
+
   const reloadEvents = async () => {
     try {
       const response = await axios.get('http://localhost:8080/auth/getConsulta');
@@ -55,17 +65,12 @@ export default function CalendarPage() {
 
     let calendar = new Calendar(calendarEl.current, {
       plugins: [resourceTimelinePlugin, dayGridPlugin, interactionPlugin, timeGridPlugin],
-      headerToolbar: {
-        left: 'prev today',
-        center: 'title',
-        right: isMobile ? 'next' : 'dayGridWeek dayGridMonth next',
-      },
-      footerToolbar: {
-        center: 'today'
-      },
+      headerToolbar: headerToolbarOptions,
+      footerToolbar: footerToolbarOptions,
       initialView: isMobile ? 'dayGridDay' : 'dayGridMonth',
       nowIndicator: true,
       selectMirror: true,
+      schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
       resources: [
         { id: 'a', title: 'Auditorium A' },
         { id: 'b', title: 'Auditorium B', eventColor: 'purple' },

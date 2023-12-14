@@ -34,7 +34,7 @@ export default function VisualizarPaciente({
     enderecoUF,
     dataInicioTratamento,
     dataTerminoTratamento,
-    quemEncaminhou,
+    quemEncaminhouNome,
     tipoDeTratamento,
     alunoUnieva,
     funcionarioUnieva,
@@ -317,7 +317,7 @@ export default function VisualizarPaciente({
                       Quem encaminhou?
                     </Text>
                     <Text fontSize='1.6rem'>
-                      {quemEncaminhou}
+                      {quemEncaminhouNome}
                     </Text>
                   </GridItem>
                   <GridItem w='100%' h='100'>
@@ -399,7 +399,7 @@ export default function VisualizarPaciente({
               enderecoUF,
               dataInicioTratamento,
               dataTerminoTratamento,
-              quemEncaminhou,
+              quemEncaminhouNome,
               tipoDeTratamento,
               alunoUnieva,
               funcionarioUnieva,
@@ -815,7 +815,7 @@ export default function VisualizarPaciente({
                     Quem encaminhou?
                   </Text>
                   <Text fontSize='1.6rem'>
-                    {quemEncaminhou}
+                    {quemEncaminhouNome}
                   </Text>
                 </Box>
               </GridItem>
@@ -898,7 +898,7 @@ export default function VisualizarPaciente({
                   enderecoUF,
                   dataInicioTratamento,
                   dataTerminoTratamento,
-                  quemEncaminhou,
+                  quemEncaminhouNome,
                   tipoDeTratamento,
                   alunoUnieva,
                   funcionarioUnieva,
